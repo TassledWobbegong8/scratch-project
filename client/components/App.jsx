@@ -1,9 +1,12 @@
 import React from 'react';
+import Nav from './Nav';
+import RoomContainer from '../containers/RoomContainer';
 
 function App() {
   return (
     <div className='app-container'>
-      <h1>Hello World!</h1>
+      <Nav />
+      <RoomContainer />
     </div>
   )
 }

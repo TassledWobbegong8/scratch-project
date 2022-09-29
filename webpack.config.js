@@ -9,7 +9,9 @@ module.exports = {
     filename: "bundle.js",
   },
   mode: "development",
-
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
@@ -42,8 +44,8 @@ module.exports = {
       directory: path.resolve(__dirname, "build"),
     },
 
-    proxy: {
-      "/": "http://localhost:3000",
-    },
+    // proxy: {
+    //   "/api": "http://localhost:3000",
+    // },
   },
 };
