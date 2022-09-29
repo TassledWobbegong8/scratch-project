@@ -25,6 +25,6 @@ const roomSchema = new Schema({
   restricted: { type: Boolean, required: true },
 });
 
-const Room = mongoose.model("rooms", roomSchema);
+const Room = mongoose.model("Room", roomSchema);
 
 module.exports = Room;
