@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-function Nav() {
-  const [subject, setSubject] = useState('');
+function Nav({ subject, setSubject }) {
   // navbar will send back new subject as updated state via useContext
 
   const subjects = [
@@ -14,28 +13,31 @@ function Nav() {
   ]
   const subjectBtns = subjects.map((e, i) => {
     return (
-      <button 
-        key='i' 
-        value={e} 
+      <button
+        key={i}
+        value={e}
         className='subject-links'
-        onClick={handleClick}>
+        onClick={(event) => handleClick(event.target.value)}>
         {e}
       </button>
     )
   })
-  
+
   const handleClick = (value) => {
-    // handle react router behavior??
+    // react router????
+    setSubject(value)
   }
 
   return (
     <div className='navbar'>
       <button id='home-link'><h2>Home</h2></button>
+      <button id='profile-link'><h2>Profile</h2></button>
+      <button id='settings-link'><h2>Settings</h2></button>
       <h2>Subjects</h2>
       <div id='subject-links'>
         {subjectBtns}
       </div>
-        
+
     </div>
   )
 }

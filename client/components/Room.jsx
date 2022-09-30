@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
-function Room() {
-  const [name, setName] = useState("Lewis Lin");
+function Room( {info, deleteRoom} ) {
+  const [name, setName] = useState("");
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   let newName;
 
@@ -22,12 +22,13 @@ function Room() {
   const mainRoom = (
     <div>
       <h1>
-        This is {name}'s Room!
+        {info.host + (info.host === "" ? "" : "'s")} Room!
       </h1>
       <form>
         <input id="nameInput" type="text" placeholder="Your Name Here" onChange={handleChange}></input>
         <button id="onSubmitButton" onClick={textOnSubmit}>Enter</button>
         <button id="showRoomInfo" onClick={showRoomInfo}>Show Room Info</button>
+        <button id="deleteRoom" onClick={(event) => deleteRoom(event, name)}>Delete Room</button>
       </form>
     </div>
   )
