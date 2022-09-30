@@ -4,7 +4,7 @@ const usersController = {};
 
 usersController.getAllUsers = async (req, res, next) => {
     try {
-        const users = await User.find({});
+        const users = await User.find().populate('rooms');
 
         if (!users) {
             return res.status(404).json({ message: 'No users found' })
@@ -26,6 +26,10 @@ usersController.createUser = async (req, res, next) => {
 
     try {
         const newUser = await User.create({ host: host, username: username, password: password });
+
+        if (!newUser) {
+            return res.status(400).json({ message: "User could not be created" });
+        }
 
         res.locals.newUser = newUser;
 
