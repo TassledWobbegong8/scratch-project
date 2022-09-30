@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import Nav from '../components/Nav';
+import { Routes, Route } from 'react-router-dom';
+import MainNav from '../components/MainNav';
+import SubjectNav from '../components/SubjectNav';
 import RoomContainer from '../containers/RoomContainer';
+import Profile from './Profile';
 
 function Dashboard() {
   const [subject, setSubject] = useState('');
@@ -11,8 +14,17 @@ function Dashboard() {
 
   return (
     <div id='dashboard'>
-      <Nav subject={subject} setSubject={setSubject} />
-      {!subject ? noSubject : yesSubject}
+      <MainNav />
+      <Routes>
+        <Route path='/' element={<>
+          <SubjectNav subject={subject} setSubject={setSubject} />
+          {!subject ? noSubject : yesSubject}
+        </>}
+        />
+        <Route path='/profile' element={<Profile />} />
+      </Routes>
+
+
     </div>
   )
 }
