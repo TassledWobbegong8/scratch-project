@@ -22,6 +22,6 @@ const mongoose = require("mongoose");
     rooms: [{ type: Schema.Types.ObjectId, ref: "Room" }],
   });
 
-  const User = mongoose.model("users", userSchema);
+  const User = mongoose.model("User", userSchema);
 
   module.exports = User;
