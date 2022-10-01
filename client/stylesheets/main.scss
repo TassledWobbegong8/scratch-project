@@ -1,0 +1,43 @@
+@import './_variables';
+@import './roomContainer';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $main-font;
+  color: $main-text-color;
+}
+a {
+  text-decoration: none;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: $background-color-light;
+}
+button:hover {
+    background-color: lighten($accent-color, 20%);
+}
+#root, .app-container, #dashboard, #main-container {
+  height: 100%;
+}
+.main-nav {
+  display: flex;
+  align-items: center;
+  background-color: $background-color;
+  height: 50px;
+  border-bottom: 1px solid $accent-color-light;
+}
+.main-nav-btn {
+  margin: 0 10px;
+}
+#logout-link {
+  color: $warning-color;
+  flex: 1;
+  justify-self: end;
+}
+
+#main-container {
+  display: flex;
+}

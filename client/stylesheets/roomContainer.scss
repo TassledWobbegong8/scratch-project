@@ -1,0 +1,30 @@
+#room-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  row-gap: 20px;
+}
+
+.subject-nav {
+  padding: 10px;
+  width: 200px;
+  h2 {
+    padding: 10px;
+    border-bottom: 1px solid $accent-color-light;
+  }
+  background-color: $background-color;
+}
+
+#subject-links-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#subject-links {
+  margin: 10px 0;
+}
+
+.mainRoom, .roomInfo {
+  background-color: $individualRoomColor;
+}

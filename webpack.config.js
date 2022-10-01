@@ -24,7 +24,7 @@ module.exports = {
       },
 
       {
-        test: /\.css$/i,
+        test: /\.(css|s(a|c)ss)$/i,
         exclude: /node_modules/,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
@@ -43,7 +43,7 @@ module.exports = {
       publicPath: "/build",
       directory: path.resolve(__dirname, "build"),
     },
-
+    historyApiFallback: true,
     // proxy: {
     //   "/api": "http://localhost:3000",
     // },

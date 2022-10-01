@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React, { useState, useContext } from 'react';
 
 function SubjectNav({ subject, setSubject }) {
@@ -13,13 +14,13 @@ function SubjectNav({ subject, setSubject }) {
   ]
   const subjectBtns = subjects.map((e, i) => {
     return (
-      <button
+      <Button variant='outlined'
         key={i}
         value={e}
-        className='subject-links'
+        id='subject-links'
         onClick={(event) => handleClick(event.target.value)}>
         {e}
-      </button>
+      </Button>
     )
   })
 
@@ -30,8 +31,8 @@ function SubjectNav({ subject, setSubject }) {
 
   return (
     <div className='subject-nav'>
-      <h2>Subjects</h2>
-      <div id='subject-links'>
+      <h2 style={{"textAlign": "center"}}>Subjects</h2>
+      <div id='subject-links-container'>
         {subjectBtns}
       </div>
 
