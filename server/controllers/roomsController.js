@@ -41,4 +41,39 @@ roomsController.openNewRoom = async (req, res, next) => {
 
 }
 
+roomsController.getUserRooms = async (req, res, next) => {
+    const { id } = req.params;
+    let rooms;
+    try {
+        rooms = await room.find({ host: id })
+        res.locals.userRooms = rooms
+    } catch (e) {
+        console.log(e.message)
+    }
+
+    if (rooms.length === 0) {
+        return res.status(404).json({ message: 'There are no rooms associated to this user ID' })
+    }
+    next()
+
+}
+
+roomsController.deleteRoom = async (req, res, next) => {
+    const { subject, host } = req.params;
+
+    let roomDelete;
+    try {
+        roomDelete = await room.findOneAndDelete({ subject: subject, host: host })
+        res.locals.deletedRoom = roomDelete;
+
+    } catch (e) {
+        console.log(e.message)
+    }
+
+    if (!roomDelete) {
+        return res.status(404).json({ message: 'Unable to find the room to delete' });
+    }
+    return next();
+}
+
 module.exports = roomsController;

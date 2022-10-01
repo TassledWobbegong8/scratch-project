@@ -12,5 +12,15 @@ router.post('/',
     (req, res) => res.status(200).json(res.locals.newRoom)
 );
 
+router.delete('/:subject/:host',
+    roomsController.deleteRoom,
+    (req, res) => res.status(200).json(res.locals.deletedRoom)
+);
+
+router.get('/:id',
+    roomsController.getUserRooms,
+    (req, res) => res.status(200).json(res.locals.userRooms)
+);
+
 
 module.exports = router;
