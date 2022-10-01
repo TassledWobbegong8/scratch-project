@@ -1,12 +1,12 @@
 import React from 'react';
-import Nav from './Nav';
-import RoomContainer from '../containers/RoomContainer';
+import Dashboard from '../containers/Dashboard';
+
+import '../stylesheets/main.scss';
 
 function App() {
   return (
     <div className='app-container'>
-      <Nav />
-      <RoomContainer />
+      <Dashboard />
     </div>
   )
 }
