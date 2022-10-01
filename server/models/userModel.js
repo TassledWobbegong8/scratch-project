@@ -1,27 +1,23 @@
 const mongoose = require("mongoose");
-// require("mongoose-type-url");
 
-// const MONGO_URI =
-//   "mongodb+srv://scratch:project@scratch-project-cluster.dphri14.mongodb.net/?retryWrites=true&w=majority";
+const Schema = mongoose.Schema;
 
-//   mongoose
-//     .connect(MONGO_URI, {
-//       // options for the connect method to parse the URI
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     })
-//     .then(() => console.log("Connected to Mongo DB."))
-//     .catch((err) => console.log(err));
+const userSchema = new Schema({
+  host: { type: Boolean, required: true },
+  username: { type: String, required: true, unique: true },
+  nickname: { type: String },
+  password: { type: String, required: true, minlength: 8 },
+  rooms: [{ type: Schema.Types.ObjectId, ref: "Room" }],
+});
 
-  const Schema = mongoose.Schema;
+userSchema.pre("save", function (next) {
 
-  const userSchema = new Schema({
-    host: { type: Boolean, required: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true, minlength: 8 },
-    rooms: [{ type: Schema.Types.ObjectId, ref: "Room" }],
-  });
+  if (!this.nickname) {
+    this.nickname = this.get("username"); 
+  }
+  next();
+});
 
-  const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
-  module.exports = User;
+module.exports = User;
