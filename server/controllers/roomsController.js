@@ -3,17 +3,18 @@ const room = require('../models/roomModel');
 const roomsController = {};
 
 roomsController.getAllRooms = async (req, res, next) => {
-    let roomslist
+    let roomslist;
+    let { subject } = req.params;
     try {
-        roomslist = await room.find().populate('allowedUsers');
+        roomslist = await room.find({ subject: subject }).where('active').equals(true);
         res.locals.rooms = roomslist;
 
     } catch (e) {
         console.log(e.message)
     }
 
-    if (!roomslist) {
-        return res.status(404).json({ message: 'No rooms found' });
+    if (roomslist.length === 0) {
+        return res.status(404).json({ message: 'There are no active rooms for this subject' });
     }
     next();
 

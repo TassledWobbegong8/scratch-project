@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const roomsController = require('../controllers/roomsController')
-router.get('/',
+router.get('/:subject',
     roomsController.getAllRooms,
-    (req, res) => res.status(200).json(res.locals.rooms)
+    (req, res) => res.status(200).json(res.locals.activeRooms)
 );
 
 router.post('/',
