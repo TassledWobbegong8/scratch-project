@@ -4,7 +4,8 @@ import MainNav from '../components/MainNav';
 import SubjectNav from '../components/SubjectNav';
 import RoomContainer from '../containers/RoomContainer';
 import Profile from './Profile';
-import SettingsMenu from './SettingsMenu';
+import SettingsContainer from './SettingsContainer';
+import SettingsCard from '../components/SettingsCard';
 
 function Dashboard() {
   const [subject, setSubject] = useState('');
@@ -15,7 +16,7 @@ function Dashboard() {
 
   return (
     <div id='dashboard'>
-      <MainNav />
+      <MainNav setSubject={setSubject}/>
       <Routes>
         <Route path='/' element={<div id='main-container'>
           <SubjectNav subject={subject} setSubject={setSubject} />
@@ -23,10 +24,13 @@ function Dashboard() {
         </div>}
         />
         <Route path='/profile' element={<Profile />} />
-        <Route path='/settings' element={<SettingsMenu/>}/>
+        <Route path='/settings' element={<div id='main-container'>
+          <SettingsContainer />
+          <div id="login-details-container">
+            {SettingsCard()}
+          </div>
+        </div>}/>
       </Routes>
-
-
     </div>
   )
 }

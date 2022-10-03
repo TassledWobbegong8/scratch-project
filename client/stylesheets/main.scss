@@ -11,6 +11,7 @@
 a {
   text-decoration: none;
 }
+
 body {
   width: 100vw;
   height: 100vh;
@@ -19,9 +20,17 @@ body {
 button:hover {
     background-color: lighten($accent-color, 20%);
 }
-#root, .app-container, #dashboard, #main-container {
+#root, .app-container, #dashboard, #main-container, #settings-container {
   height: 100%;
 }
+
+#login-details-container {
+  height: 100%;
+  min-width: 30%;
+  width: 30%;
+  max-width: 400px;
+}
+
 .main-nav {
   display: flex;
   align-items: center;
@@ -38,6 +47,14 @@ button:hover {
   justify-self: end;
 }
 
+#login-text {
+  text-align: center;
+};
+
 #main-container {
   display: flex;
+}
+
+#SettingsMenu {
+  padding: 20px;
 }
