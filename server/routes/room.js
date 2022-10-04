@@ -12,7 +12,7 @@ router.post('/',
     (req, res) => res.status(200).json(res.locals.newRoom)
 );
 
-router.delete('/:subject/:host',
+router.delete('/:id',
     roomsController.deleteRoom,
     (req, res) => res.status(200).json(res.locals.deletedRoom)
 );

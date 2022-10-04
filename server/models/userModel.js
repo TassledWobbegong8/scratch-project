@@ -8,6 +8,7 @@ const userSchema = new Schema({
   nickname: { type: String },
   password: { type: String, required: true, minlength: 8 },
   rooms: [{ type: Schema.Types.ObjectId, ref: "Room" }],
+  savedRooms: [{ type: Schema.Types.ObjectId, ref: "Room" }],
 });
 
 userSchema.pre("save", function (next) {

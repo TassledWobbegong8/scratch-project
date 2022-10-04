@@ -1,5 +1,6 @@
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 import React, { useState, useEffect, useContext } from "react";
 
 function RoomCard( {info, deleteRoom} ) {
@@ -24,8 +25,11 @@ function RoomCard( {info, deleteRoom} ) {
   const mainRoom = (
     <div className="mainRoom">
       <h1>
-        {info.host} Room
-        <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon>
+        <div>
+          {info.host} Room
+          <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon>
+        </div>
+
       </h1>
       {/* <form>
         <input id="nameInput" type="text" placeholder="Your Name Here" onChange={handleChange}></input>
@@ -41,7 +45,7 @@ function RoomCard( {info, deleteRoom} ) {
       <p>Subject:</p>
       <p>Creator:</p>
       <p>People Inside:</p>
-      <button id="exitRoomInfo" onClick={showRoomInfo}>X</button>
+      <KeyboardReturnIcon id="exitRoomInfo" onClick={showRoomInfo}>X</KeyboardReturnIcon>
     </div>
   )
 

@@ -64,11 +64,11 @@ roomsController.getUserRooms = async (req, res, next) => {
 }
 
 roomsController.deleteRoom = async (req, res, next) => {
-    const { subject, host } = req.params;
+    const { id } = req.params;
 
     let roomDelete;
     try {
-        roomDelete = await room.findOneAndDelete({ subject: subject, host: host })
+        roomDelete = await room.findOneAndDelete({ _id: id })
         res.locals.deletedRoom = roomDelete;
 
     } catch (e) {

@@ -1,25 +1,28 @@
 import { Button } from '@mui/material';
+import { Calculate, Book, HistoryEdu, Language, School, Science } from '@mui/icons-material';
 import React, { useState, useContext } from 'react';
 
 function SubjectNav({ subject, setSubject }) {
   // navbar will send back new subject as updated state via useContext
+  const subjectObj = {
+    'MATH': <Calculate className='subject-link-icon'/>,
+    'ENGLISH': <Book className='subject-link-icon'/>,
+    'HISTORY': <HistoryEdu className='subject-link-icon'/>,
+    'SCIENCE': <Science className='subject-link-icon'/>,
+    'LANGUAGES': <Language className='subject-link-icon'/>,
+    'MISCELLANEOUS': <School className='subject-link-icon'/>
+  }
+  const subjects = Object.entries(subjectObj);
 
-  const subjects = [
-    'MATH',
-    'ENGLISH',
-    'HISTORY',
-    'SCIENCE',
-    'LANGUAGES',
-    'MISCELLANEOUS'
-  ]
   const subjectBtns = subjects.map((e, i) => {
     return (
-      <Button variant='outlined'
+      <Button variant='text'
         key={i}
-        value={e}
+        value={e[0]}
         id='subject-links'
         onClick={(event) => handleClick(event.target.value)}>
-        {e}
+        {e[1]}
+        {e[0]}
       </Button>
     )
   })
@@ -31,7 +34,7 @@ function SubjectNav({ subject, setSubject }) {
 
   return (
     <div className='subject-nav'>
-      <h2 style={{"textAlign": "center"}}>Subjects</h2>
+      <h2 >Subjects</h2>
       <div id='subject-links-container'>
         {subjectBtns}
       </div>

@@ -79,4 +79,47 @@ usersController.createUser = async (req, res, next) => {
     }
 };
 
+usersController.saveRoom = async (req, res, next) => {
+
+  // get user ID from params
+  const { id } = req.params;
+
+  // get room ID to save from request body
+  const { savedRooms } = req.body;
+
+  try {
+
+      await User.updateOne({ _id: id }, { $push: { savedRooms: savedRooms } });
+
+      return next(); 
+
+  } catch (e) {
+      return res.status(400).json({ message: e.message });
+
+  };
+
+};
+
+usersController.unsaveRoom = async (req, res, next) => {
+
+  // get user ID from params
+  const { id } = req.params;
+
+  // get room ID to unsave from request body
+  const { savedRooms } = req.body;
+
+  try {
+
+      await User.updateOne({ _id: id }, { $pull: { savedRooms: savedRooms } });
+
+      return next(); 
+
+  } catch (e) {
+      return res.status(400).json({ message: e.message });
+
+  };  
+
+};
+
+
 module.exports = usersController;
