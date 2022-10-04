@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import RoomManager from "../components/RoomManager";
 
 export default function Profile() {
-  // FAKE DATA FOR STATE --> DELETE OR COMMENT OUT LATER!!
-  const fakeUser = {
-    username: 'lewislin9', 
-    nickname: 'Lewlew',
-    rooms: [{subject: 'MATH', restricted: true}, {subject: 'SCIENCE', restricted: false}]};
+  const initialUser = {
+    username: '', 
+    nickname: '',
+    rooms: []};
 
-  const [profileInformation, setProfileInformation] = useState(fakeUser);
+  const [profileInformation, setProfileInformation] = useState({initialUser});
 
   const fetchUser = async () => {
     // GET request to server api endpoint with user ID in the cookie
-    const userData = await fetch('/api/user').then(response => response.json());
+    // ****THIS IS FAKE ENDPOINT DON'T USE IN PRODUCTION
+    const fakeEndpoint = '/api/users/633b95312ab28a4c27eabc57'
+    const userData = await fetch(fakeEndpoint).then(response => response.json());
     setProfileInformation(userData);
   }
 
-  // useEffect(() => {
-  //   fetchUser();
-  // }, [])
+  useEffect(() => {
+    fetchUser();
+  }, [])
 
   return (
     <div id='user-profile'>
