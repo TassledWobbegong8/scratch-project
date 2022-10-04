@@ -1,0 +1,86 @@
+#user-profile {
+  margin-top: 50px;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-field {
+  color: $accent-color
+}
+
+#room-manager {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#profile-tab {
+  align-self: start;
+  margin-top: 40px;
+  margin-left: 20%;
+  padding: 10px 20px;
+  color: $mui-text-color;
+  background-color: white;
+  font-weight: 700;
+  border-radius: $border-radius $border-radius 0 0 ;
+  border-top: 1px solid $accent-color-light;
+  border-left: 1px solid $accent-color-light;
+  border-right: 1px solid $accent-color-light;
+  z-index: 1;
+}
+
+.profile-room-container {
+  flex: 1;
+  text-align: left;
+  margin-top: -1px;
+  padding: 40px 20%;
+  width: 100%;
+  background-color: white;
+  border-top: 1px solid $accent-color-light;
+}
+.profile-room {
+  width: 400px;
+  margin: 10px;
+  padding: 20px;
+  background-color: $card-background;
+  border-radius: $border-radius;
+  label {
+    font-weight: 700;
+  }
+}
+
+#open-add-room {
+  position: absolute;
+  right: 20%;
+  margin: 10px;
+  font-size: 30px;
+  padding: 6px 15px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 2px 2px 2px $background-color-light;
+  background-color: $accent-color;
+  color: white;
+  transition: border-radius 0.2s, content 0.5s;
+  &:hover {
+    font-size: 0;
+    border-radius: 100px;
+    padding: 15px 15px;
+    width: 180px;
+    &::after {
+      content: 'Create new room';
+      font-size: 16px;
+    }
+  }
+}
+
+#room-editor-modal {
+  position: absolute;
+  background-color: $card-background;
+  padding: 20px;
+  border: 1px solid $accent-color-light;
+  border-radius: $border-radius;
+  box-shadow: 2px 2px 2px $background-color-light;
+}

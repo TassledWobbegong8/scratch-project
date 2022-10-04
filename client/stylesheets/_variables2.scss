@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,700;1,400&display=swap');
+
+$main-font: 'Roboto', sans-serif;
+$main-text-color: #000000;
+
+$mui-text-color: #1976d2;
+$accent-color: #34B3F1;
+$accent-color-light: lighten($accent-color, 24%);
+
+$background-color: lighten($accent-color, 30%);
+$background-color-light: #EEEEEE;
+
+$card-background: lighten($background-color-light, 3%);
+$warning-color: #F15412;
+
+$border-radius: 4px;

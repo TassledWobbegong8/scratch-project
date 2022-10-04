@@ -9,7 +9,7 @@ function RoomContainer({ subject }) {
   // fetch new room cards when subject changes
   const fetchRooms = async () => {
     // GET request to server api endpoint with subject in params
-    const roomData = await fetch(`/api/room/${subject}`).then(response => response.json());
+    const roomData = await fetch(`/api/rooms/${subject}`).then(response => response.json());
     setRooms(roomData);
   }
 
