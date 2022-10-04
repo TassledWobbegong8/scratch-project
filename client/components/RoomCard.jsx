@@ -1,6 +1,8 @@
+import { Button, IconButton } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 import React, { useState, useEffect, useContext } from "react";
 
-function Room( {info, deleteRoom} ) {
+function RoomCard( {info, deleteRoom} ) {
   const [name, setName] = useState("");
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   let newName;
@@ -20,21 +22,21 @@ function Room( {info, deleteRoom} ) {
   }
 
   const mainRoom = (
-    <div>
+    <div className="mainRoom">
       <h1>
-        {info.host + (info.host === "" ? "" : "'s")} Room!
+        {info.host} Room
+        <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon>
       </h1>
-      <form>
+      {/* <form>
         <input id="nameInput" type="text" placeholder="Your Name Here" onChange={handleChange}></input>
         <button id="onSubmitButton" onClick={textOnSubmit}>Enter</button>
         <button id="showRoomInfo" onClick={showRoomInfo}>Show Room Info</button>
-        <button id="deleteRoom" onClick={(event) => deleteRoom(event, name)}>Delete Room</button>
-      </form>
+      </form> */}
     </div>
   )
 
   const roomInfo = (
-    <div>
+    <div className="roomInfo">
       <p>Room Number:</p>
       <p>Subject:</p>
       <p>Creator:</p>
@@ -50,4 +52,4 @@ function Room( {info, deleteRoom} ) {
   }
 }
 
-export default Room
+export default RoomCard

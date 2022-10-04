@@ -1,0 +1,54 @@
+@import './_variables2';
+@import './roomContainer';
+@import './profile';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $main-font;
+}
+a {
+  text-decoration: none;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: $background-color-light;
+}
+button:hover {
+    background-color: lighten($accent-color, 20%);
+}
+.warning, #delete-room-btn {
+  color: $warning-color;
+}
+
+
+#root, .app-container, #dashboard {
+  height: 100%;
+}
+#dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  background-color: $background-color;
+  height: 50px;
+  border-bottom: 1px solid $accent-color-light;
+}
+.main-nav-btn {
+  margin: 0 10px;
+}
+#logout-link {
+  color: $warning-color;
+  flex: 1;
+  justify-self: end;
+}
+
+#main-container {
+  flex: 1;
+  display: flex;
+}
