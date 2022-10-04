@@ -1,3 +1,4 @@
+const { findById, findByIdAndUpdate } = require('../models/roomModel');
 const room = require('../models/roomModel');
 
 const roomsController = {};
@@ -6,8 +7,10 @@ roomsController.getAllRooms = async (req, res, next) => {
     let roomslist;
     let { subject } = req.params;
     try {
+
         roomslist = await room.find({ subject: subject }).where('active').equals(true);
-        res.locals.rooms = roomslist;
+        console.log(roomslist);
+        res.locals.roomslist = roomslist;
 
     } catch (e) {
         console.log(e.message)
@@ -43,10 +46,10 @@ roomsController.openNewRoom = async (req, res, next) => {
 }
 
 roomsController.getUserRooms = async (req, res, next) => {
-    const { id } = req.params;
+    const { user_id } = req.params;
     let rooms;
     try {
-        rooms = await room.find({ host: id })
+        rooms = await room.find({ host: user_id })
         res.locals.userRooms = rooms
     } catch (e) {
         console.log(e.message)
@@ -55,6 +58,7 @@ roomsController.getUserRooms = async (req, res, next) => {
     if (rooms.length === 0) {
         return res.status(404).json({ message: 'There are no rooms associated to this user ID' })
     }
+
     next()
 
 }
@@ -74,7 +78,27 @@ roomsController.deleteRoom = async (req, res, next) => {
     if (!roomDelete) {
         return res.status(404).json({ message: 'Unable to find the room to delete' });
     }
-    return next();
+    next();
+}
+
+
+roomsController.updateRoom = async (req, res, next) => {
+    const { id } = req.params;
+    const { subject, restricted, maxallowed, allowedUsers } = req.body;
+    let updatedRoom;
+    try {
+
+        updatedRoom = await room.findByIdAndUpdate(id, { subject, restricted, maxallowed, allowedUsers })
+        res.locals.updatedRoom = updatedRoom
+    } catch (e) {
+        console.log(e.message)
+    }
+
+    if (!updatedRoom) {
+        return res.status(404).json({ message: 'Unable to find the room' })
+    }
+
+    next();
 }
 
 module.exports = roomsController;
