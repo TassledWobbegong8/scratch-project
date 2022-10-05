@@ -13,8 +13,18 @@ export default function Login({ setLoggedIn }) {
   const navigate = useNavigate();
 
   const logIn = async () => {
-    
-    setLoggedIn(true);
+    const user = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    }).then(response => response.json());
+
+    setLoggedIn(user);
     navigate('/main/home');
   };
 
@@ -48,7 +58,7 @@ export default function Login({ setLoggedIn }) {
       
       <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
       
-      <p>{'Don\'t already have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
+      <p>{'Don\'t have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
     </div>);
 
   const signupDetails = (

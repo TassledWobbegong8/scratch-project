@@ -39,10 +39,9 @@ function RoomCard( { info } ) {
 
   const roomInfo = (
     <div className="roomInfo">
-      <p>Room Number: </p>
-      <p>Subject: </p>
-      <p>Creator:  </p>
-      <p>People Inside:  </p>
+      <p>Subject: {info.subject} </p>
+      <p>Creator:  {info.host.username} </p>
+      <p>People Inside:  {info.allowedUsers} </p>
       <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
       <KeyboardReturnIcon id="exitRoomInfo" onClick={showRoomInfo}>X</KeyboardReturnIcon>
     </div>

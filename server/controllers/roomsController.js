@@ -1,5 +1,6 @@
 const { findById, findByIdAndUpdate } = require('../models/roomModel');
 const room = require('../models/roomModel');
+const user = require('../models/userModel');
 
 const roomsController = {};
 
@@ -24,13 +25,18 @@ roomsController.getAllRooms = async (req, res, next) => {
 };
 
 roomsController.openNewRoom = async (req, res, next) => {
-  const { subject, host, restricted, allowedUsers, pendingUsers, active } = req.body;
+  const { _id: host } = res.locals.token;
+  const { subject, restricted, allowedUsers, pendingUsers, active } = req.body;
   let newRoom;
   try {
     newRoom = await room.create({
       host: host, subject: subject, restricted: restricted, active: active,
       allowedUsers: allowedUsers, pendingUsers: pendingUsers
     });
+    // add new room to host user's rooms list
+    const hostUser = await user.findById(host);
+    hostUser.rooms.push(newRoom._id);
+    await hostUser.save();
 
     res.locals.newRoom = newRoom;
 
@@ -70,6 +76,7 @@ roomsController.deleteRoom = async (req, res, next) => {
   try {
     roomDelete = await room.findOneAndDelete({ _id: id });
     res.locals.deletedRoom = roomDelete;
+    // TODO: update host users rooms list
 
   } catch (e) {
     console.log(e.message);

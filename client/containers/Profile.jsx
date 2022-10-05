@@ -15,7 +15,7 @@ export default function Profile() {
     const fakeEndpoint = '/api/users/633b95312ab28a4c27eabc57';
     const userData = await fetch('/api/users/user').then(response => response.json());
     console.log(userData);
-    setProfileInformation(userData);
+    if(userData) setProfileInformation(userData);
   };
 
   useEffect(() => {

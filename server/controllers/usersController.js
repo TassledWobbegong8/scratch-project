@@ -20,15 +20,19 @@ usersController.getAllUsers = async (req, res, next) => {
 };
 
 usersController.getUser = async (req, res, next) => {
-  const { _id } = res.locals.token;
+  // find either the id from the jwt cookie OR the username from the body
 
   try {
-    const user = await User.findById(_id)
-      .populate('rooms')
-      .populate('savedRooms');
-
-    if (!user) {
-      return res.status(404).json({ message: 'No user found' });
+    let user;
+    if (res.locals.token) {
+      user = await User.findById(res.locals.token._id)
+        .populate('rooms')
+        .populate('savedRooms'); 
+    } else {
+      const { username, password } = req.body;
+      user = await User.findOne({username, password})
+        .populate('rooms')
+        .populate('savedRooms');
     }
 
     res.locals.user = user;

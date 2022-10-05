@@ -5,6 +5,9 @@
     font-size: 14px;
     text-align: center;
   }
+  input {
+    background-color: $card-background;
+  }
 }
 
 #auth-btn {

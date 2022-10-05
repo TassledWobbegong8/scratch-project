@@ -15,7 +15,7 @@ function Dashboard( ) {
   const [loggedIn, setLoggedIn] = useState(true);
 
   const verifyLogin = async () => {
-    const logged = await fetch('/api/verify').then(response => response.json());
+    const logged = await fetch('/api/auth/verify').then(response => response.json());
     console.log(logged);
     setLoggedIn(logged);
   };

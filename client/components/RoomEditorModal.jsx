@@ -14,12 +14,16 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
       return;
     }
     // fetch request will return new room doc
-    const newRoomData = await fetch('/api/room', {
+    const newRoomData = await fetch('/api/rooms', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify(updatedRoom)
+      body: JSON.stringify({
+        ...updatedRoom, 
+        allowedUsers: [], 
+        pendingUsers: [],
+        active: true})
     }).then(response => response.json());
 
     // update user to reset state

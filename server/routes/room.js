@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const roomsController = require('../controllers/roomsController');
+const cookieController = require('../controllers/cookieController');
+
 router.get('/:subject',
   roomsController.getAllRooms,
   (req, res) => res.status(200).json(res.locals.roomslist)
 );
 
 router.post('/',
+  cookieController.verifyUser,
   roomsController.openNewRoom,
   (req, res) => res.status(200).json(res.locals.newRoom)
 );

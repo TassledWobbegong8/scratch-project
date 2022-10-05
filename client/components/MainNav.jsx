@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 function MainNav({ setSubject, setLoggedIn }) {
   const logOut = async () => {
-    const cookie = await fetch('/api/logout').then(response => response.json());
+    const cookie = await fetch('/api/auth/logout').then(response => response.json());
     setLoggedIn(false);
   };
 
