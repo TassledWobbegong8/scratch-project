@@ -5,12 +5,12 @@ import React, { useState, useContext } from 'react';
 function SubjectNav({ subject, setSubject }) {
   // navbar will send back new subject as updated state via useContext
   const subjectObj = {
-    'MATH': <Calculate className='subject-link-icon'/>,
-    'ENGLISH': <Book className='subject-link-icon'/>,
-    'HISTORY': <HistoryEdu className='subject-link-icon'/>,
-    'SCIENCE': <Science className='subject-link-icon'/>,
-    'LANGUAGES': <Language className='subject-link-icon'/>,
-    'MISCELLANEOUS': <School className='subject-link-icon'/>
+    'math': <Calculate className='subject-link-icon'/>,
+    'english': <Book className='subject-link-icon'/>,
+    'history': <HistoryEdu className='subject-link-icon'/>,
+    'science': <Science className='subject-link-icon'/>,
+    'languages': <Language className='subject-link-icon'/>,
+    'miscellaneous': <School className='subject-link-icon'/>
   }
   const subjects = Object.entries(subjectObj);
 

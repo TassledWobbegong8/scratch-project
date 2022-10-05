@@ -3,7 +3,7 @@ import RoomCard from '../components/RoomCard';
 import { Card } from '@mui/material';
 
 function RoomContainer({ subject }) {
-  const [rooms, setRooms] = useState([{subject: 'MATH', host: 'Lewis'}, {subject: 'SCIENCE', host: 'Pei'}, {subject: 'ENGLISH', host: 'Eric'}, {subject: 'SCIENCE', host: 'Uma'}, {subject: 'MATH', host: 'Matt Severyn'},]);
+  const [rooms, setRooms] = useState([{subject: 'math', host: 'Lewis'}, {subject: 'SCIENCE', host: 'Pei'}, {subject: 'ENGLISH', host: 'Eric'}, {subject: 'SCIENCE', host: 'Uma'}, {subject: 'MATH', host: 'Matt Severyn'},]);
   // roomcontainer will retrieve current subject from useContext
 
   // fetch new room cards when subject changes

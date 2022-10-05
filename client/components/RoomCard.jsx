@@ -6,17 +6,16 @@ import React, { useState, useEffect, useContext } from "react";
 function RoomCard( {info, deleteRoom} ) {
   const [name, setName] = useState("");
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
-  let newName;
 
-  const textOnSubmit = event => {
-    event.preventDefault();
-    setName((prevName) => {return newName})
-  }
+  // const textOnSubmit = event => {
+  //   event.preventDefault();
+  //   setName((prevName) => {return newName})
+  // }
 
-  function handleChange() {
-    newName = event.target.value
-    return event.target.value
-  }
+  // function handleChange() {
+  //   newName = event.target.value
+  //   return event.target.value
+  // }
 
   const showRoomInfo = event => {
     setRoomInfoBoolean((prevBoolean) => {return !prevBoolean})
