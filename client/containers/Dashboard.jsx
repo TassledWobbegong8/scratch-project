@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 // components
 import MainNav from '../components/MainNav';
@@ -8,13 +8,24 @@ import Profile from './Profile';
 import SettingsContainer from './SettingsContainer';
 import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
+import Room from './Room';
 
 function Dashboard( ) {
   const [subject, setSubject] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
+
+  const verifyLogin = async () => {
+    const logged = await fetch('/api/verify').then(response => response.json());
+    console.log(logged);
+    setLoggedIn(logged);
+  };
+
+  // check session if dashboard remounts
+  useEffect(() => {
+    verifyLogin();
+  }, []);
 
   const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
-
   const yesSubject = <RoomContainer subject={subject}/>;
 
   return (
@@ -37,6 +48,7 @@ function Dashboard( ) {
                 <SettingsCard/>
               </div>
             </div>}/>
+            <Route path='/room' element={<Room />} />
           </Routes>
         </>} />}
         <Route path="*" element={<Navigate to='/' />} />

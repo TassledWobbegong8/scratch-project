@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 function MainNav({ setSubject, setLoggedIn }) {
-  const logOut = () => {
+  const logOut = async () => {
+    const cookie = await fetch('/api/logout').then(response => response.json());
     setLoggedIn(false);
   };
 

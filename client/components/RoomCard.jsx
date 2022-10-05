@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-function RoomCard( {info, deleteRoom} ) {
-  const [name, setName] = useState('');
+function RoomCard( { info } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
 
   // const textOnSubmit = event => {
@@ -18,17 +18,16 @@ function RoomCard( {info, deleteRoom} ) {
   // }
 
   const showRoomInfo = event => {
-    setRoomInfoBoolean((prevBoolean) => {return !prevBoolean;});
+    setRoomInfoBoolean(!roomInfoBoolean);
   };
 
   const mainRoom = (
     <div className="mainRoom">
       <h1>
         <div>
-          {info.host.nickname} Room
+          {info.host.username} Room
           <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon>
         </div>
-
       </h1>
       {/* <form>
         <input id="nameInput" type="text" placeholder="Your Name Here" onChange={handleChange}></input>
@@ -40,10 +39,11 @@ function RoomCard( {info, deleteRoom} ) {
 
   const roomInfo = (
     <div className="roomInfo">
-      <p>Room Number:</p>
-      <p>Subject:</p>
-      <p>Creator:</p>
-      <p>People Inside:</p>
+      <p>Room Number: </p>
+      <p>Subject: </p>
+      <p>Creator:  </p>
+      <p>People Inside:  </p>
+      <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
       <KeyboardReturnIcon id="exitRoomInfo" onClick={showRoomInfo}>X</KeyboardReturnIcon>
     </div>
   );
