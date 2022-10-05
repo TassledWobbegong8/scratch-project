@@ -5,7 +5,7 @@ import { Link, redirect, Route, Routes } from 'react-router-dom';
 import '../stylesheets/main.scss';
 
 function App() {
-    return <Dashboard/>
+  return <Dashboard/>;
 }
 
 export default App;

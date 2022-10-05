@@ -11,7 +11,7 @@ function SubjectNav({ subject, setSubject }) {
     'science': <Science className='subject-link-icon'/>,
     'languages': <Language className='subject-link-icon'/>,
     'miscellaneous': <School className='subject-link-icon'/>
-  }
+  };
   const subjects = Object.entries(subjectObj);
 
   const subjectBtns = subjects.map((e, i) => {
@@ -24,13 +24,13 @@ function SubjectNav({ subject, setSubject }) {
         {e[1]}
         {e[0]}
       </Button>
-    )
-  })
+    );
+  });
 
   const handleClick = (value) => {
     // react router????
-    setSubject(value)
-  }
+    setSubject(value);
+  };
 
   return (
     <div className='subject-nav'>
@@ -40,7 +40,7 @@ function SubjectNav({ subject, setSubject }) {
       </div>
 
     </div>
-  )
+  );
 }
 
 export default SubjectNav;

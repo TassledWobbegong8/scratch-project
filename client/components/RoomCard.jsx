@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
-import React, { useState, useEffect, useContext } from "react";
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import React, { useState, useEffect, useContext } from 'react';
 
 function RoomCard( {info, deleteRoom} ) {
   const [name, setName] = useState('');
@@ -18,8 +18,8 @@ function RoomCard( {info, deleteRoom} ) {
   // }
 
   const showRoomInfo = event => {
-    setRoomInfoBoolean((prevBoolean) => {return !prevBoolean})
-  }
+    setRoomInfoBoolean((prevBoolean) => {return !prevBoolean;});
+  };
 
   const mainRoom = (
     <div className="mainRoom">
@@ -36,7 +36,7 @@ function RoomCard( {info, deleteRoom} ) {
         <button id="showRoomInfo" onClick={showRoomInfo}>Show Room Info</button>
       </form> */}
     </div>
-  )
+  );
 
   const roomInfo = (
     <div className="roomInfo">
@@ -46,7 +46,7 @@ function RoomCard( {info, deleteRoom} ) {
       <p>People Inside:</p>
       <KeyboardReturnIcon id="exitRoomInfo" onClick={showRoomInfo}>X</KeyboardReturnIcon>
     </div>
-  )
+  );
 
   if (!roomInfoBoolean) {
     return mainRoom;
@@ -55,4 +55,4 @@ function RoomCard( {info, deleteRoom} ) {
   }
 }
 
-export default RoomCard
+export default RoomCard;

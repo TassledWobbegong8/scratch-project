@@ -10,25 +10,25 @@ function RoomContainer({ subject }) {
   const fetchRooms = async () => {
     // GET request to server api endpoint with subject in params
     const roomData = await fetch(`/api/rooms/${subject}`).then(response => response.json());
-    if(Array.isArray(roomData)) setRooms(roomData)
-    else setRooms([])
-  }
+    if(Array.isArray(roomData)) setRooms(roomData);
+    else setRooms([]);
+  };
 
   useEffect(() => {
     fetchRooms();
-  }, [subject])
+  }, [subject]);
 
 
   const roomCards = rooms.map((e, i) => {
-    return (<Card variant="outlined" key={JSON.stringify(e)}>{<RoomCard info={e} />}</Card>)
-  })
+    return (<Card variant="outlined" key={JSON.stringify(e)}>{<RoomCard info={e} />}</Card>);
+  });
 
   return (
     <div id='room-container'>
       <h2>Active {subject} Rooms</h2>
       {roomCards}
     </div>
-  )
+  );
 }
 
 export default RoomContainer;

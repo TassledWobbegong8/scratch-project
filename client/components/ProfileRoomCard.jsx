@@ -9,15 +9,15 @@ function ProfileRoomCard({ fetchUser, info }) {
   const deleteRoom = async (id) => {
     const deleted = await fetch(`/api/room/${id}`, {
       method: 'DELETE',
-    }).then(response => response.json())
+    }).then(response => response.json());
 
     fetchUser();
-  }
+  };
 
   const closeModal = (event) => {
     event.preventDefault();
-    setModal(false)
-  }
+    setModal(false);
+  };
 
 
   return (
@@ -32,7 +32,7 @@ function ProfileRoomCard({ fetchUser, info }) {
       {editRoomModal && <RoomEditor fetchUser={fetchUser} action={'edit'} id={info._id} closeModal={closeModal} />}
       
     </div>
-  )
+  );
 }
 
 export default ProfileRoomCard;

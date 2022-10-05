@@ -9,7 +9,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
   const addRoom = async () => {
     // check that all fields are filled
     if (!updatedRoom.subject) {
-      console.log(updatedRoom)
+      console.log(updatedRoom);
       setWarning(true);
       return;
     }
@@ -24,13 +24,13 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
 
     // update user to reset state
     fetchUser();
-  }
+  };
 
   // edit function to edit card via patch req and update room list
   const editRoom = async () => {
     // check that all fields are filled
     if (!updatedRoom.subject) {
-      console.log(updatedRoom)
+      console.log(updatedRoom);
       setWarning(true);
       return;
     }
@@ -45,29 +45,29 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
 
     // update user to reset state
     fetchUser();
-  }
+  };
 
   const addRoomBtn = <button onClick={(event) => {
     event.preventDefault();
-    addRoom()}}>Add new room</button>
+    addRoom();}}>Add new room</button>;
 
   const editRoomBtn = <button onClick={(event) => {
     event.preventDefault();
-    editRoom()}}>Update room</button>
+    editRoom();}}>Update room</button>;
 
   return (
     <div id='room-editor-modal'>
-          <form>
-            <label className='room-editor-label'>Subject: </label>
-            <input className='room-editor-input' type='text' onChange={event => setRoom({...updatedRoom, subject: event.target.value})} ></input>
-            <label className='room-editor-label'>Restricted: </label>
-            <Switch onClick={() => setRoom({...updatedRoom, restricted: !updatedRoom.restricted})} />
-            {action === 'add' ? addRoomBtn : editRoomBtn}
-            <button onClick={closeModal}>Cancel</button>
-          </form>
-          {warning && <p className="warning">All fields must be filled!</p>}
-        </div>
-  )
+      <form>
+        <label className='room-editor-label'>Subject: </label>
+        <input className='room-editor-input' type='text' onChange={event => setRoom({...updatedRoom, subject: event.target.value})} ></input>
+        <label className='room-editor-label'>Restricted: </label>
+        <Switch onClick={() => setRoom({...updatedRoom, restricted: !updatedRoom.restricted})} />
+        {action === 'add' ? addRoomBtn : editRoomBtn}
+        <button onClick={closeModal}>Cancel</button>
+      </form>
+      {warning && <p className="warning">All fields must be filled!</p>}
+    </div>
+  );
 }
 
 export default RoomEditor;

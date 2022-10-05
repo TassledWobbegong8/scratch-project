@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Chatbox from "../components/Chatbox";
-import DocumentEditor from "../components/DocumentEditor";
+import React, { useState, useEffect } from 'react';
+import Chatbox from '../components/Chatbox';
+import DocumentEditor from '../components/DocumentEditor';
 
 function Room({ id }) {
   const [roomDetails, setDetails] = useState({});
@@ -8,11 +8,11 @@ function Room({ id }) {
   const fetchRoomDetails = async () => {
     const details = await fetch(`/api/rooms/${id}`).then(response => response.json());
     setDetails(details);
-  }
+  };
 
   useEffect(() => {
-    fetchRoomDetails()
-  }, [])
+    fetchRoomDetails();
+  }, []);
 
   return (
     <div className="room-page">
@@ -22,7 +22,7 @@ function Room({ id }) {
       <DocumentEditor />
       <Chatbox />
     </div>
-  )
+  );
 }
 
 export default Room;

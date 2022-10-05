@@ -11,7 +11,7 @@ import Login from '../components/Login';
 function Dashboard( ) {
   const [subject, setSubject] = useState('');
 
-  const noSubject = <h2></h2>;
+  const noSubject = <h2 id='no-subject' className='warning'>Please select a subject!</h2>;
 
   const yesSubject = <RoomContainer subject={subject}/>;
 

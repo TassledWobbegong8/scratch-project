@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 
 function Chatbox() {
@@ -12,7 +12,7 @@ function Chatbox() {
         <Button variant='contained'>Send</Button>
       </form>
     </div>
-  )
+  );
 }
 
 export default Chatbox;

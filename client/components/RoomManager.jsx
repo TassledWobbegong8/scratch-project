@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProfileRoomCard from "../components/ProfileRoomCard";
+import ProfileRoomCard from '../components/ProfileRoomCard';
 import RoomEditor from './RoomEditorModal';
 
 function RoomManager({ fetchUser, rooms }) {
@@ -8,11 +8,11 @@ function RoomManager({ fetchUser, rooms }) {
   const closeModal = (event) => {
     event.preventDefault();
     setModal(false);
-  }
+  };
 
   const roomCards = rooms.map((e, i) => {
-    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} />
-  })
+    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} />;
+  });
 
   return (
     <div id='room-manager'>
@@ -21,10 +21,10 @@ function RoomManager({ fetchUser, rooms }) {
         <h2>Hosted Rooms:</h2>
 
         {!addRoomModal ?
-        <button id='open-add-room' 
-          onClick={() => setModal(true)}
+          <button id='open-add-room' 
+            onClick={() => setModal(true)}
           >+</button>
-        : <RoomEditor closeModal={closeModal} fetchUser={fetchUser} action={'add'} />}
+          : <RoomEditor closeModal={closeModal} fetchUser={fetchUser} action={'add'} />}
 
         {roomCards}
 
@@ -32,7 +32,7 @@ function RoomManager({ fetchUser, rooms }) {
 
       </div>
     </div>
-  )
+  );
 }
 
 export default RoomManager;
