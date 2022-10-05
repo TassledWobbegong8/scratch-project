@@ -8,7 +8,7 @@ roomsController.getAllRooms = async (req, res, next) => {
     let { subject } = req.params;
     try {
 
-        roomslist = await room.find({ subject: subject }).where('active').equals(true);
+        roomslist = await room.find({ subject: subject }).where('active').equals(true).populate('host');
         console.log(roomslist);
         res.locals.roomslist = roomslist;
 
@@ -17,7 +17,7 @@ roomsController.getAllRooms = async (req, res, next) => {
     }
 
     if (roomslist.length === 0) {
-        return res.status(404).json({ message: 'There are no active rooms for this subject' });
+        res.locals.roomslist = 'There are no active rooms for this subject';
     }
     next();
 

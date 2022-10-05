@@ -25,7 +25,7 @@ function RoomCard( {info, deleteRoom} ) {
     <div className="mainRoom">
       <h1>
         <div>
-          {info.host} Room
+          {info.host.nickname} Room
           <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon>
         </div>
 

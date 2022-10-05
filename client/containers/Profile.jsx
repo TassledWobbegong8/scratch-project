@@ -7,13 +7,14 @@ export default function Profile() {
     nickname: '',
     rooms: []};
 
-  const [profileInformation, setProfileInformation] = useState({initialUser});
+  const [profileInformation, setProfileInformation] = useState(initialUser);
 
   const fetchUser = async () => {
     // GET request to server api endpoint with user ID in the cookie
     // ****THIS IS FAKE ENDPOINT DON'T USE IN PRODUCTION
     const fakeEndpoint = '/api/users/633b95312ab28a4c27eabc57'
     const userData = await fetch(fakeEndpoint).then(response => response.json());
+    console.log(userData)
     setProfileInformation(userData);
   }
 
@@ -25,7 +26,7 @@ export default function Profile() {
     <div id='user-profile'>
       <h1>{profileInformation.nickname || 'My Profile'}</h1>
       <p className='profile-field'>@{profileInformation.username}</p>
-      <RoomManager fetchUser={fetchUser} rooms={profileInformation.rooms} />
+      <RoomManager fetchUser={fetchUser} rooms={profileInformation.rooms} host={profileInformation._id}/>
     </div>
   )
 }
