@@ -2,17 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const usersController = require('../controllers/usersController');
+const cookieController = require('../controllers/cookieController');
 
 router.get('/', usersController.getAllUsers, (req, res) =>
     res.status(200).json(res.locals.users)
 );
 
-router.get("/:id", usersController.getUser, (req, res) =>
+router.get("/:id", usersController.getUser, cookieController.setUserCookie, (req, res) =>
   res.status(200).json(res.locals.user)
 );
 
-router.post('/', usersController.createUser, (req, res) =>
-    res.status(200).json(res.locals.newUser)
+router.post('/', usersController.createUser, cookieController.setUserCookie, (req, res) =>
+    res.status(200).json(res.locals.user)
 );
 
 router.delete("/:id", usersController.deleteUser, (req, res) =>

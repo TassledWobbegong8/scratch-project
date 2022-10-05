@@ -72,7 +72,7 @@ usersController.createUser = async (req, res, next) => {
       return res.status(400).json({ message: "User could not be created" });
     }
 
-    res.locals.newUser = newUser;
+    res.locals.user = newUser;
 
     return next();
   } catch (e) {
