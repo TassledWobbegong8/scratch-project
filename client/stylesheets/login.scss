@@ -1,0 +1,21 @@
+.auth-container {
+  align-self: center;
+  margin-top: 60px;
+  p {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+#auth-btn {
+  align-self: center;
+  width: 200px;
+  a {
+    width: 100%;
+    color: white;
+  }
+}
+
+.switch-auth {
+  color: $accent-color;
+}

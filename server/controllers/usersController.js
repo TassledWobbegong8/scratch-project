@@ -20,10 +20,10 @@ usersController.getAllUsers = async (req, res, next) => {
 };
 
 usersController.getUser = async (req, res, next) => {
-  const { id } = req.params;
+  const { _id } = res.locals.token;
 
   try {
-    const user = await User.findById(id)
+    const user = await User.findById(_id)
       .populate('rooms')
       .populate('savedRooms');
 

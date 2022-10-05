@@ -1,14 +1,15 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: "./client/index.js",
+  entry: './client/index.js',
 
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: '/'
   },
-  mode: "development",
+  mode: 'development',
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -17,35 +18,37 @@ module.exports = {
       {
         test: /\.jsx?/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"],
+          presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       },
 
       {
         test: /\.(css|s(a|c)ss)$/i,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Development",
-      template: "index.html",
+      title: 'Development',
+      template: 'index.html',
     }),
   ],
 
   devServer: {
     static: {
-      publicPath: "/build",
-      directory: path.resolve(__dirname, "build"),
+      publicPath: '/build',
+      directory: path.resolve(__dirname, 'build'),
     },
-    historyApiFallback: true,
+    historyApiFallback: {
+      index: '/'
+    },
     proxy: {
-      "/api": "http://localhost:3000",
+      '/api': 'http://localhost:3000',
     },
   },
 };

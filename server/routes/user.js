@@ -8,7 +8,7 @@ router.get('/', usersController.getAllUsers, (req, res) =>
   res.status(200).json(res.locals.users)
 );
 
-router.get('/:id', usersController.getUser, cookieController.setUserCookie, (req, res) =>
+router.get('/user', cookieController.verifyUser, usersController.getUser, (req, res) =>
   res.status(200).json(res.locals.user)
 );
 

@@ -1,20 +1,70 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField, Button } from '@mui/material';
-import { Link, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login( {logout, login} ) {
-  const [loginName, setLoginName] = useState('');
+export default function Login({ setLoggedIn }) {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
+
+  const [signup, setSignup] = useState(false);
+  const [warning, setWarning] = useState(false);
+
+  const navigate = useNavigate();
+
+  const logIn = async () => {
+    
+    setLoggedIn(true);
+    navigate('/main/home');
+  };
+
+  const signUp = async () => {
+    // check that fields are valid
+    if (!username || !nickname || password.length < 8) return setWarning(true);
+    // post new user
+    await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        nickname,
+        host: false,
+      })
+    });
+
+    setLoggedIn(true);
+    navigate('/main/home');
+  };
+
 
   const loginDetails = (
-    <div id="settings-container">
+    <div className="auth-container details-container">
       <h2 id="login-text">Login Details</h2>
-      <TextField label="Email Address"/>
-      <TextField label="Password"/>
-      <Link to="/main/home">
-        <Button onClick={()=>login()} variant="contained" style={{maxWidth: '240px', maxHeight: '50px', minWidth: '240px', minHeight: '50px', margin: '0 auto', position: 'relative'}}>Login </Button>
-      </Link>
+      <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
+      <TextField label="Password" onChange={(event) => setPassword(event.target.value)} />
+      
+      <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
+      
+      <p>{'Don\'t already have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
     </div>);
 
-  return loginDetails;
+  const signupDetails = (
+    <div className="auth-container  details-container">
+      <h2 id="login-text">Signup Details</h2>
+      <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
+      <TextField label="Nickname" onChange={(event) => setNickname(event.target.value)} />
+      <TextField placeholder='Must be at least 8 characters' label="Password"  onChange={(event) => setPassword(event.target.value)} />
+      <TextField label="Confirm Password" />
+      {warning && <p className='warning'>Please fill in all fields!</p>}
+      
+      <Button onClick={signUp} variant="contained" id='auth-btn'>Signup</Button>
+      
+      <p>{'Already have an account?'} <span className='switch-auth' onClick={() => setSignup(false)}>Click here!</span></p>
+    </div>
+  );
+
+  return signup ? signupDetails : loginDetails;
 }

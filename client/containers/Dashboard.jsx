@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+// components
 import MainNav from '../components/MainNav';
 import SubjectNav from '../components/SubjectNav';
-import RoomContainer from '../containers/RoomContainer';
+import RoomContainer from './RoomContainer';
 import Profile from './Profile';
 import SettingsContainer from './SettingsContainer';
 import SettingsCard from '../components/SettingsCard';
@@ -10,17 +11,18 @@ import Login from '../components/Login';
 
 function Dashboard( ) {
   const [subject, setSubject] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const noSubject = <h2 id='no-subject' className='warning'>Please select a subject!</h2>;
+  const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
 
   const yesSubject = <RoomContainer subject={subject}/>;
 
   return (
     <div id='dashboard'>
       <Routes>
-        <Route path="/" element={<Login/>}></Route>
-        <Route path="/main/*" element={<>
-          <MainNav setSubject={setSubject}/>
+        <Route path="/" element={<Login setLoggedIn={setLoggedIn} />} />
+        {loggedIn && <Route path="/main/*" element={<>
+          <MainNav setSubject={setSubject} setLoggedIn={setLoggedIn} />
           <Routes>
             <Route path='/home' element={
               <div id='main-container'>
@@ -36,8 +38,8 @@ function Dashboard( ) {
               </div>
             </div>}/>
           </Routes>
-        </>}>
-        </Route>
+        </>} />}
+        <Route path="*" element={<Navigate to='/' />} />
       </Routes>
     </div>
   );

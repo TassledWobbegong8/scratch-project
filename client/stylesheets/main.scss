@@ -1,6 +1,7 @@
 @import './_variables2';
 @import './roomContainer';
 @import './profile';
+@import './login';
 
 * {
   margin: 0;
@@ -65,7 +66,18 @@ button:hover {
   flex: 1;
   display: flex;
 }
+#no-subject {
+  margin: 50px;
+}
 
 #SettingsMenu {
   padding: 20px;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  row-gap: 20px;
+  width: 500px;
 }

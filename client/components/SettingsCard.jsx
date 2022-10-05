@@ -17,7 +17,7 @@ export default function SettingsCard() {
   );
 
   const loginDetails = (
-    <div id="settings-container">
+    <div className='details-container' id="settings-container">
       <h2 id="login-text">Login Details</h2>
       <TextField label="Email Address"/>
       <TextField label="Password"/>
