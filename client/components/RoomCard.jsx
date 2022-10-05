@@ -4,7 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 import React, { useState, useEffect, useContext } from "react";
 
 function RoomCard( {info, deleteRoom} ) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
 
   // const textOnSubmit = event => {

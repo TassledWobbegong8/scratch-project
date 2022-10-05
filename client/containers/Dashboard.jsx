@@ -8,39 +8,39 @@ import SettingsContainer from './SettingsContainer';
 import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
 
-function Dashboard( {logout} ) {
+function Dashboard( ) {
   const [subject, setSubject] = useState('');
 
-  const noSubject = <h2></h2>
+  const noSubject = <h2></h2>;
 
-  const yesSubject = <RoomContainer subject={subject}/>
+  const yesSubject = <RoomContainer subject={subject}/>;
 
   return (
     <div id='dashboard'>
       <Routes>
         <Route path="/" element={<Login/>}></Route>
         <Route path="/main/*" element={<>
-          <MainNav logout={logout} setSubject={setSubject}/>
-            <Routes>
-              <Route path='/home' element={
-                <div id='main-container'>
-                  <SubjectNav subject={subject} setSubject={setSubject} />
-                  {!subject ? noSubject : yesSubject}
-                  </div>}
-                  />
-              <Route path='/profile' element={<Profile />} />
-              <Route path='/settings' element={<div id='main-container'>
-                  <SettingsContainer />
-                  <div id="login-details-container">
-                  <SettingsCard/>
-                </div>
-              </div>}/>
-            </Routes>
-          </>}>
+          <MainNav setSubject={setSubject}/>
+          <Routes>
+            <Route path='/home' element={
+              <div id='main-container'>
+                <SubjectNav subject={subject} setSubject={setSubject} />
+                {!subject ? noSubject : yesSubject}
+              </div>}
+            />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/settings' element={<div id='main-container'>
+              <SettingsContainer />
+              <div id="login-details-container">
+                <SettingsCard/>
+              </div>
+            </div>}/>
+          </Routes>
+        </>}>
         </Route>
       </Routes>
     </div>
-  )
+  );
 }
 
 export default Dashboard;
