@@ -3,29 +3,29 @@ const User = require("../models/userModel");
 const usersController = {};
 
 usersController.getAllUsers = async (req, res, next) => {
-    try {
-        const users = await User.find().populate('rooms');
+  try {
+    const users = await User.find().populate("rooms").populate("savedRooms");
 
-        if (!users) {
-            return res.status(404).json({ message: 'No users found' })
-
-        }
-
-        res.locals.users = users;
-
-        return next();
-    } catch (e) {
-        console.log(e);
-        return next(e);
+    if (!users) {
+      return res.status(404).json({ message: "No users found" });
     }
+
+    res.locals.users = users;
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return next(e);
+  }
 };
 
 usersController.getUser = async (req, res, next) => {
-
-    const { id } = req.params;
+  const { id } = req.params;
 
   try {
-    const user = await User.findById(id).populate("rooms");
+    const user = await User.findById(id)
+      .populate("rooms")
+      .populate("savedRooms");
 
     if (!user) {
       return res.status(404).json({ message: "No user found" });
@@ -41,11 +41,9 @@ usersController.getUser = async (req, res, next) => {
 };
 
 usersController.deleteUser = async (req, res, next) => {
-
   const { id } = req.params;
 
   try {
-
     const deleteDoc = await User.findByIdAndDelete(id);
 
     if (!deleteDoc) {
@@ -60,23 +58,88 @@ usersController.deleteUser = async (req, res, next) => {
 };
 
 usersController.createUser = async (req, res, next) => {
+  const { host, username, password, nickname } = req.body;
 
-    const { host, username, password, nickname } = req.body;
+  try {
+    const newUser = await User.create({
+      host: host,
+      username: username,
+      password: password,
+      nickname: nickname,
+    });
 
-    try {
-        const newUser = await User.create({ host: host, username: username, password: password, nickname: nickname });
-
-        if (!newUser) {
-            return res.status(400).json({ message: "User could not be created" });
-        }
-
-        res.locals.newUser = newUser;
-
-        return next();
-    } catch (e) {
-        return res.status(400).json({ message: e.message });
-        
+    if (!newUser) {
+      return res.status(400).json({ message: "User could not be created" });
     }
+
+    res.locals.newUser = newUser;
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message });
+  }
+};
+
+usersController.updateUserInfo = async (req, res, next) => {
+  const { id } = req.params;
+
+  const { username, password } = req.body;
+
+  const update = {};
+
+  if (username) {
+    update.username = username;
+  }
+
+  if (password) {
+    update.password = password;
+  }
+
+  try {
+    let doc = await User.findByIdAndUpdate(id, update, {
+      returnOriginal: false,
+    });
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message }); 
+  }
+};
+
+usersController.saveRoom = async (req, res, next) => {
+  // get user ID from params
+  const { id } = req.params;
+
+  // get room ID to save from request body
+  const { savedRooms } = req.body;
+
+  try {
+    await User.updateOne({ _id: id }, { $push: { savedRooms: savedRooms } });
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message });
+  }
+};
+
+usersController.unsaveRoom = async (req, res, next) => {
+  // get user ID from params
+  const { id } = req.params;
+
+  // get room ID to unsave from request body
+  const { savedRooms } = req.body;
+
+  try {
+    await User.updateOne({ _id: id }, { $pull: { savedRooms: savedRooms } });
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message });
+  }
 };
 
 module.exports = usersController;

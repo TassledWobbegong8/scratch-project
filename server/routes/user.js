@@ -19,6 +19,16 @@ router.delete("/:id", usersController.deleteUser, (req, res) =>
   res.status(200).json({ message: "Successfully deleted user" })
 );
 
+router.patch("/:id", usersController.updateUserInfo, (req, res) =>
+  res.status(200).json({ message: "User update successful" })
+);
 
+router.patch("/:id/saveroom/", usersController.saveRoom, (req, res) =>
+  res.status(200).json({ message: 'Room successfully saved'})
+);
+
+router.patch("/:id/unsaveroom/", usersController.unsaveRoom, (req, res) =>
+  res.status(200).json({ message: "Room successfully unsaved" })
+);
 
 module.exports = router;
