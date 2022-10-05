@@ -15,6 +15,7 @@ export default function SettingsContainer() {
   const settingsBtns = settings.map((e, i) => {
     return (
       <Button variant='outlined'
+        fullWidth={true}
         key={i}
         value={e}
         id='subject-links'

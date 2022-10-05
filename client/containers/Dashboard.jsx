@@ -6,8 +6,9 @@ import RoomContainer from '../containers/RoomContainer';
 import Profile from './Profile';
 import SettingsContainer from './SettingsContainer';
 import SettingsCard from '../components/SettingsCard';
+import Login from '../components/Login';
 
-function Dashboard() {
+function Dashboard( {logout} ) {
   const [subject, setSubject] = useState('');
 
   const noSubject = <h2></h2>
@@ -16,20 +17,27 @@ function Dashboard() {
 
   return (
     <div id='dashboard'>
-      <MainNav setSubject={setSubject}/>
       <Routes>
-        <Route path='/' element={<div id='main-container'>
-          <SubjectNav subject={subject} setSubject={setSubject} />
-          {!subject ? noSubject : yesSubject}
-        </div>}
-        />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/settings' element={<div id='main-container'>
-          <SettingsContainer />
-          <div id="login-details-container">
-            {SettingsCard()}
-          </div>
-        </div>}/>
+        <Route path="/" element={<Login/>}></Route>
+        <Route path="/main/*" element={<>
+          <MainNav logout={logout} setSubject={setSubject}/>
+            <Routes>
+              <Route path='/home' element={
+                <div id='main-container'>
+                  <SubjectNav subject={subject} setSubject={setSubject} />
+                  {!subject ? noSubject : yesSubject}
+                  </div>}
+                  />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/settings' element={<div id='main-container'>
+                  <SettingsContainer />
+                  <div id="login-details-container">
+                  <SettingsCard/>
+                </div>
+              </div>}/>
+            </Routes>
+          </>}>
+        </Route>
       </Routes>
     </div>
   )
