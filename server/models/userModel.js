@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -7,17 +7,18 @@ const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   nickname: { type: String },
   password: { type: String, required: true, minlength: 8 },
-  rooms: [{ type: Schema.Types.ObjectId, ref: "Room" }],
+  rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
+  savedRooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
 });
 
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
 
   if (!this.nickname) {
-    this.nickname = this.get("username"); 
+    this.nickname = this.get('username'); 
   }
   next();
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
