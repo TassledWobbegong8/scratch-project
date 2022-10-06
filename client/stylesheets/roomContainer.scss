@@ -1,0 +1,48 @@
+#room-container {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  row-gap: 20px;
+  h2 {
+    color: $mui-text-color;
+  }
+}
+
+#settings-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  row-gap: 20px;
+}
+
+.subject-nav {
+  height: 100%;
+  padding: 10px;
+  width: 250px;
+  h2 {
+    padding: 10px;
+    border-bottom: 1px solid $accent-color-light;
+  }
+  background-color: $background-color;
+}
+
+#subject-links-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#subject-links {
+  margin: 10px 0;
+  justify-content: start;
+  &:hover {
+    background-color: $background-color-light
+  }
+}
+.subject-link-icon {
+  margin-right: 10px;
+}
+
+.mainRoom, .roomInfo {
+  background-color: $card-background;
+}
