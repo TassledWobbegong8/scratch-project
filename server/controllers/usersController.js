@@ -1,13 +1,13 @@
-const User = require("../models/userModel");
+const User = require('../models/userModel');
 
 const usersController = {};
 
 usersController.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find().populate("rooms").populate("savedRooms");
+    const users = await User.find().populate('rooms').populate('savedRooms');
 
     if (!users) {
-      return res.status(404).json({ message: "No users found" });
+      return res.status(404).json({ message: 'No users found' });
     }
 
     res.locals.users = users;
@@ -20,15 +20,19 @@ usersController.getAllUsers = async (req, res, next) => {
 };
 
 usersController.getUser = async (req, res, next) => {
-  const { id } = req.params;
+  // find either the id from the jwt cookie OR the username from the body
 
   try {
-    const user = await User.findById(id)
-      .populate("rooms")
-      .populate("savedRooms");
-
-    if (!user) {
-      return res.status(404).json({ message: "No user found" });
+    let user;
+    if (res.locals.token) {
+      user = await User.findById(res.locals.token._id)
+        .populate('rooms')
+        .populate('savedRooms'); 
+    } else {
+      const { username, password } = req.body;
+      user = await User.findOne({username, password})
+        .populate('rooms')
+        .populate('savedRooms');
     }
 
     res.locals.user = user;
@@ -47,7 +51,7 @@ usersController.deleteUser = async (req, res, next) => {
     const deleteDoc = await User.findByIdAndDelete(id);
 
     if (!deleteDoc) {
-      return res.status(400).json({ message: "Could not delete user" });
+      return res.status(400).json({ message: 'Could not delete user' });
     }
 
     return next();
@@ -69,10 +73,10 @@ usersController.createUser = async (req, res, next) => {
     });
 
     if (!newUser) {
-      return res.status(400).json({ message: "User could not be created" });
+      return res.status(400).json({ message: 'User could not be created' });
     }
 
-    res.locals.newUser = newUser;
+    res.locals.user = newUser;
 
     return next();
   } catch (e) {
@@ -97,7 +101,7 @@ usersController.updateUserInfo = async (req, res, next) => {
   }
 
   try {
-    let doc = await User.findByIdAndUpdate(id, update, {
+    const doc = await User.findByIdAndUpdate(id, update, {
       returnOriginal: false,
     });
 
