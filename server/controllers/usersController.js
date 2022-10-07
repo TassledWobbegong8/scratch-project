@@ -27,7 +27,7 @@ usersController.getUser = async (req, res, next) => {
     if (res.locals.token) {
       user = await User.findById(res.locals.token._id)
         .populate('rooms')
-        .populate('savedRooms'); 
+        .populate('savedRooms');
     } else {
       const { username, password } = req.body;
       user = await User.findOne({username, password})
@@ -86,7 +86,7 @@ usersController.createUser = async (req, res, next) => {
 };
 
 usersController.updateUserInfo = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params; //res.locals.token._id for cookie token!
 
   const { username, password } = req.body;
 
@@ -108,13 +108,13 @@ usersController.updateUserInfo = async (req, res, next) => {
     return next();
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ message: e.message }); 
+    return res.status(400).json({ message: e.message });
   }
 };
 
 usersController.saveRoom = async (req, res, next) => {
   // get user ID from params
-  const { id } = req.params;
+  const { id } = req.params; // update to Cookie when finished
 
   // get room ID to save from request body
   const { savedRooms } = req.body;

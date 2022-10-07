@@ -7,7 +7,7 @@ function Room( ) {
   const [roomDetails, setDetails] = useState({});
 
   const { info } = useLocation().state;
-  console.log(info)
+  console.log(info);
 
   // const fetchRoomDetails = async () => {
   //   const details = await fetch(`/api/rooms/${id}`).then(response => response.json());

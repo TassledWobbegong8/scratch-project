@@ -14,13 +14,46 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
+
+#tabs {
+  display: flex;
 }
 
 #profile-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
   align-self: start;
   margin-top: 40px;
   margin-left: 20%;
+  padding: 10px 40px;
+  color: $mui-text-color;
+  background-color: white;
+  font-weight: 700;
+  border-radius: $border-radius $border-radius 0 0 ;
+  border-top: 1px solid $accent-color-light;
+  border-left: 1px solid $accent-color-light;
+  border-right: 1px solid $accent-color-light;
+  border-bottom: 0px;
+  z-index: 1;
+  &:hover{
+    background-color: darken($color: white, $amount: 3%);
+    &::after {
+      opacity: 0;
+      transition: all 0.8s
+    }
+  }
+}
+
+#profile-tab:first-child {
+  margin-right: 10px;
+}
+
+#saved-rooms-tab {
+  align-self: start;
+  margin-top: 40px;
   padding: 10px 20px;
   color: $mui-text-color;
   background-color: white;
@@ -29,7 +62,15 @@
   border-top: 1px solid $accent-color-light;
   border-left: 1px solid $accent-color-light;
   border-right: 1px solid $accent-color-light;
+  border-bottom: 0px;
   z-index: 1;
+  &:hover{
+    background-color: darken($color: white, $amount: 3%);
+    &::after {
+      opacity: 0;
+      transition: all 0.8s
+    }
+  }
 }
 
 .profile-room-container {
@@ -42,6 +83,17 @@
   border-top: 1px solid $accent-color-light;
 }
 .profile-room {
+  width: 400px;
+  margin: 10px;
+  padding: 20px;
+  background-color: $card-background;
+  border-radius: $border-radius;
+  label {
+    font-weight: 700;
+  }
+}
+
+.saved-room {
   width: 400px;
   margin: 10px;
   padding: 20px;
