@@ -10,7 +10,7 @@ usersController.getUser = async (req, res, next) => {
     if (res.locals.token) {
       user = await User.findById(res.locals.token._id)
         .populate('rooms')
-        .populate('savedRooms'); 
+        .populate('savedRooms');
     } else {
       const { username, password } = req.body;
       user = await User.findOne({username, password})
