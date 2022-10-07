@@ -10,7 +10,7 @@ module.exports = {
         auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
         client_secret: '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',
         redirect_uris: [
-            'http://localhost:8080/main/room'
+            'http://localhost:3000/auth_callback'
         ],
         javascript_origins: [
             'http://localhost:8080',
@@ -19,6 +19,8 @@ module.exports = {
         scopes: [
             'https://www.googleapis.com/auth/drive',
             'https://www.googleapis.com/auth/documents'
-        ]
-    }
+        ],
+
+    },
+
 };
