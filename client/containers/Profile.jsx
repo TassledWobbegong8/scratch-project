@@ -3,7 +3,7 @@ import RoomManager from '../components/RoomManager';
 
 export default function Profile() {
   const initialUser = {
-    username: '', 
+    username: '',
     nickname: '',
     rooms: []};
 
@@ -26,7 +26,7 @@ export default function Profile() {
     <div id='user-profile'>
       <h1>{profileInformation.nickname || 'My Profile'}</h1>
       <p className='profile-field'>@{profileInformation.username}</p>
-      <RoomManager fetchUser={fetchUser} rooms={profileInformation.rooms} host={profileInformation._id}/>
+      <RoomManager fetchUser={fetchUser} rooms={profileInformation.rooms} savedRoomsProps={profileInformation.savedRooms} host={profileInformation._id}/>
     </div>
   );
 }

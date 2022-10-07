@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import RoomCard from '../components/RoomCard';
 import { Card } from '@mui/material';
 
-function RoomContainer({ subject }) {
+function RoomContainer({ subject, id }) {
   const [rooms, setRooms] = useState([]);
   // roomcontainer will retrieve current subject from useContext
 
@@ -20,7 +20,7 @@ function RoomContainer({ subject }) {
 
 
   const roomCards = rooms.map((e, i) => {
-    return (<Card variant="outlined" key={JSON.stringify(e)}>{<RoomCard info={e} />}</Card>);
+    return (<Card variant="outlined" key={JSON.stringify(e)}>{<RoomCard info={e} id={id} />}</Card>);
   });
 
   return (
