@@ -2,23 +2,6 @@ const User = require('../models/userModel');
 
 const usersController = {};
 
-usersController.getAllUsers = async (req, res, next) => {
-  try {
-    const users = await User.find().populate('rooms').populate('savedRooms');
-
-    if (!users) {
-      return res.status(404).json({ message: 'No users found' });
-    }
-
-    res.locals.users = users;
-
-    return next();
-  } catch (e) {
-    console.log(e);
-    return next(e);
-  }
-};
-
 usersController.getUser = async (req, res, next) => {
   // find either the id from the jwt cookie OR the username from the body
 
@@ -45,7 +28,8 @@ usersController.getUser = async (req, res, next) => {
 };
 
 usersController.deleteUser = async (req, res, next) => {
-  const { id } = req.params;
+  // get the id
+  const id = res.locals.token._id;
 
   try {
     const deleteDoc = await User.findByIdAndDelete(id);
@@ -86,7 +70,8 @@ usersController.createUser = async (req, res, next) => {
 };
 
 usersController.updateUserInfo = async (req, res, next) => {
-  const { id } = req.params; //res.locals.token._id for cookie token!
+  // get the id of user
+  const id = res.locals.token._id;
 
   const { username, password } = req.body;
 
@@ -113,8 +98,8 @@ usersController.updateUserInfo = async (req, res, next) => {
 };
 
 usersController.saveRoom = async (req, res, next) => {
-  // get user ID from params
-  const { id } = req.params; // update to Cookie when finished
+  // get the id of user
+  const id = res.locals.token._id;
 
   // get room ID to save from request body
   const { savedRooms } = req.body;
@@ -130,8 +115,8 @@ usersController.saveRoom = async (req, res, next) => {
 };
 
 usersController.unsaveRoom = async (req, res, next) => {
-  // get user ID from params
-  const { id } = req.params;
+  // get the id of user
+  const id = res.locals.token._id;
 
   // get room ID to unsave from request body
   const { savedRooms } = req.body;
@@ -145,5 +130,23 @@ usersController.unsaveRoom = async (req, res, next) => {
     return res.status(400).json({ message: e.message });
   }
 };
+
+
+// usersController.getAllUsers = async (req, res, next) => {
+//   try {
+//     const users = await User.find().populate('rooms').populate('savedRooms');
+
+//     if (!users) {
+//       return res.status(404).json({ message: 'No users found' });
+//     }
+
+//     res.locals.users = users;
+
+//     return next();
+//   } catch (e) {
+//     console.log(e);
+//     return next(e);
+//   }
+// };
 
 module.exports = usersController;

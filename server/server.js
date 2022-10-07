@@ -1,9 +1,20 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const express = require('express');
-const cookieParser = require('cookie-parser');
 
 const apiRouter = require('./routes/api');
+
+/////////////////////
+const { google } = require('googleapis');
+const jwt = require('jsonwebtoken');
+const OAuth2 = google.auth.OAuth2;
+const CONFIG = require('./config');
+const cookieParser = require('cookie-parser');
+
+const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth2Credentials.client_secret, CONFIG.oauth2Credentials.redirect_uris[0]);
+let jwt_token;
+///////////////////////
+
 
 // require("mongoose-type-url");
 
@@ -24,7 +35,11 @@ mongoose
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+///////////////////////
 app.use(cookieParser());
+//////////////////////
+
 
 // placeholder route for production 
 // app.use('/build', express.static(path.join(__dirname, '../build')));
@@ -33,6 +48,59 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
+
+
+
+app.get('/auth', (req, res) => {
+
+  const loginLink = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    prompt: 'consent',
+    scope: CONFIG.oauth2Credentials.scopes,
+    include_granted_scopes: true
+  });
+  // console.log(loginLink);
+  return res.status(200).json(loginLink);
+});
+
+app.get('/auth_callback', async (req, res) => {
+  try {
+
+    const { tokens } = await oauth2Client.getToken(req.query.code);
+    oauth2Client.setCredentials(tokens);
+
+    jwt_token = jwt.sign(tokens.refresh_token, CONFIG.JWTsecret);
+
+    return res.redirect('/access_drive');
+
+  } catch (e) {
+    console.log(e.message);
+  }
+});
+
+
+app.get('/access_drive', async (req, res) => {
+
+  const decoded = jwt.verify(jwt_token, CONFIG.JWTsecret);
+  const drive = google.drive('v3');
+  let response;
+  const fileArray = [];
+  try {
+    response = await drive.files.list({
+      auth: oauth2Client,
+      pageSize: 10,
+      fields: 'nextPageToken, files(id, name)'
+    });
+
+  } catch (e) {
+    console.log('Error from API:', e.message);
+  }
+  if (response.data.files.length) {
+    response.data.files.forEach(e => { fileArray.push(e.name); });
+  } else { return res.status(400).json('There were no documents found on this drive'); }
+  return res.status(200).json(fileArray);
+});
+
 
 app.use('/api', apiRouter);
 
