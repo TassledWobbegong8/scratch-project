@@ -7,7 +7,7 @@ function DocumentEditor({ hostView }) {
 
   const connectAuth = async () => {
     // request oauth url from server
-    const redirectURL = await fetch('/auth');
+    const redirectURL = await fetch('/auth').then(response => response.json());
     // redirect user to consent screen
     window.location.replace(redirectURL);
   };

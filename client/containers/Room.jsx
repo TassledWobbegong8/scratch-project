@@ -11,7 +11,7 @@ function Room( ) {
 
   // fetch host if info doesn't already exist
   const fetchHost = async () => {
-    const details = await fetch('/api/users/user').then(response => response.json());
+    const details = await fetch('/api/users').then(response => response.json());
     setHost(details);
     // if room host is the same as the current user
     if (!info.host._id || info.host._id === details._id) setHostView(true);
