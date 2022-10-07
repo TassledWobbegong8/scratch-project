@@ -1,3 +1,17 @@
+/* THIS COMPONENT NOT IN USE!!
+
+the component below was refactored into react from the code sample shown in the google picker api docs.
+https://developers.google.com/drive/picker/guides/sample
+the component mounts, laods scripts, and renders as expected.
+when clicking AUTHORIZE, the OAUTH consent screen will appear with the requested permissions.
+however, the cookies sent by google to enable the picker view after sign in, are not secure.
+(the error will appear in the browser console)
+this results in a sign-in loop and eventually terminates into a 400 bad request.
+after much research a fix was not found.
+-- pchu 10-07-2022
+
+*/
+
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';

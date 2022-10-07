@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
-import GooglePicker from './GooglePicker';
+import FilePicker from './FilePicker';
 
 function DocumentEditor({ hostView }) {
   const [openPicker, setPicker] = useState(false);
@@ -16,7 +16,7 @@ function DocumentEditor({ hostView }) {
   return (
     <div className='doc-editor'>
       {hostView ? 
-        <Button onClick={() => connectAuth()}>Open picker</Button>
+        <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>
         : 'host document here'}
     </div>
   );
