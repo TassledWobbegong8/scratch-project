@@ -25,7 +25,7 @@ export default function Login({ setLoggedIn }) {
     }).then(response => response.json());
 
     setLoggedIn(user);
-    navigate('/main/home');
+    if (user) navigate('/main/home');
   };
 
   const signUp = async () => {

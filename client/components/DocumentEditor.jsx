@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '@mui/material';
+import GooglePicker from './GooglePicker';
 
-function DocumentEditor() {
+function DocumentEditor({ hostView }) {
+  const [openPicker, setPicker] = useState(false);
+
+  const connectAuth = async () => {
+    // request oauth url from server
+    const redirectURL = await fetch('/auth');
+    // redirect user to consent screen
+    window.location.replace(redirectURL);
+  };
+
+
   return (
     <div className='doc-editor'>
-      document here
+      {hostView ? 
+        <Button onClick={() => connectAuth()}>Open picker</Button>
+        : 'host document here'}
     </div>
   );
 }
