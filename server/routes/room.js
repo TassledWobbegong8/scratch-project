@@ -4,10 +4,13 @@ const router = express.Router();
 const roomsController = require('../controllers/roomsController');
 const cookieController = require('../controllers/cookieController');
 
-router.get('/:subject',
-  roomsController.getAllRooms,
-  (req, res) => res.status(200).json(res.locals.roomslist)
-);
+
+
+// router.get('/',
+//   cookieController.getRoomCookie,
+//   roomsController.getRoom,
+//   (req, res) => res.status(200).json(res.locals.room)
+// );
 
 router.post('/',
   cookieController.verifyUser,
@@ -30,5 +33,20 @@ router.patch('/update/:id',
   (req, res) => res.status(200).json({ message: 'Updated the Room info.' })
 );
 
+router.get('/cookie',
+  cookieController.getRoomCookie,
+  roomsController.getRoom,
+  (req, res) => res.status(200).json(res.locals.roomDoc)
+);
+
+router.post('/cookie',
+  cookieController.setRoomCookie,
+  (req, res) => res.status(200).json('set room cookie!')
+);
+
+router.get('/:subject',
+  roomsController.getAllRooms,
+  (req, res) => res.status(200).json(res.locals.roomslist)
+);
 
 module.exports = router;
