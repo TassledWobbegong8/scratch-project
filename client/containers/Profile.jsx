@@ -3,7 +3,7 @@ import RoomManager from '../components/RoomManager';
 
 export default function Profile() {
   const initialUser = {
-    username: '', 
+    username: '',
     nickname: '',
     rooms: []};
 
@@ -13,7 +13,7 @@ export default function Profile() {
     // GET request to server api endpoint with user ID in the cookie
     // ****THIS IS FAKE ENDPOINT DON'T USE IN PRODUCTION
     const fakeEndpoint = '/api/users/633b95312ab28a4c27eabc57';
-    const userData = await fetch('/api/users/user').then(response => response.json());
+    const userData = await fetch('/api/users').then(response => response.json());
     console.log(userData);
     if(userData) setProfileInformation(userData);
   };
@@ -26,7 +26,7 @@ export default function Profile() {
     <div id='user-profile'>
       <h1>{profileInformation.nickname || 'My Profile'}</h1>
       <p className='profile-field'>@{profileInformation.username}</p>
-      <RoomManager fetchUser={fetchUser} rooms={profileInformation.rooms} host={profileInformation._id}/>
+      <RoomManager fetchUser={fetchUser} rooms={profileInformation.rooms} savedRoomsProps={profileInformation.savedRooms} host={profileInformation._id}/>
     </div>
   );
 }

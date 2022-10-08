@@ -4,6 +4,10 @@ const cookieController = {};
 const privateKey = 'wobbegong';
 
 cookieController.setUserCookie = async (req, res, next) => {
+  if (!res.locals.user) {
+    res.locals.loggedIn = false;
+    return next();
+  }
   try {
     const { _id, username } = res.locals.user;
     // create jwt with payload and store as cookie

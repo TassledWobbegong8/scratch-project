@@ -4,26 +4,29 @@ import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
 
 function Room( ) {
-  const [roomDetails, setDetails] = useState({});
+  const [hostInfo, setHost] = useState({});
+  const [hostView, setHostView] = useState(false);
 
   const { info } = useLocation().state;
-  console.log(info)
 
-  // const fetchRoomDetails = async () => {
-  //   const details = await fetch(`/api/rooms/${id}`).then(response => response.json());
-  //   setDetails(details);
-  // };
+  // fetch host if info doesn't already exist
+  const fetchHost = async () => {
+    const details = await fetch('/api/users').then(response => response.json());
+    setHost(details);
+    // if room host is the same as the current user
+    if (!info.host._id || info.host._id === details._id) setHostView(true);
+  };
 
-  // useEffect(() => {
-  //   fetchRoomDetails();
-  // }, []);
+  useEffect(() => {
+    fetchHost();
+  }, []);
 
   return (
     <div className="room-page">
       <div id='room-page-info'>
-        <h2>Host: {info.host.username} </h2>
+        <h2>Host: {info.host.nickname || hostInfo.nickname} </h2>
       </div>
-      <DocumentEditor />
+      <DocumentEditor hostView={hostView}/>
       <Chatbox />
     </div>
   );

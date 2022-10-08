@@ -4,7 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function RoomCard( { info } ) {
+function RoomCard( { info, id } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
 
   // const textOnSubmit = event => {
@@ -16,6 +16,12 @@ function RoomCard( { info } ) {
   //   newName = event.target.value
   //   return event.target.value
   // }
+
+  async function saveRoom () {
+    const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'savedRooms': `${info._id}`})};
+    await fetch(`/api/users/saveroom`, options);
+    console.log("Room Saved!");
+  }
 
   const showRoomInfo = event => {
     setRoomInfoBoolean(!roomInfoBoolean);
@@ -43,7 +49,8 @@ function RoomCard( { info } ) {
       <p>Creator:  {info.host.username} </p>
       <p>People Inside:  {info.allowedUsers} </p>
       <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
-      <KeyboardReturnIcon id="exitRoomInfo" onClick={showRoomInfo}>X</KeyboardReturnIcon>
+      <Button variant='contained' id="saveMyRoom" onClick={saveRoom}>Save</Button>
+      <Button id="exitRoomInfo" onClick={showRoomInfo}>Back</Button>
     </div>
   );
 
