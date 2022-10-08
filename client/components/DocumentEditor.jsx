@@ -16,15 +16,17 @@ function DocumentEditor({ hostView }) {
     const files = await fetch('/access_drive').then(response => response.json());
 
     if (files) {
-      console.log(files)
+      console.log(files);
+      setPicker(true);
       return setFiles(files);
     }
+    console.log('not authorized yet');
     // request oauth url from server
     const redirectURL = await fetch('/auth').then(response => response.json());
     // redirect user to consent screen
-    const redirect = window.location.replace(redirectURL);
+    window.location.replace(redirectURL);
     // redirect should come back as an array with the files
-    setFiles(await redirect.json());
+    setFiles(await fetch('/access_drive').then(response => response.json()));
     setPicker(true);
   };
 
@@ -32,7 +34,7 @@ function DocumentEditor({ hostView }) {
   return (
     <div className='doc-editor'>
       {openPicker && <FilePicker fileList={fileList} setDocument={setDocument} />}
-      {hostView && <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>}
+      {hostView && !openPicker && <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>}
     </div>
   );
 }
