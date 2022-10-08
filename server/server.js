@@ -71,7 +71,9 @@ app.get('/auth_callback', async (req, res) => {
 
     jwt_token = jwt.sign(tokens.refresh_token, CONFIG.JWTsecret);
 
-    return res.redirect('/access_drive');
+    return res.redirect('http://localhost:8080/main/home');
+
+    // return res.redirect('/access_drive');
 
   } catch (e) {
     console.log(e.message);
