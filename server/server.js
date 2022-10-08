@@ -98,9 +98,23 @@ app.get('/access_drive', async (req, res) => {
     console.log('Error from API:', e.message);
   }
   if (response.data.files.length) {
-    response.data.files.forEach(e => { fileArray.push(e.name); });
+    response.data.files.forEach(e => { fileArray.push({ name: e.name, id: e.id }); });
   } else { return res.status(400).json('There were no documents found on this drive'); }
   return res.status(200).json(fileArray);
+});
+
+app.get('/get_doc', async (req, res) => {
+
+  const documentId = req.query.documentId;
+
+  const docs = google.docs({ version: 'v1', auth: oauth2Client });
+
+  const docData = await docs.documents.get({
+    documentId: documentId
+  });
+
+  res.status(200).json(docData.data);
+
 });
 
 
