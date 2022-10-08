@@ -111,6 +111,20 @@ app.get('/access_drive', async (req, res, next) => {
 
 });
 
+app.get('/get_doc', async (req, res) => {
+
+  const documentId = req.query.documentId;
+
+  const docs = google.docs({ version: 'v1', auth: oauth2Client });
+
+  const docData = await docs.documents.get({
+    documentId: documentId
+  });
+
+  res.status(200).json(docData.data);
+
+});
+
 
 app.use('/api', apiRouter);
 
