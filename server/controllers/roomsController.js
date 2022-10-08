@@ -24,9 +24,21 @@ roomsController.getAllRooms = async (req, res, next) => {
 
 };
 
+roomsController.getRoom = async (req, res, next) => {
+  try {
+    console.log('getRoom id', res.locals.roomId)
+    const roomDoc = await room.findById(res.locals.roomId);
+    console.log('roomdoc', roomDoc);
+    res.locals.roomDoc = roomDoc;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
 roomsController.openNewRoom = async (req, res, next) => {
-  // const { _id: host } = res.locals.token;
-  const { host, subject, restricted, allowedUsers } = req.body;
+  const { _id: host } = res.locals.token;
+  const { subject, restricted, allowedUsers } = req.body;
   let newRoom;
   try {
     newRoom = await room.create({

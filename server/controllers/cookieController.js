@@ -53,6 +53,10 @@ cookieController.deleteSession = async (req, res, next) => {
       maxAge: 0,
       overwrite: true
     });
+    res.cookie('O_AUTH', '', {
+      maxAge: 0,
+      overwrite: true
+    });
     res.locals.cookie = 'deleted';
     return next();
   } catch (err) {
@@ -62,6 +66,32 @@ cookieController.deleteSession = async (req, res, next) => {
     });
   }
   
+};
+
+cookieController.setRoomCookie = async (req, res, next) => {
+  try {
+    console.log('setting cookie')
+    await res.cookie('roomId', req.body.room, {httpOnly: true});
+    return next();
+  } catch (err) {
+    return next({
+      log: 'cookieController.setRoomCookie' + err,
+      message: { err: 'cookieController.setRoomCookie: ERROR: could not set room cookie'}
+    });
+  }
+};
+
+cookieController.getRoomCookie = async (req, res, next) => {
+  try {
+    res.locals.roomId = req.cookies.roomId;
+    console.log('cookie', res.locals.roomId);
+    return next();
+  } catch (err) {
+    return next({
+      log: 'cookieController.getRoomCookie' + err,
+      message: { err: 'cookieController.getRoomCookie: ERROR: could not retrieve room cookie'}
+    });
+  }
 };
 
 module.exports = cookieController;

@@ -12,7 +12,6 @@ const CONFIG = require('./config');
 const cookieParser = require('cookie-parser');
 
 const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth2Credentials.client_secret, CONFIG.oauth2Credentials.redirect_uris[0]);
-let jwt_token;
 ///////////////////////
 
 
@@ -45,9 +44,7 @@ app.use(cookieParser());
 // app.use('/build', express.static(path.join(__dirname, '../build')));
 
 // placeholder route for serving app 
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-});
+app.use('/', express.static(path.resolve(__dirname, '../build')));
 
 
 
@@ -63,27 +60,37 @@ app.get('/auth', (req, res) => {
   return res.status(200).json(loginLink);
 });
 
-app.get('/auth_callback', async (req, res) => {
+app.get('/auth_callback', async (req, res, next) => {
   try {
 
     const { tokens } = await oauth2Client.getToken(req.query.code);
     oauth2Client.setCredentials(tokens);
 
-    jwt_token = jwt.sign(tokens.refresh_token, CONFIG.JWTsecret);
+    const jwt_token = jwt.sign(tokens.refresh_token, CONFIG.JWTsecret);
+    // store on cookie
+    res.cookie('O_AUTH', jwt_token, {httpOnly: true});
 
-    return res.redirect('http://localhost:8080/main/home');
+    return res.redirect('http://localhost:8080/main/room');
 
     // return res.redirect('/access_drive');
 
   } catch (e) {
     console.log(e.message);
+    return (next);
   }
 });
 
 
-app.get('/access_drive', async (req, res) => {
-
+app.get('/access_drive', async (req, res, next) => {
+  console.log('access drive');
+  const jwt_token = req.cookies.O_AUTH;
+  // if no jwt found, return false to frontend
+  if (!jwt_token) {
+    console.log('no token');
+    return res.status(200).json(false);
+  }
   const decoded = jwt.verify(jwt_token, CONFIG.JWTsecret);
+  
   const drive = google.drive('v3');
   let response;
   const fileArray = [];
@@ -93,14 +100,15 @@ app.get('/access_drive', async (req, res) => {
       pageSize: 10,
       fields: 'nextPageToken, files(id, name)'
     });
+    if (response.data.files.length) {
+      response.data.files.forEach(e => { fileArray.push({id: e.id, name: e.name}); });
+    } else { return res.status(400).json('There were no documents found on this drive'); }
+    return res.status(200).json(fileArray);
 
   } catch (e) {
     console.log('Error from API:', e.message);
   }
-  if (response.data.files.length) {
-    response.data.files.forEach(e => { fileArray.push(e.name); });
-  } else { return res.status(400).json('There were no documents found on this drive'); }
-  return res.status(200).json(fileArray);
+
 });
 
 

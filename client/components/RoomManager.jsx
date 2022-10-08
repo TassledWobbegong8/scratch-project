@@ -8,9 +8,9 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   const [addRoomModal, setModal] = useState(false);
   const [addSavedRoom, setSavedRoom] = useState(false);
 
-  console.log(fetchUser);
-  console.log(rooms);
-  console.log(savedRoomsProps);
+  // console.log(fetchUser);
+  // console.log(rooms);
+  // console.log(savedRoomsProps);
 
   // useEffect(() => {
   //   async function getUser() {
@@ -29,7 +29,7 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   });
 
   const savedRoomCards = savedRoomsProps ? savedRoomsProps.map((e, i) => {
-    return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser}/>
+    return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser}/>;
   }) : <div/>;
 
 
@@ -54,7 +54,7 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   return (
     <div id='room-manager'>
       <div id='tabs'>
-        <button onClick={(()=>{setModal(false); setSavedRoom((prevState) => {return false})})} id='profile-tab'>Room Manager</button>
+        <button onClick={(()=>{setModal(false); setSavedRoom((prevState) => {return false;});})} id='profile-tab'>Room Manager</button>
         <button onClick={()=>setSavedRoom(true)} id='saved-rooms-tab'>Saved Rooms</button>
       </div>
       {!addSavedRoom ?
