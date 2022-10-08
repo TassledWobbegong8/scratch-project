@@ -8,6 +8,10 @@ const cookieController = require('../controllers/cookieController');
 //   res.status(200).json(res.locals.users)
 // );
 
+router.get('/:id', usersController.getUserById, (req, res) => 
+  res.status(200).json(res.locals.user)
+);
+
 router.get('/', cookieController.verifyUser, usersController.getUser, (req, res) =>
   res.status(200).json(res.locals.user)
 );

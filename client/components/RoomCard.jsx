@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 function RoomCard( { info, id } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   // const textOnSubmit = event => {
   //   event.preventDefault();
@@ -21,6 +22,7 @@ function RoomCard( { info, id } ) {
     const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'savedRooms': `${info._id}`})};
     await fetch('/api/users/saveroom', options);
     console.log('Room Saved!');
+    setSaved(true);
   }
 
   const showRoomInfo = event => {
@@ -28,13 +30,14 @@ function RoomCard( { info, id } ) {
   };
 
   const mainRoom = (
-    <div className="mainRoom">
-      <h1>
-        <div>
-          {info.host.username} Room
-          <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon>
-        </div>
-      </h1>
+    <div className="mainRoom" onClick={showRoomInfo}>
+      {/* <div > */}
+      {/* <div>
+          <img src='https://csunshinetoday.csun.edu/wp-content/uploads/Math4-web.jpg' width="192" height="144"/>
+        </div> */}
+      {info.host.nickname} Room
+      {/* <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon> */}
+      {/* </div> */}
       {/* <form>
         <input id="nameInput" type="text" placeholder="Your Name Here" onChange={handleChange}></input>
         <button id="onSubmitButton" onClick={textOnSubmit}>Enter</button>
@@ -45,12 +48,15 @@ function RoomCard( { info, id } ) {
 
   const roomInfo = (
     <div className="roomInfo">
-      <p>Subject: {info.subject} </p>
-      <p>Creator:  {info.host.username} </p>
-      <p>People Inside:  {info.allowedUsers} </p>
-      <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
-      <Button variant='contained' id="saveMyRoom" onClick={saveRoom}>Save</Button>
-      <Button id="exitRoomInfo" onClick={showRoomInfo}>Back</Button>
+      <p><span>Subject:  </span>{info.subject.toUpperCase()} </p>
+      <p><span>Creator:  </span>{info.host.username} </p>
+      <p><span>People Inside: </span>{info.allowedUsers} </p>
+      <div id='main-button'>
+        <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
+        {!saved && <Button variant='contained' id="saveMyRoom" onClick={saveRoom}>Save</Button>}
+        {saved && <Button variant='outlined' id="saveMyRoom">Saved!</Button>}
+        <Button id="exitRoomInfo" onClick={showRoomInfo}>Back</Button>
+      </div>
     </div>
   );
 

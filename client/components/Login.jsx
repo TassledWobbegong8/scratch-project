@@ -54,7 +54,7 @@ export default function Login({ setLoggedIn }) {
     <div className="auth-container details-container">
       <h2 id="login-text">Login Details</h2>
       <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
-      <TextField label="Password" onChange={(event) => setPassword(event.target.value)} />
+      <TextField type='password' label="Password" onChange={(event) => setPassword(event.target.value)} />
       
       <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
       
@@ -66,8 +66,7 @@ export default function Login({ setLoggedIn }) {
       <h2 id="login-text">Signup Details</h2>
       <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
       <TextField label="Nickname" onChange={(event) => setNickname(event.target.value)} />
-      <TextField placeholder='Must be at least 8 characters' label="Password"  onChange={(event) => setPassword(event.target.value)} />
-      <TextField label="Confirm Password" />
+      <TextField type='password' placeholder='Must be at least 8 characters' label="Password"  onChange={(event) => setPassword(event.target.value)} />
       {warning && <p className='warning'>Please fill in all fields!</p>}
       
       <Button onClick={signUp} variant="contained" id='auth-btn'>Signup</Button>
@@ -76,5 +75,12 @@ export default function Login({ setLoggedIn }) {
     </div>
   );
 
-  return signup ? signupDetails : loginDetails;
+  return (
+    <>
+      <p className='logo' id='main-logo'>stud<span>if</span>y</p>
+      <p id='slogan'><span>{'"does studying make you cry? use studify!"'}</span> - Confucius</p>
+      {signup ? signupDetails : loginDetails}
+    </>
+    
+  );
 }

@@ -42,15 +42,18 @@ function Room( ) {
   useEffect(() => {
     // if state exists then set info
     if (state) setInfo(state.info);
+    console.log('state', state)
     // if info is null (no state) then retrieve room info
-    if (!info._id) getRoom();
+    if (!state) getRoom();
   }, [hostView]);
 
   // set host and set cookie for room
   useEffect(() => {
     if (info.host) fetchHost();
+    console.log('info', info)
     // if info was read from state then save id
-    if (info._id && hostView) saveRoom();
+    if (state) saveRoom();
+    console.log('hostview', hostView);
   }, [info]);
 
   return (

@@ -8,7 +8,7 @@ function ProfileRoomCard({ fetchUser, info }) {
 
   // create function to delete card via delete req and update room list (to be drilled down to Room)
   const deleteRoom = async (id) => {
-    const deleted = await fetch(`/api/room/${id}`, {
+    const deleted = await fetch(`/api/rooms/${id}`, {
       method: 'DELETE',
     }).then(response => response.json());
 

@@ -31,6 +31,7 @@
     "googleapis": "^108.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.2",
+    "pattern.css": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-picker": "^0.1.0",
