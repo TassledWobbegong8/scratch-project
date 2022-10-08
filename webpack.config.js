@@ -47,9 +47,11 @@ module.exports = {
     historyApiFallback: {
       index: '/'
     },
-    proxy: {
-      '/api': 'http://localhost:3000',
-      '/auth': 'http://localhost:3000'
-    },
+    proxy: [
+      {
+        context: ['/auth', '/api', '/auth_callback', '/access_drive'],
+        target: 'http://localhost:3000',
+      },
+    ],
   },
 };
