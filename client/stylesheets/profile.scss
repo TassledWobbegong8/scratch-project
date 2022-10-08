@@ -82,13 +82,19 @@
   border-top: 1px solid $accent-color-light;
 }
 .profile-room {
-  width: 400px;
+  width: 450px;
   margin: 10px;
   padding: 20px;
   background-color: $card-background;
   border-radius: $border-radius;
+  p {
+    margin: 5px;
+  }
   label {
     font-weight: 700;
+  }
+  button {
+    margin: 5px;
   }
 }
 
@@ -98,8 +104,14 @@
   padding: 20px;
   background-color: $card-background;
   border-radius: $border-radius;
+  p {
+    margin: 5px;
+  }
   label {
     font-weight: 700;
+  }
+  button {
+    margin: 5px;
   }
 }
 
@@ -129,9 +141,25 @@
 
 #room-editor-modal {
   position: absolute;
+  top: 250px;
+  left: 25%;
   background-color: $card-background;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid $accent-color-light;
   border-radius: $border-radius;
   box-shadow: 2px 2px 2px $background-color-light;
+  z-index: 1;
+}
+#subject-select {
+  width: 150px;
+}
+.room-editor-label {
+  margin: 10px;
+}
+#room-editor-modal-btns {
+  margin-top: 10px;
+  button {
+    margin: 10px;
+    float: right;
+  }
 }

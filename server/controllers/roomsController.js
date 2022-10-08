@@ -38,12 +38,12 @@ roomsController.getRoom = async (req, res, next) => {
 
 roomsController.openNewRoom = async (req, res, next) => {
   const { _id: host } = res.locals.token;
-  const { subject, restricted, allowedUsers } = req.body;
+  const { subject, restricted, allowedUsers, active } = req.body;
   let newRoom;
   try {
     newRoom = await room.create({
-      host: host, subject: subject, restricted: restricted,
-      allowedUsers: allowedUsers
+      host, subject, restricted,
+      allowedUsers, active
     });
     // add new room to host user's rooms list
     const hostUser = await user.findById(host);

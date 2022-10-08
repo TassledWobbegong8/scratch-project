@@ -27,6 +27,17 @@ usersController.getUser = async (req, res, next) => {
   }
 };
 
+usersController.getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    res.locals.user = user;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
 usersController.deleteUser = async (req, res, next) => {
   // get the id
   const id = res.locals.token._id;

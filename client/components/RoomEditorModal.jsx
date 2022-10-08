@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button } from '@mui/material';
+import { Button, Switch, Select, InputLabel, MenuItem } from '@mui/material';
 
 function RoomEditor({ fetchUser, closeModal, action, id }) {
   const [warning, setWarning] = useState(false);
@@ -51,25 +51,42 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
     fetchUser();
   };
 
-  const addRoomBtn = <button onClick={(event) => {
+  const addRoomBtn = <Button variant='contained' onClick={(event) => {
     event.preventDefault();
-    addRoom();}}>Add new room</button>;
+    addRoom();}}>Add new room</Button>;
 
-  const editRoomBtn = <button onClick={(event) => {
+  const editRoomBtn = <Button variant='contained' onClick={(event) => {
     event.preventDefault();
-    editRoom();}}>Update room</button>;
+    editRoom();}}>Update room</Button>;
 
   return (
     <div id='room-editor-modal'>
       <form>
-        <label className='room-editor-label'>Subject: </label>
-        <input className='room-editor-input' type='text' onChange={event => setRoom({...updatedRoom, subject: event.target.value})} ></input>
+        <InputLabel id="subject-label">Subject</InputLabel>
+        <Select
+          labelId="subject-label"
+          id="subject-select"
+          value={updatedRoom.subject}
+          label="Subject"
+          onChange={event => setRoom({...updatedRoom, subject: event.target.value})}
+        >
+          <MenuItem value={'english'}>English</MenuItem>
+          <MenuItem value={'math'}>Math</MenuItem>
+          <MenuItem value={'science'}>Science</MenuItem>
+          <MenuItem value={'languages'}>Languages</MenuItem>
+          <MenuItem value={'history'}>History</MenuItem>
+          <MenuItem value={'miscellaneous'}>Miscellaneous</MenuItem>
+        </Select>
         <label className='room-editor-label'>Restricted: </label>
         <Switch onClick={() => setRoom({...updatedRoom, restricted: !updatedRoom.restricted})} />
-        {action === 'add' ? addRoomBtn : editRoomBtn}
-        <button onClick={closeModal}>Cancel</button>
+        {warning && <p className="warning">All fields must be filled!</p>}
       </form>
-      {warning && <p className="warning">All fields must be filled!</p>}
+      <div id='room-editor-modal-btns'>
+        <Button variant='text' onClick={closeModal}>Cancel</Button>
+        {action === 'add' ? addRoomBtn : editRoomBtn}
+        
+      </div>
+
     </div>
   );
 }
