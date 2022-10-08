@@ -76,5 +76,12 @@ export default function Login({ setLoggedIn }) {
     </div>
   );
 
-  return signup ? signupDetails : loginDetails;
+  return (
+    <>
+      <p className='logo' id='main-logo'>stud<span>if</span>y</p>
+      <p id='slogan'><span>{'"does studying make you cry? use studify!"'}</span> - Confucius</p>
+      {signup ? signupDetails : loginDetails}
+    </>
+    
+  );
 }

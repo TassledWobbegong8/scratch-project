@@ -53,6 +53,10 @@ cookieController.deleteSession = async (req, res, next) => {
       maxAge: 0,
       overwrite: true
     });
+    res.cookie('O_AUTH', '', {
+      maxAge: 0,
+      overwrite: true
+    });
     res.locals.cookie = 'deleted';
     return next();
   } catch (err) {

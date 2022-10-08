@@ -18,16 +18,16 @@
 }
 
 #tabs {
+  margin-top: 40px;
+  margin-left: 20%;
   display: flex;
+  button {
+    white-space: nowrap;
+  }
 }
 
 #profile-tab {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  align-self: start;
-  margin-top: 40px;
-  margin-left: 20%;
+
   padding: 10px 40px;
   color: $mui-text-color;
   background-color: white;
@@ -53,8 +53,7 @@
 
 #saved-rooms-tab {
   align-self: start;
-  margin-top: 40px;
-  padding: 10px 20px;
+  padding: 10px 40px;
   color: $mui-text-color;
   background-color: white;
   font-weight: 700;

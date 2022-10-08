@@ -41,6 +41,10 @@ button:hover {
 #dashboard {
   display: flex;
   flex-direction: column;
+  background-image: radial-gradient(white 20%, transparent 20%);
+  background-color: transparent;
+  background-position: 30px;
+  background-size: 15px 15px;
 }
 
 .main-nav {
@@ -52,6 +56,16 @@ button:hover {
 }
 .main-nav-btn {
   margin: 0 10px;
+}
+.logo {
+  font-family: 'Rubik', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  padding: 5px;
+  margin-left: 20px;
+  span {
+    font-weight: 300;
+  }
 }
 #logout-link {
   color: $warning-color;
@@ -69,6 +83,7 @@ button:hover {
 }
 #no-subject {
   margin: 50px;
+  background-color: white;
 }
 
 #SettingsMenu {
