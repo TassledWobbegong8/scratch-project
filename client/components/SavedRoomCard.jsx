@@ -6,7 +6,7 @@ export default function SavedRoomCard({fetchUser, info, id}) {
 
   async function deleteSavedRoom () {
     const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'savedRooms': `${info._id}`})};
-    await fetch(`/api/users/${id}/unsaveroom`, options);
+    await fetch(`/api/users/unsaveroom`, options);
     await fetchUser();
   }
 
