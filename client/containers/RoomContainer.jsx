@@ -20,7 +20,7 @@ function RoomContainer({ subject, id }) {
 
 
   const roomCards = rooms.map((e, i) => {
-    return (<Card variant="outlined" key={JSON.stringify(e)}>{<RoomCard info={e} id={id} />}</Card>);
+    return (<RoomCard info={e} key={JSON.stringify(e)} id={id} />);
   });
 
   return (
