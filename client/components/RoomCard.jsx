@@ -19,7 +19,7 @@ function RoomCard( { info, id } ) {
 
   async function saveRoom () {
     const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'savedRooms': `${info._id}`})};
-    await fetch(`/api/users/${id}/saveroom`, options);
+    await fetch(`/api/users/saveroom`, options);
     console.log("Room Saved!");
   }
 
