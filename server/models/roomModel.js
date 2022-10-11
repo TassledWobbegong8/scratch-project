@@ -1,18 +1,4 @@
 const mongoose = require('mongoose');
-// require("mongoose-type-url");
-
-// const MONGO_URI =
-//   "mongodb+srv://scratch:project@scratch-project-cluster.dphri14.mongodb.net/?retryWrites=true&w=majority";
-const MONGO_URI = 'mongodb+srv://ninja:turtles@cluster0.0kx9n6x.mongodb.net/?retryWrites=true&w=majority';
-
-mongoose
-  .connect(MONGO_URI, {
-    // options for the connect method to parse the URI
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('Connected to Mongo DB.'))
-  .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 
