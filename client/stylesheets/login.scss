@@ -1,0 +1,38 @@
+.auth-container {
+  align-self: center;
+  margin-top: 10px;
+  p {
+    font-size: 14px;
+    text-align: center;
+  }
+  input {
+    background-color: $card-background;
+  }
+}
+
+#main-logo {
+  margin: 60px 0 10px 0;
+  font-size: 60px;
+  color: $accent-color;
+  text-align: center;
+}
+#slogan {
+  color: $accent-color;
+  text-align: center;
+  span {
+    font-style: italic;
+  }
+}
+
+#auth-btn {
+  align-self: center;
+  width: 200px;
+  a {
+    width: 100%;
+    color: white;
+  }
+}
+
+.switch-auth {
+  color: $accent-color;
+}

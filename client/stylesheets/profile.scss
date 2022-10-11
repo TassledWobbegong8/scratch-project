@@ -14,14 +14,21 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
+
+#tabs {
+  margin-top: 40px;
+  margin-left: 20%;
+  display: flex;
+  button {
+    white-space: nowrap;
+  }
 }
 
 #profile-tab {
-  align-self: start;
-  margin-top: 40px;
-  margin-left: 20%;
-  padding: 10px 20px;
+
+  padding: 10px 40px;
   color: $mui-text-color;
   background-color: white;
   font-weight: 700;
@@ -29,7 +36,40 @@
   border-top: 1px solid $accent-color-light;
   border-left: 1px solid $accent-color-light;
   border-right: 1px solid $accent-color-light;
+  border-bottom: 0px;
   z-index: 1;
+  &:hover{
+    background-color: darken($color: white, $amount: 3%);
+    &::after {
+      opacity: 0;
+      transition: all 0.8s
+    }
+  }
+}
+
+#profile-tab:first-child {
+  margin-right: 10px;
+}
+
+#saved-rooms-tab {
+  align-self: start;
+  padding: 10px 40px;
+  color: $mui-text-color;
+  background-color: white;
+  font-weight: 700;
+  border-radius: $border-radius $border-radius 0 0 ;
+  border-top: 1px solid $accent-color-light;
+  border-left: 1px solid $accent-color-light;
+  border-right: 1px solid $accent-color-light;
+  border-bottom: 0px;
+  z-index: 1;
+  &:hover{
+    background-color: darken($color: white, $amount: 3%);
+    &::after {
+      opacity: 0;
+      transition: all 0.8s
+    }
+  }
 }
 
 .profile-room-container {
@@ -42,13 +82,36 @@
   border-top: 1px solid $accent-color-light;
 }
 .profile-room {
+  width: 450px;
+  margin: 10px;
+  padding: 20px;
+  background-color: $card-background;
+  border-radius: $border-radius;
+  p {
+    margin: 5px;
+  }
+  label {
+    font-weight: 700;
+  }
+  button {
+    margin: 5px;
+  }
+}
+
+.saved-room {
   width: 400px;
   margin: 10px;
   padding: 20px;
   background-color: $card-background;
   border-radius: $border-radius;
+  p {
+    margin: 5px;
+  }
   label {
     font-weight: 700;
+  }
+  button {
+    margin: 5px;
   }
 }
 
@@ -78,9 +141,25 @@
 
 #room-editor-modal {
   position: absolute;
+  top: 250px;
+  left: 25%;
   background-color: $card-background;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid $accent-color-light;
   border-radius: $border-radius;
   box-shadow: 2px 2px 2px $background-color-light;
+  z-index: 1;
+}
+#subject-select {
+  width: 150px;
+}
+.room-editor-label {
+  margin: 10px;
+}
+#room-editor-modal-btns {
+  margin-top: 10px;
+  button {
+    margin: 10px;
+    float: right;
+  }
 }
