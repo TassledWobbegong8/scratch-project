@@ -4,6 +4,7 @@ const router = express.Router();
 const cookieController = require('../controllers/cookieController');
 const usersController = require('../controllers/usersController');
 
+// use route -> localhost:3000/api/auth/*
 
 router.get('/verify', cookieController.verifyUser, (req, res) => {
   res.status(200).json(res.locals.token);

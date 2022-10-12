@@ -4,7 +4,7 @@ const router = express.Router();
 const roomsController = require('../controllers/roomsController');
 const cookieController = require('../controllers/cookieController');
 
-
+// use route -> localhost:3000/api/rooms/*
 
 // router.get('/',
 //   cookieController.getRoomCookie,
