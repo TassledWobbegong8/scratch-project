@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
+import { Button } from '@mui/material';
 
 function Room( ) {
   const [hostInfo, setHost] = useState({});
@@ -60,6 +61,9 @@ function Room( ) {
     <div className="room-page">
       <div id='room-page-info'>
         <h2>Host: {info.host && (info.host.nickname || hostInfo.nickname)} </h2>
+      </div>
+      <div style={{textAlign: 'center'}}>
+        <Button variant='text'>Blackboard</Button>
       </div>
       <DocumentEditor hostView={hostView}/>
       <Chatbox />
