@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const OAuth2 = google.auth.OAuth2;
 const CONFIG = require('./config');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv').config();
 
 const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth2Credentials.client_secret, CONFIG.oauth2Credentials.redirect_uris[0]);
 ///////////////////////
@@ -19,8 +20,7 @@ const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth
 
 const PORT = 3000;
 
-const MONGO_URI =
-  'mongodb+srv://scratch:project@scratch-project-cluster.dphri14.mongodb.net/?retryWrites=true&w=majority';
+const MONGO_URI = 'mongodb+srv://rogerwan1:riUffNN5R8UyyWig@teamavatarptri8.bshlcg6.mongodb.net/TeamAvatar';
 
 mongoose
   .connect(MONGO_URI, {
