@@ -143,21 +143,21 @@ usersController.unsaveRoom = async (req, res, next) => {
 };
 
 
-// usersController.getAllUsers = async (req, res, next) => {
-//   try {
-//     const users = await User.find().populate('rooms').populate('savedRooms');
+usersController.getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find().populate('rooms').populate('savedRooms');
 
-//     if (!users) {
-//       return res.status(404).json({ message: 'No users found' });
-//     }
+    if (!users) {
+      return res.status(404).json({ message: 'No users found' });
+    }
 
-//     res.locals.users = users;
+    res.locals.users = users;
 
-//     return next();
-//   } catch (e) {
-//     console.log(e);
-//     return next(e);
-//   }
-// };
+    return next();
+  } catch (e) {
+    console.log(e);
+    return next(e);
+  }
+};
 
 module.exports = usersController;
