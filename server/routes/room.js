@@ -46,7 +46,7 @@ router.post('/cookie',
 
 router.get('/:subject',
   roomsController.getAllRooms,
-  (req, res) => res.status(200).json(res.locals.roomslist)
+  (req, res) => res.status(200).json(res.locals.rooms)
 );
 
 module.exports = router;

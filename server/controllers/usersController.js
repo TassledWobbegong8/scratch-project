@@ -73,8 +73,9 @@ usersController.deleteUser = async (req, res, next) => {
 };
 
 usersController.createUser = async (req, res, next) => {
-  const { host, username, password, nickname } = req.body;
-  
+
+  const { username, password, nickname } = req.body;
+
 
   // create a bcrypt hash
   const salt = await bcrypt.genSalt();
@@ -82,7 +83,6 @@ usersController.createUser = async (req, res, next) => {
   console.log("passwordHash from userController.createUser", passwordHash);
   try {
     const newUser = await User.create({
-      host: host,
       username: username,
       password: passwordHash,
       nickname: nickname,
