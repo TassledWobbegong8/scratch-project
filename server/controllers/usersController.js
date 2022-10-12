@@ -57,11 +57,10 @@ usersController.deleteUser = async (req, res, next) => {
 };
 
 usersController.createUser = async (req, res, next) => {
-  const { host, username, password, nickname } = req.body;
+  const { username, password, nickname } = req.body;
 
   try {
     const newUser = await User.create({
-      host: host,
       username: username,
       password: password,
       nickname: nickname,
