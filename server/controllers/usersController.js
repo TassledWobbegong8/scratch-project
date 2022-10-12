@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const User = require('../models/userModel');
 
 const usersController = {};
@@ -13,9 +15,23 @@ usersController.getUser = async (req, res, next) => {
         .populate('savedRooms');
     } else {
       const { username, password } = req.body;
-      user = await User.findOne({username, password})
-        .populate('rooms')
-        .populate('savedRooms');
+
+      const passwordHash = await User.findOne({username})
+     
+      const passwordCorrect = await bcrypt.compare(
+        password,
+        passwordHash.password
+      );
+
+      if(passwordCorrect){
+        user = await User.findOne({username})
+          .populate('rooms')
+          .populate('savedRooms');
+      } 
+
+      // user = await User.findOne({username, password})
+      //   .populate('rooms')
+      //   .populate('savedRooms');
     }
 
     res.locals.user = user;
@@ -57,14 +73,21 @@ usersController.deleteUser = async (req, res, next) => {
 };
 
 usersController.createUser = async (req, res, next) => {
+
   const { username, password, nickname } = req.body;
 
+
+  // create a bcrypt hash
+  const salt = await bcrypt.genSalt();
+  const passwordHash = await bcrypt.hash(password.toString(), salt);
+  console.log("passwordHash from userController.createUser", passwordHash);
   try {
     const newUser = await User.create({
       username: username,
-      password: password,
+      password: passwordHash,
       nickname: nickname,
     });
+    
 
     if (!newUser) {
       return res.status(400).json({ message: 'User could not be created' });
@@ -83,6 +106,9 @@ usersController.updateUserInfo = async (req, res, next) => {
   // get the id of user
   const id = res.locals.token._id;
 
+  // create a bcrypt hash
+  const salt = await bcrypt.genSalt();
+
   const { username, password } = req.body;
 
   const update = {};
@@ -92,7 +118,8 @@ usersController.updateUserInfo = async (req, res, next) => {
   }
 
   if (password) {
-    update.password = password;
+    const passwordHash = await bcrypt.hash(password.toString(), salt);
+    update.password = passwordHash;
   }
 
   try {
