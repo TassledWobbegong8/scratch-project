@@ -20,7 +20,7 @@ const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth
 const PORT = 3000;
 
 const MONGO_URI =
-  'mongodb+srv://scratch:project@scratch-project-cluster.dphri14.mongodb.net/?retryWrites=true&w=majority';
+  'mongodb+srv://scoobygang8:scoobygang8@codesmith.gxmhsj2.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, {
