@@ -4,6 +4,8 @@ const router = express.Router();
 const usersController = require('../controllers/usersController');
 const cookieController = require('../controllers/cookieController');
 
+// use route -> localhost:3000/api/users/*
+
 router.get('/getAllUser', usersController.getAllUsers, (req, res) =>
   res.status(200).json(res.locals.users)
 );
