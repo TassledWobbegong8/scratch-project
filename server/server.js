@@ -40,10 +40,10 @@ app.use(cookieParser());
 //////////////////////
 
 
-// placeholder route for production 
+// placeholder route for production
 // app.use('/build', express.static(path.join(__dirname, '../build')));
 
-// placeholder route for serving app 
+// placeholder route for serving app
 app.use('/', express.static(path.resolve(__dirname, '../build')));
 
 
@@ -90,7 +90,7 @@ app.get('/access_drive', async (req, res, next) => {
     return res.status(200).json(false);
   }
   const decoded = jwt.verify(jwt_token, CONFIG.JWTsecret);
-  
+
   const drive = google.drive('v3');
   let response;
   const fileArray = [];
@@ -108,6 +108,7 @@ app.get('/access_drive', async (req, res, next) => {
   } catch (e) {
     console.log('Error from API:', e.message);
   }
+
 
 });
 
@@ -143,6 +144,6 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
+module.exports = app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 }); //listens on port 3000 -> http://localhost:3000/

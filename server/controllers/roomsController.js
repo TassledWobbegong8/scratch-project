@@ -26,7 +26,7 @@ roomsController.getAllRooms = async (req, res, next) => {
 
 roomsController.getRoom = async (req, res, next) => {
   try {
-    console.log('getRoom id', res.locals.roomId)
+    console.log('getRoom id', res.locals.roomId);
     const roomDoc = await room.findById(res.locals.roomId);
     console.log('roomdoc', roomDoc);
     res.locals.roomDoc = roomDoc;
