@@ -70,7 +70,7 @@ cookieController.deleteSession = async (req, res, next) => {
 
 cookieController.setRoomCookie = async (req, res, next) => {
   try {
-    console.log('setting cookie')
+    // console.log('setting cookie')
     await res.cookie('roomId', req.body.room, {httpOnly: true});
     return next();
   } catch (err) {
@@ -84,7 +84,7 @@ cookieController.setRoomCookie = async (req, res, next) => {
 cookieController.getRoomCookie = async (req, res, next) => {
   try {
     res.locals.roomId = req.cookies.roomId;
-    console.log('cookie', res.locals.roomId);
+    // console.log('cookie', res.locals.roomId);
     return next();
   } catch (err) {
     return next({

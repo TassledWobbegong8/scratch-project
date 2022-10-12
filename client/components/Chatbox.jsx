@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
+// import io from '../../server/server.js';
+import { io } from 'socket.io-client';
+
+const socket = io("http://localhost:3000");
 
 function Chatbox() {
-  const fakeMessages = [
-    {from: 'lewis', body: 'yo!'},
-    {from: 'peipei', body: 'bye'}
-  ];
-  const [messageList, setMessages] = useState(fakeMessages);
+
+  
+  
+  //const [messageList, setMessages] = useState(fakeMessages);
   // need function to retrieve messages
 
-  const messages = messageList.map((e, i) => {
-    return (<p key={i}>{e.from}: {e.body}</p>);
+  useEffect(() => {
+    console.log("chatbox mounted");
+    
   });
 
   return (
     <div className='chatbox'>
       <div id='message-container'>
-        {messages}
+        {/* {messages} */}
       </div>
       <form>
         <input type='text'></input>
