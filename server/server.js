@@ -4,6 +4,10 @@ const express = require('express');
 
 const apiRouter = require('./routes/api');
 
+const cors = require('cors');
+
+const app = express();
+
 /////////////////////
 const { google } = require('googleapis');
 const jwt = require('jsonwebtoken');
@@ -13,6 +17,29 @@ const cookieParser = require('cookie-parser');
 
 const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth2Credentials.client_secret, CONFIG.oauth2Credentials.redirect_uris[0]);
 ///////////////////////
+
+
+// socket.io 
+
+const http = require('http');
+const server = http.createServer(app);
+// const { Server } = require('socket.io');
+// const io = new Server(server);
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: ['http://localhost:8080', 'http://localhost:3000'],
+    methods: ['GET', 'POST'],
+    // allowedHeaders: ['my-custom-header'],
+    // credentials: true,
+  },
+});
+
+app.use(cors());
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
 
 // require("mongoose-type-url");
@@ -31,7 +58,7 @@ mongoose
   .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
 
-const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -143,6 +170,8 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
+
+
+server.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 }); //listens on port 3000 -> http://localhost:3000/
