@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
@@ -42,7 +42,7 @@ function Room( ) {
   useEffect(() => {
     // if state exists then set info
     if (state) setInfo(state.info);
-    console.log('state', state)
+    console.log('state', state);
     // if info is null (no state) then retrieve room info
     if (!state) getRoom();
   }, [hostView]);
@@ -50,7 +50,7 @@ function Room( ) {
   // set host and set cookie for room
   useEffect(() => {
     if (info.host) fetchHost();
-    console.log('info', info)
+    console.log('info', info);
     // if info was read from state then save id
     if (state) saveRoom();
     console.log('hostview', hostView);

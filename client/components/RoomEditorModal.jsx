@@ -1,5 +1,5 @@
+import { Button, InputLabel, MenuItem, Select, Switch } from '@mui/material';
 import React, { useState } from 'react';
-import { Button, Switch, Select, InputLabel, MenuItem } from '@mui/material';
 
 function RoomEditor({ fetchUser, closeModal, action, id }) {
   const [warning, setWarning] = useState(false);

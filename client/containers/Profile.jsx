@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import RoomManager from '../components/RoomManager';
 
 export default function Profile() {

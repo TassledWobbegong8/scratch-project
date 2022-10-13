@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 // components
-import MainNav from '../components/MainNav';
-import SubjectNav from '../components/SubjectNav';
-import RoomContainer from './RoomContainer';
-import Profile from './Profile';
-import SettingsContainer from './SettingsContainer';
-import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
+import MainNav from '../components/MainNav';
+import SettingsCard from '../components/SettingsCard';
+import SubjectNav from '../components/SubjectNav';
+import Profile from './Profile';
 import Room from './Room';
+import RoomContainer from './RoomContainer';
+import SettingsContainer from './SettingsContainer';
 
 function Dashboard( ) {
   const [subject, setSubject] = useState('');

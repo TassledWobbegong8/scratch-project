@@ -1,6 +1,5 @@
 import { Button, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export default function SettingsCard() {
   const [username, setUsername] = useState('');

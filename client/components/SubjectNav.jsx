@@ -1,6 +1,6 @@
+import { Book, Calculate, HistoryEdu, Language, School, Science } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { Calculate, Book, HistoryEdu, Language, School, Science } from '@mui/icons-material';
-import React, { useState, useContext } from 'react';
+import React from 'react';
 
 function SubjectNav({ subject, setSubject }) {
   // navbar will send back new subject as updated state via useContext

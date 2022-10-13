@@ -36,7 +36,7 @@ cookieController.verifyUser = async (req, res, next) => {
       return next();
     }
     const decoded = jwt.verify(token, privateKey);
-    res.locals.token = decoded;
+    res.locals.token = decoded; // able to access the _id and username by res.locals.token._id
     return next();
   } catch (err) {
     return next({
@@ -70,7 +70,7 @@ cookieController.deleteSession = async (req, res, next) => {
 
 cookieController.setRoomCookie = async (req, res, next) => {
   try {
-    console.log('setting cookie')
+    console.log('setting cookie');
     await res.cookie('roomId', req.body.room, {httpOnly: true});
     return next();
   } catch (err) {

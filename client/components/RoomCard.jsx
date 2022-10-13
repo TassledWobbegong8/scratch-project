@@ -1,6 +1,4 @@
 import { Button } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 

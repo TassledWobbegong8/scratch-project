@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
 import { Button } from '@mui/material';
-import SettingsCard from '../components/SettingsCard';
+import React, { useState } from 'react';
 
 export default function SettingsContainer() {
 

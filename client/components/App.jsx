@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dashboard from '../containers/Dashboard';
-import { Link, redirect, Route, Routes } from 'react-router-dom';
 
 import '../stylesheets/main.scss';
 

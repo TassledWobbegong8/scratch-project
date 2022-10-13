@@ -14,8 +14,8 @@ after much research a fix was not found.
 
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 function GooglePicker() {
   const [authBtn, setAuthVisible] = useState(false);

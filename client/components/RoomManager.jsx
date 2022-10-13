@@ -1,5 +1,4 @@
-import { Button } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ProfileRoomCard from '../components/ProfileRoomCard';
 import RoomEditor from './RoomEditorModal';
 import SavedRoomCard from './SavedRoomCard';

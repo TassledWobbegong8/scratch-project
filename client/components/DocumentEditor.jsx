@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
+import React, { useState } from 'react';
 import FilePicker from './FilePicker';
 
 function DocumentEditor({ hostView }) {
