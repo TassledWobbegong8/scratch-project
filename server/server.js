@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const express = require('express');
+require('dotenv').config();
 
 /////////////////////
 const cookieParser = require('cookie-parser');
@@ -10,11 +11,8 @@ const oAuthRouter = require('./routes/oauth');
 
 const PORT = 3000;
 
-const MONGO_URI =
-  'mongodb+srv://scoobygang8:scoobygang8@codesmith.gxmhsj2.mongodb.net/?retryWrites=true&w=majority';
-
 mongoose
-  .connect(MONGO_URI, {
+  .connect(process.env.MONGO_URI, {
     // options for the connect method to parse the URI
     useNewUrlParser: true,
     useUnifiedTopology: true,
