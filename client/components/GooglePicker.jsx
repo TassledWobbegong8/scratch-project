@@ -31,7 +31,7 @@ function GooglePicker() {
 
   // load scripts
   useEffect(() => {
-    console.log('mounting scripts');
+    // console.log('mounting scripts');
     const script1 = document.createElement('script');
     const script2 = document.createElement('script');
   
