@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken');
 const cookieController = {};
-// MOVE THIS TO THE ENV FILE
-const privateKey = 'wobbegong';
 
 cookieController.setUserCookie = async (req, res, next) => {
   if (!res.locals.user) {
@@ -14,7 +12,7 @@ cookieController.setUserCookie = async (req, res, next) => {
     const token = jwt.sign({
       _id,
       username
-    }, privateKey);
+    }, process.env.PRIVATE_KEY);
 
     await res.cookie('ssid', token, {httpOnly: true});
     res.locals.loggedIn = true;
@@ -35,7 +33,7 @@ cookieController.verifyUser = async (req, res, next) => {
       res.locals.token = false;
       return next();
     }
-    const decoded = jwt.verify(token, privateKey);
+    const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
     res.locals.token = decoded;
     return next();
   } catch (err) {
