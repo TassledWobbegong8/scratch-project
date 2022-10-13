@@ -16,7 +16,7 @@ function Dashboard( ) {
 
   const verifyLogin = async () => {
     const logged = await fetch('/api/auth/verify').then(response => response.json());
-    console.log(logged);
+    console.log('logged', logged);
     setLoggedIn(logged);
   };
 
@@ -26,7 +26,7 @@ function Dashboard( ) {
   }, []);
 
   const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
-  const yesSubject = <RoomContainer id={loggedIn._id} subject={subject}/>;
+  const yesSubject = <RoomContainer id={loggedIn._id} subject={subject} username={loggedIn.username}/>;
 
   return (
     <div id='dashboard'>

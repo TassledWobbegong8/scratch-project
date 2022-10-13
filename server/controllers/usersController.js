@@ -116,7 +116,8 @@ usersController.saveRoom = async (req, res, next) => {
   const { savedRooms } = req.body;
 
   try {
-    await User.updateOne({ _id: id }, { $push: { savedRooms: savedRooms } });
+    // use $addToSet instead of $push to only retain the unique value
+    await User.updateOne({ _id: id }, { $addToSet: { savedRooms: savedRooms } });
 
     return next();
   } catch (e) {
@@ -143,21 +144,21 @@ usersController.unsaveRoom = async (req, res, next) => {
 };
 
 
-// usersController.getAllUsers = async (req, res, next) => {
-//   try {
-//     const users = await User.find().populate('rooms').populate('savedRooms');
+usersController.getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find().populate('rooms').populate('savedRooms');
 
-//     if (!users) {
-//       return res.status(404).json({ message: 'No users found' });
-//     }
+    if (!users) {
+      return res.status(404).json({ message: 'No users found' });
+    }
 
-//     res.locals.users = users;
+    res.locals.users = users;
 
-//     return next();
-//   } catch (e) {
-//     console.log(e);
-//     return next(e);
-//   }
-// };
+    return next();
+  } catch (e) {
+    console.log(e);
+    return next(e);
+  }
+};
 
 module.exports = usersController;
