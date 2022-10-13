@@ -10,7 +10,6 @@ describe('route integration', () => {
     // });
     describe('user routes', () => {
       describe('/api/users/', () => {
-        // get
         describe('GET', () => {
           it('responds with 200 status and responds with json user object', async () => {
             const response = await request(server)
@@ -20,7 +19,6 @@ describe('route integration', () => {
 
           });
         });
-        // post
         describe('POST', () => {
           it('responds with 200 status and responds with json user object', async () => {
             const response = await request(server)
@@ -29,7 +27,6 @@ describe('route integration', () => {
             expect(response.headers["content-type"]).toMatch(/application\/json/);
           });
         });
-        // delete
         describe('DELETE', () => {
           it('responds with 200 status, responds with json user object, responds with message object', async () => {
             const response = await request(server)
@@ -39,7 +36,6 @@ describe('route integration', () => {
             expect(Object.keys(response.body)).toEqual('message');
           });
         });
-        // patch
       }); 
     });
 });
