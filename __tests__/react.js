@@ -1,9 +1,9 @@
-import { enableFetchMocks } from 'jest-fetch-mock'
-enableFetchMocks();
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Link, Outlet, Routes, Route, useRoutes } from 'react-router-dom';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 // import { server } from './mocks/server'
 
 import regeneratorRuntime from 'regenerator-runtime';
@@ -15,7 +15,7 @@ import Profile from '../client/containers/Profile';
 import Room from '../client/containers/Room';
 import RoomContainer from '../client/containers/Dashboard';
 import MainNav from '../client/components/MainNav';
-// require('jest-fetch-mock').enableMocks();
+import SubjectNav from '../client/components/SubjectNav';
 
 // import mongoose from 'mongoose';
 
@@ -57,11 +57,52 @@ describe('Unit testing React componnets', () => {
         mainNav = render(<MainNav/>, {wrapper: BrowserRouter})
       })
 
-        test('Just let me pass the basic test', ()=> {
+        test('Checking for main nav child components', ()=> {
         //   const linkElement = screen.getByText('Home');
         //   expect(linkElement).toBeInTheDocument();
             expect(mainNav.getByText('Home')).toBeInTheDocument();
+            expect(mainNav.getByText('Profile')).toBeInTheDocument();
+            expect(mainNav.getByText('Settings')).toBeInTheDocument();
+            expect(mainNav.getByText('Logout')).toBeInTheDocument();
         })
 
-   })
+   });
+
+   describe('Subject Nav', () => {
+    let subjectNav;
+    let user;
+    let room;
+    let handleClick
+
+    beforeEach(() => {
+      user = userEvent.setup();
+      handleClick = jest.fn()
+      // room = render(<Dashboard/>, {wrapper: BrowserRouter})
+      subjectNav = render(<SubjectNav setSubject={handleClick}/>, {wrapper: BrowserRouter});
+
+
+    })
+
+    test('Checking for subject nav child components', () => {
+      //test for subject buttons
+      const math = subjectNav.getByRole('button', { name: 'math'});
+      expect(math).toBeInTheDocument();
+      const english = subjectNav.getByRole('button', { name: 'english'});
+      expect(english).toBeInTheDocument();
+      const history = subjectNav.getByRole('button', { name: 'history'});
+      expect(history).toBeInTheDocument();
+      const science = subjectNav.getByRole('button', { name: 'science'});
+      expect(science).toBeInTheDocument();
+    });
+
+    test('Clicking on the links should redirect the user to the correct endpoint' , async () => {
+      const math = subjectNav.getByRole('button', { name: 'math'});
+      expect(math).toBeInTheDocument();
+
+      await userEvent.click(math);
+      // userEvent.click(math);
+      expect(handleClick).toHaveBeenCalledTimes(1);
+
+    });
+   });
 })
