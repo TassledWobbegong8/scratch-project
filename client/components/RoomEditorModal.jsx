@@ -9,7 +9,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
   const addRoom = async () => {
     // check that all fields are filled
     if (!updatedRoom.subject) {
-      console.log(updatedRoom);
+      // console.log(updatedRoom);
       setWarning(true);
       return;
     }
@@ -34,7 +34,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
   const editRoom = async () => {
     // check that all fields are filled
     if (!updatedRoom.subject) {
-      console.log(updatedRoom);
+      // console.log(updatedRoom);
       setWarning(true);
       return;
     }

@@ -39,6 +39,10 @@ app.use(cors());
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on('send_message', (data) => {
+    io.emit('receive_message', data);
+  });
 });
 
 
