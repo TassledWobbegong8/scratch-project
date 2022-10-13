@@ -116,7 +116,8 @@ usersController.saveRoom = async (req, res, next) => {
   const { savedRooms } = req.body;
 
   try {
-    await User.updateOne({ _id: id }, { $push: { savedRooms: savedRooms } });
+    // use $addToSet instead of $push to only retain the unique value
+    await User.updateOne({ _id: id }, { $addToSet: { savedRooms: savedRooms } });
 
     return next();
   } catch (e) {
