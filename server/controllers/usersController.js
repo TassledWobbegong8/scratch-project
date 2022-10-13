@@ -15,19 +15,22 @@ usersController.getUser = async (req, res, next) => {
         .populate('savedRooms');
     } else {
       const { username, password } = req.body;
+      console.log('password', password);
 
-      const passwordHash = await User.findOne({username})
-     
-      const passwordCorrect = await bcrypt.compare(
-        password,
-        passwordHash.password
-      );
+      const passwordHash = await User.findOne({username});
 
-      if(passwordCorrect){
-        user = await User.findOne({username})
-          .populate('rooms')
-          .populate('savedRooms');
-      } 
+      if(passwordHash !== null){
+        const passwordCorrect = await bcrypt.compare(
+          password,
+          passwordHash.password
+        );
+        if(passwordCorrect){
+          user = await User.findOne({username})
+            .populate('rooms')
+            .populate('savedRooms');
+        } 
+      }
+    
 
       // user = await User.findOne({username, password})
       //   .populate('rooms')
@@ -80,7 +83,7 @@ usersController.createUser = async (req, res, next) => {
   // create a bcrypt hash
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password.toString(), salt);
-  console.log("passwordHash from userController.createUser", passwordHash);
+  console.log('passwordHash from userController.createUser', passwordHash);
   try {
     const newUser = await User.create({
       username: username,
