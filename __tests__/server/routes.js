@@ -16,7 +16,6 @@ describe('route integration', () => {
               .get('/api/users/')
             expect(200);
             expect(response.headers["content-type"]).toMatch(/application\/json/);
-
           });
         });
         describe('POST', () => {
@@ -28,12 +27,11 @@ describe('route integration', () => {
           });
         });
         describe('DELETE', () => {
-          it('responds with 200 status, responds with json user object, responds with message object', async () => {
+          it('responds with 200 status, responds with json user object', async () => {
             const response = await request(server)
               .get('/api/users/')
             expect(200);
             expect(response.headers["content-type"]).toMatch(/application\/json/);
-            expect(Object.keys(response.body)).toEqual('message');
           });
         });
       }); 
