@@ -24,12 +24,39 @@ describe('test', () => {
       cy.wait('@login').then(({response}) => {
         expect(response.statusCode).to.eq(200)
       })
-      cy.get('h2').should('have.text', "Subjects")
+      cy.get('h2').contains('Subjects')
       cy.get('button').contains('Logout').click()
       cy.wait('@logout').then(({response}) => {
         expect(response.statusCode).to.eq(304)
       })
     })
+  })
+
+  context.only('check incorrect username or password', () => {
+    it('user with incorrect password', () => {
+      cy.intercept('POST', '/api/auth/login').as('login')
+
+      cy.get('input').first().type('test')
+      cy.get('input').last().type('testtest1')
+      cy.get('button').contains('Login').click()
+      // cy.wait('@login').then(({response}) => {
+      //   expect(response.statusCode).to.not.eq(200)
+      // })
+      cy.get('.warning').contains('Your Login Information is Incorrect')
+    })
+
+    it('user with incorrect username / user not yet signup', () => {
+      cy.intercept('POST', '/api/auth/login').as('login')
+
+      cy.get('input').first().type('tset')
+      cy.get('input').last().type('testtest1')
+      cy.get('button').contains('Login').click()
+      // cy.wait('@login').then(({response}) => {
+      //   expect(response.statusCode).to.not.eq(200)
+      // })
+      cy.get('.warning').contains('Your Login Information is Incorrect')
+    })
+
   })
 
   context('signup new user', () => {
@@ -62,8 +89,26 @@ describe('test', () => {
       cy.wait('@signup').then(({response}) => {
         expect(response.statusCode).to.eq(200)
       })
-      cy.get('h2').should('have.text', "Subjects")
+      cy.get('h2').contains('Subjects')
     })
 
   })
+
+  // context('avoid signup with an existing username', () => {
+  //   beforeEach(() => {
+  //     cy.get('span').contains('Click here!').click()
+  //   })
+  //   it('route to signup page', () => {
+  //     cy.get('h2').contains('Signup Details')
+  //   })
+
+  //   it('try signup with an existing username', () => {
+  //     cy.get('input').eq(0).type('test')
+  //     cy.get('input').eq(1).type('test')
+  //     cy.get('input').eq(2).type('cypress1')
+  //     // should not able to move forward. but still passing.
+  //   })
+  // })
+
+
 })
