@@ -40,6 +40,10 @@
   align-items: center;
 }
 
+.grid-item-front {
+  position: absolute;
+}
+
 .grid-item-back {
   display:flex-col;
   align-items: center;
@@ -51,11 +55,18 @@
   transition: 0.3s ease;
   cursor: auto;
 
+  :hover {
+    opacity: 1;
+  }
 
   h2 {
     padding: 1rem;
     padding-top: 3rem;
   }
+}
+
+.grid-item-back:hover {
+  opacity: 1;
 }
 
 .hover-btns {
@@ -74,9 +85,4 @@
     background-color: rgb(171, 222, 233);
     color: rgb(50, 50, 50);
   }
-}
-
-.grid-item-back:hover {
-  opacity:1;
-
 }

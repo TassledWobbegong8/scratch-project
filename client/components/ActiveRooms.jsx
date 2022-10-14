@@ -15,7 +15,9 @@ const ActiveRooms = () => {
       <div className='grid-container'>
         {rooms.map((rooms, i) => (
           <div className='grid-item' key={i}>
-        
+            <div className='grid-item-front'>
+              Heres some text
+            </div>
             {/* hover effect */}
             <div className='grid-item-back'>
               <h2>Testing Card: Back</h2>

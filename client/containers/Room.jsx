@@ -63,6 +63,9 @@ function Room( ) {
       </div>
       <DocumentEditor hostView={hostView}/>
       <Chatbox />
+      <a href='/main/home'>
+        <button id='exit-room-btn'>Exit Room</button>
+      </a>
     </div>
   );
 }
