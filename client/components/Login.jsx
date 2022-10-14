@@ -41,7 +41,6 @@ export default function Login({ setLoggedIn }) {
         username,
         password,
         nickname,
-        host: false,
       })
     });
 
