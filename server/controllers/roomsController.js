@@ -105,6 +105,25 @@ roomsController.deleteRoom = async (req, res, next) => {
   next();
 };
 
+roomsController.addUser = async (req, res, next) => {
+  const { id } = req.params;
+  const { newUser } = req.body;
+  console.log('inside add user');
+  console.log('this is new id', id);
+
+  try {
+    // use $addToSet instead of $push to only retain the unique value
+    //group is host
+    //vote is allowed user
+    await room.updateOne({ _id: id }, { $addToSet: {allowedUsers: newUser } });
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message });
+  }
+};
+
 
 roomsController.updateRoom = async (req, res, next) => {
   const { id } = req.params;

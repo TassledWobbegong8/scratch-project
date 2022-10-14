@@ -31,15 +31,15 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
   };
 
   // edit function to edit card via patch req and update room list
-  const editRoom = async () => {
+  const editRoom = async (e) => {
+    closeModal(e);
     // check that all fields are filled
     if (!updatedRoom.subject) {
-      console.log(updatedRoom);
       setWarning(true);
       return;
     }
     // fetch request will return new room doc
-    const updatedRoomData = await fetch(`/api/room/${id}`, {
+    const updatedRoomData = await fetch(`/api/rooms/update/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-type': 'application/json'
@@ -57,7 +57,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
 
   const editRoomBtn = <Button variant='contained' onClick={(event) => {
     event.preventDefault();
-    editRoom();}}>Update room</Button>;
+    editRoom(event);}}>Update room</Button>;
 
   return (
     <div id='room-editor-modal'>

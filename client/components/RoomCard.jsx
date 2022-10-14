@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+//info passed down is info about room. id & username is used to identified loggedin user
 function RoomCard( { info, id, username } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -13,9 +14,9 @@ function RoomCard( { info, id, username } ) {
 
   // create a new patch request function to add clicked user as "allowed user" to show all users in the room
   async function joinRoom () {
-    console.log('this is logged in user id', username);
-    const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'allowedUsers': `${username}`})};
-    await fetch('/api/users/saveroom', options);
+    const roomid = info._id;
+    const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'newUser': `${username}`})};
+    await fetch(`/api/rooms/newUser/${roomid}`, options);
   }
 
 
@@ -56,7 +57,7 @@ function RoomCard( { info, id, username } ) {
     <div className="roomInfo">
       <p><span>Subject:  </span>{info.subject.toUpperCase()} </p>
       <p><span>Creator:  </span>{info.host.username} </p>
-      <p><span>People Inside: </span>{info.allowedUsers} </p>
+      <p><span>People who visted: </span>{info.allowedUsers} </p>
       <div id='main-button'>
         <Link to='/main/room' state={{ info }}><Button variant='contained' onClick={joinRoom}>Join Room</Button></Link>
         {!saved && <Button variant='contained' id="saveMyRoom" onClick={saveRoom}>Save</Button>}

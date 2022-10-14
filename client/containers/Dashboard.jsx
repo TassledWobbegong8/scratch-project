@@ -17,7 +17,6 @@ function Dashboard( ) {
 
   const verifyLogin = async () => {
     const logged = await fetch('/api/auth/verify').then(response => response.json());
-    console.log('logged', logged);
     setLoggedIn(logged);
   };
 
@@ -33,7 +32,7 @@ function Dashboard( ) {
   return (
     <div id='dashboard'>
       <Routes>
-        <Route path="/" element={<Login setLoggedIn={setLoggedIn} />} />
+        <Route path="/" element={<Login setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>} />
         {loggedIn && <Route path="/main/*" element={<>
           <MainNav setSubject={setSubject} setLoggedIn={setLoggedIn} />
           <Routes>

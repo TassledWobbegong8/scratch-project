@@ -28,6 +28,11 @@ router.get('/user/:id',
   (req, res) => res.status(200).json(res.locals.userRooms)
 );
 
+router.patch('/newUser/:id',
+  roomsController.addUser,
+  (req, res) => res.status(200).json({ message: 'Updated the Room info.' })
+);
+
 router.patch('/update/:id',
   roomsController.updateRoom,
   (req, res) => res.status(200).json({ message: 'Updated the Room info.' })
