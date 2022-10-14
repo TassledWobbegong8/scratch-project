@@ -154,12 +154,14 @@ function Room( ) {
         <div>
           <canvas width={window.innerWidth - 188} height={(window.innerWidth - 188) / 1.5}></canvas>
           <div className="controls">
-            <ul>
-              <li className="red selected"></li>
-              <li className="blue"></li>
-              <li className="yellow"></li>
-            </ul>
-            <button id="revealColorSelect">New Color</button>
+            <div style={{paddingBottom: '50px'}}>
+              <ul>
+                <li className="red selected"></li>
+                <li className="blue"></li>
+                <li className="yellow"></li>
+              </ul>
+              <button id="revealColorSelect">New Color</button>
+            </div>
             <div id="colorSelect">
               <span id="newColor"></span>
               <div className="sliders">
