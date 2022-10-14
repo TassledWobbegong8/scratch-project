@@ -3,14 +3,12 @@ import { useLocation } from 'react-router-dom';
 import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
 
-function Room() {
+function Chatroom() {
   const [hostInfo, setHost] = useState({});
   const [hostView, setHostView] = useState(false);
   const [info, setInfo] = useState({});
 
   const state = useLocation().state;
-
-  console.log('state', useLocation());
 
   // save roomdoc in cookie for retrieval after redirect
   const saveRoom = async () => {
@@ -73,4 +71,4 @@ function Room() {
   );
 }
 
-export default Room;
+export default Chatroom;
