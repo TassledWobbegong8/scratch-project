@@ -56,7 +56,7 @@ export default function Login({ setLoggedIn }) {
       <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
       <TextField type='password' label="Password" onChange={(event) => setPassword(event.target.value)} />
       
-      <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
+      <Button onClick={logIn} variant="contained" aria-label='auth-btn' id='auth-btn'>Login</Button>
       
       <p>{'Don\'t have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
     </div>);
