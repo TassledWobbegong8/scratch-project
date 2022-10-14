@@ -1,4 +1,4 @@
-const User = require('../models/userModel');
+const User = require("../models/userModel");
 
 const usersController = {};
 
@@ -9,17 +9,17 @@ usersController.getUser = async (req, res, next) => {
     let user;
     if (res.locals.token) {
       user = await User.findById(res.locals.token._id)
-        .populate('rooms')
-        .populate('savedRooms');
+        .populate("rooms")
+        .populate("savedRooms");
     } else {
       const { username, password } = req.body;
-      user = await User.findOne({username, password})
-        .populate('rooms')
-        .populate('savedRooms');
+      user = await User.findOne({ username, password })
+        .populate("rooms")
+        .populate("savedRooms");
     }
 
     res.locals.user = user;
-    console.log('get req res.locals.user --> ', res.locals.user);
+    // console.log('get req res.locals.user --> ', res.locals.user);
 
     return next();
   } catch (e) {
@@ -47,7 +47,7 @@ usersController.deleteUser = async (req, res, next) => {
     const deleteDoc = await User.findByIdAndDelete(id);
 
     if (!deleteDoc) {
-      return res.status(400).json({ message: 'Could not delete user' });
+      return res.status(400).json({ message: "Could not delete user" });
     }
 
     return next();
@@ -69,7 +69,7 @@ usersController.createUser = async (req, res, next) => {
     });
 
     if (!newUser) {
-      return res.status(400).json({ message: 'User could not be created' });
+      return res.status(400).json({ message: "User could not be created" });
     }
 
     res.locals.user = newUser;
@@ -142,7 +142,6 @@ usersController.unsaveRoom = async (req, res, next) => {
     return res.status(400).json({ message: e.message });
   }
 };
-
 
 // usersController.getAllUsers = async (req, res, next) => {
 //   try {

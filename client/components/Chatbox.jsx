@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
-// import io from '../../server/server.js';
 import { io } from 'socket.io-client';
+import { useCookies } from 'react-cookie';
+import jwt_decode from 'jwt-decode';
 
-const socket = io("http://localhost:3000");
+const socket = io('http://localhost:3000');
 
 function Chatbox() {
+  //Room State
+  //const [room, setRoom] = useState("");
 
-  const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
+  const [cookies, setCookie] = useCookies();
+
+  const [username, setUsername] = useState('');
+
+  const [message, setMessage] = useState('');
+  const [messageReceived, setMessageReceived] = useState('');
   const [isConnected, setIsConnected] = useState(socket.connected);
 
   // message history is array of objects consisting of message body property and received which is boolean to
@@ -17,23 +24,30 @@ function Chatbox() {
 
   const sendMessage = () => {
     // emit event to server
-    socket.emit('send_message', message );
+    // console.log('msgObj roomId -->', cookies.roomId)
+    const messageObj = { message, room: cookies.roomId, user: username };
+    socket.emit('send_message', messageObj);
 
     // append message object as sent message to messageHistory for rendering
-    setMessageHistory(state => { 
-      const newHistory = [...state, message];
+    setMessageHistory((state) => {
+      const newHistory = [...state, messageObj];
       return newHistory;
     });
   };
-  
-  
-  //const [messageList, setMessages] = useState(fakeMessages);
-  // need function to retrieve messages
 
+  // separate useEffect to join room chat on component render
+  useEffect(() => {
+    // get the user info off jwt cookie
+    const decoded = jwt_decode(cookies.ssid);
+    setUsername(decoded.username);
+    socket.emit('join_room', cookies.roomId);
+  
+  }, []);
+
+  // useEffect listening to socket events containing socket listener for received messeages events to append to message history
   useEffect(() => {
     socket.on('receive_message', (data) => {
-
-      setMessageHistory(state => {
+      setMessageHistory((state) => {
         const newHistory = [...state, data];
         return newHistory;
       });
@@ -41,22 +55,23 @@ function Chatbox() {
   }, [socket]);
 
   const messages = messageHistory.map((e, i) => {
-    return (
-      <p key={i}>
-        {e}
-      </p>
-    );
+    return <p key={i}>{e.user}: { e.message }</p>;
   });
 
   return (
-    <div className='chatbox'>
-      <div id='message-container'>
-        {console.log(messageHistory)}
-        {messages}
-      </div>
+    <div className="chatbox">
+      <div id="message-container">{messages}</div>
       <form>
-        <input type='text' value={message} onChange={(event) =>{setMessage(event.target.value);}}></input>
-        <Button variant='text' onClick={sendMessage}>Send</Button>
+        <input
+          type="text"
+          value={message}
+          onChange={(event) => {
+            setMessage(event.target.value);
+          }}
+        ></input>
+        <Button variant="text" onClick={sendMessage}>
+          Send
+        </Button>
       </form>
     </div>
   );
