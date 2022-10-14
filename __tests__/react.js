@@ -104,6 +104,7 @@ describe('Unit testing React componnets', () => {
 
       await userEvent.click(math);
       // userEvent.click(math);
+      // Matt's suspicion: async await
       expect(handleClick).toHaveBeenCalledTimes(1);
       expect(subject).toBe('math');
     });
