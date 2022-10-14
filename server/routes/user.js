@@ -50,4 +50,11 @@ router.patch(
   (req, res) => res.status(200).json({ message: 'Room successfully unsaved' })
 );
 
+// router for cypress testing purpose, only delete one specific test user.
+router.delete('/test', 
+  usersController.deleteTestUser,
+  (req, res) => {
+    res.status(200).json({message: 'Successfully deleted test user'});
+  });
+
 module.exports = router;

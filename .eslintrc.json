@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["**/test", "**/__tests__"],
+  "ignorePatterns": ["**/test", "**/__tests__", "cypress", "cypress.*"],
   "env": {
     "node": true,
     "browser": true,

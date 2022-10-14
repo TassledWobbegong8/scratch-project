@@ -161,4 +161,20 @@ usersController.getAllUsers = async (req, res, next) => {
   }
 };
 
+usersController.deleteTestUser = async (req, res, next) => {
+
+  try {
+    const deleteDoc = await User.findOneAndDelete({username:'cypress'});
+
+    if (!deleteDoc) {
+      return res.status(400).json({ message: 'Could not delete user' });
+    }
+
+    return next();
+  } catch (e) {
+    console.log(e);
+    return next(e);
+  }
+};
+
 module.exports = usersController;
