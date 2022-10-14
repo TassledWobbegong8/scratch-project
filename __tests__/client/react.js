@@ -1,23 +1,36 @@
-// import React from 'React'
-// import {render, screen} from '@testing-library/react'
-// import userEvent from '@testing-library/react'
-// import '@testing-library/jest-dom'
+/**
+ * @jest-environment jsdom
+ */
 
-// import Login from '../../client/components/Login'
+
+import React from 'React'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/react'
+import '@testing-library/jest-dom'
+import { useNavigate } from 'react-router-dom';
+
+import Login from '../../client/components/Login'
 
 // import App from '../../client/components/App'
 // import '../../client/stylesheets/main.scss'
 // import Dashboard from '../../client/containers/Dashboard'
 
-// describe('Unit testing React components', () => {
-//   describe('Login', () => {
-//     let form;
-//     beforeAll(() => {
-//       form = render(<Login />);
-//     });
+const mockUseNavigate = jest.fn(); // mock useNavigate
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockUseNavigate,
+}));
 
-//     test('loads and displays a form with username field', () => {
-//       expect(form.getByLabelText('Username')).toBeTruthy();
-//     });
-//   });
-// })
+describe('Unit testing React components', () => {
+  describe('Login', () => {
+    let form;
+    beforeAll(() => {
+      form = render(<Login />);
+    });
+
+    test('loads and displays a form with username field', () => {
+      expect(form.getByLabelText('Username')).toBeTruthy();
+
+    });
+  });
+})

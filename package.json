@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --detectOpenHandles",
     "dev": "nodemon server/server.js & webpack-dev-server --open",
     "windev": "concurrently \"nodemon server/server.js\" \"webpack-dev-server --open\"",
     "start": "nodemon server/server.js"
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/TassledWobbegong8/scratch-project#readme",
   "jest": {
-    "testEnvironment": "jest-environment-jsdom"
+    "testEnvironment": "node"
   },
   "dependencies": {
     "@babel/plugin-transform-async-to-generator": "^7.18.6",
