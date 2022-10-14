@@ -72,11 +72,14 @@ describe('Unit testing React componnets', () => {
     let subjectNav;
     let user;
     let room;
-    let handleClick
+    let handleClick;
+    let subject = '';
 
     beforeEach(() => {
       user = userEvent.setup();
-      handleClick = jest.fn()
+      handleClick = jest.fn((e) => {
+        subject = e
+      })
       // room = render(<Dashboard/>, {wrapper: BrowserRouter})
       subjectNav = render(<SubjectNav setSubject={handleClick}/>, {wrapper: BrowserRouter});
 
@@ -102,7 +105,7 @@ describe('Unit testing React componnets', () => {
       await userEvent.click(math);
       // userEvent.click(math);
       expect(handleClick).toHaveBeenCalledTimes(1);
-
+      expect(subject).toBe('math');
     });
    });
 })
