@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
+import $ from 'jquery';
 
 function Room() {
   const [hostInfo, setHost] = useState({});
@@ -62,12 +63,136 @@ function Room() {
     console.log('hostview', hostView);
   }, [info]);
 
+  // js for collapsible button
+  useEffect(() => {
+    const coll = document.getElementsByClassName("collapsible");
+    
+    for (let i = 0; i < coll.length; i++) {
+      console.log(coll[i].getAttribute('listener'));
+      if(coll[i].getAttribute('listener') !== 'true') {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          const content = this.nextElementSibling;
+          if (content.style.maxHeight){
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+    }
+  }, []);
+
+  // blackboard js
+  useEffect(() => {
+    let color = $(".selected").css("background-color");
+    const $canvas = $("canvas");
+    let context = $canvas[0].getContext("2d");
+    let lastEvent;
+    let mouseDown = false;
+    
+    //When clicking on control list items
+    $(".controls").on("click", "li", function() {
+      //Deselect sibling elements
+      $(this).siblings().removeClass("selected");
+      //Select clicked element
+      $(this).addClass("selected");
+      //cache current color
+      color = $(this).css("background-color");
+    });
+    
+    //When "New Color" is pressed
+    $("#revealColorSelect").click(function() {
+      //Show color select or hide the color select
+      changeColor();
+      $("#colorSelect").toggle();
+    });
+    
+    //update the new color span
+    function changeColor() {
+      let r = $("#red").val();
+      let g = $("#green").val();
+      let b = $("#blue").val();
+      $("#newColor").css("background-color", "rgb(" + r + "," + g + ", " + b + ")");
+    }
+    
+    //When color sliders change
+    $("input[type=range]").change(changeColor);
+    
+    //When "Add Color" is pressed
+    $("#addNewColor").click(function() {
+      //Append the color to the controls ul
+      var $newColor = $("<li></li>");
+      $newColor.css("background-color", $("#newColor").css("background-color"));
+      $(".controls ul").append($newColor);
+      //Select the new color
+      $newColor.click();
+    });
+    
+    //On mouse events on the canvas
+    $canvas.mousedown(function(e) {
+      lastEvent = e;
+      mouseDown = true;
+    }).mousemove(function(e) {
+      //Draw lines
+      if (mouseDown) {
+        context.beginPath();
+        context.moveTo(lastEvent.offsetX, lastEvent.offsetY);
+        context.lineTo(e.offsetX, e.offsetY);
+        context.strokeStyle = color;
+        context.stroke();
+        lastEvent = e;
+      }
+    }).mouseup(function() {
+      mouseDown = false;
+    }).mouseleave(function() {
+      $canvas.mouseup();
+    });
+  }, []);
+
   return (
     <div className="room-page">
       <div id="room-page-info">
         <h2>Host: {info.host && (info.host.nickname || hostInfo.nickname)} </h2>
       </div>
-      <DocumentEditor hostView={hostView} />
+
+      <button type="button" className="collapsible">Blackboard</button>
+      <div className="content">
+        <div>
+          <canvas width={window.innerWidth - 188} height={(window.innerWidth - 188) / 1.5}></canvas>
+          <div className="controls">
+            <div style={{paddingBottom: '50px'}}>
+              <ul>
+                <li className="red selected"></li>
+                <li className="blue"></li>
+                <li className="yellow"></li>
+              </ul>
+              <button id="revealColorSelect">New Color</button>
+            </div>
+            <div id="colorSelect">
+              <span id="newColor"></span>
+              <div className="sliders">
+                <p>
+                  <label htmlFor="red">Red</label>
+                  <input id="red" name="red" type="range" min='0' max='255' defaultValue='0'/>
+                </p>
+                <p>
+                  <label htmlFor="green">Green</label>
+                  <input id="green" name="green" type="range" min='0' max='255' defaultValue='0'/>
+                </p>
+                <p>
+                  <label htmlFor="blue">Blue</label>
+                  <input id="blue" name="blue" type="range" min='0' max='255' defaultValue='0'/>
+                </p>
+              </div>
+              <div>
+                <button id="addNewColor">Add Color</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <DocumentEditor hostView={hostView}/>
       <Chatbox />
     </div>
   );
