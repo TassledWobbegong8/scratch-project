@@ -50,7 +50,7 @@ module.exports = {
     },
     proxy: [
       {
-        context: ['/auth', '/api', '/auth_callback', '/access_drive'],
+        context: ['/oauth', '/api'],
         target: 'http://localhost:3000',
       },
     ],

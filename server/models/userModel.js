@@ -4,7 +4,6 @@ const Room = require('./roomModel');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  host: { type: Boolean, required: true },
   username: { type: String, required: true, unique: true },
   nickname: { type: String },
   password: { type: String, required: true, minlength: 8 },

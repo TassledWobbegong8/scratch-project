@@ -1,33 +1,42 @@
-const { findById, findByIdAndUpdate } = require('../models/roomModel');
-const room = require('../models/roomModel');
-const user = require('../models/userModel');
+const { RoomPreferencesOutlined } = require('@mui/icons-material');
+const Room = require('../models/roomModel');
+const User = require('../models/userModel');
 
 const roomsController = {};
 
 roomsController.getAllRooms = async (req, res, next) => {
-  let roomslist;
-  const { subject } = req.params;
+
   try {
+    let roomsList;
+    const { subject } = req.params;
 
-    roomslist = await room.find({ subject: subject }).where('active').equals(true).populate('host');
-    console.log(roomslist);
-    res.locals.roomslist = roomslist;
+    if (subject === 'all') {
+      roomsList = await Room.find({}).where('active').equals(true).populate('host');
+    }
+    else {
+      roomsList = await Room.find({ subject: subject }).where('active').equals(true).populate('host');
+    }
 
-  } catch (e) {
-    console.log(e.message);
+    res.locals.rooms = roomsList;
+
+    if (roomsList.length === 0) {
+      res.locals.rooms = 'There are no active rooms for this subject';
+    }
+    next();
+  } catch (err) {
+    return next({
+      log: 'roomsController.getAllRooms' + err,
+      message: { err: 'roomsController.getAllRooms: ERROR: could not get rooms'}
+    });
   }
-
-  if (roomslist.length === 0) {
-    res.locals.roomslist = 'There are no active rooms for this subject';
-  }
-  next();
 
 };
 
 roomsController.getRoom = async (req, res, next) => {
   try {
-    console.log('getRoom id', res.locals.roomId);
-    const roomDoc = await room.findById(res.locals.roomId);
+
+    // gets room id from cookie
+    const roomDoc = await Room.findById(res.locals.roomId);
     console.log('roomdoc', roomDoc);
     res.locals.roomDoc = roomDoc;
     return next();
@@ -37,92 +46,90 @@ roomsController.getRoom = async (req, res, next) => {
 };
 
 roomsController.openNewRoom = async (req, res, next) => {
-  const { _id: host } = res.locals.token;
-  const { subject, restricted, allowedUsers, active } = req.body;
-  let newRoom;
   try {
-    newRoom = await room.create({
+    // getting current user id from token
+    const { _id: host } = res.locals.token;
+    // getting room info from request
+    const { subject, restricted, allowedUsers, active } = req.body;
+    const newRoom = await Room.create({
       host, subject, restricted,
       allowedUsers, active
     });
     // add new room to host user's rooms list
-    const hostUser = await user.findById(host);
+    const hostUser = await User.findById(host);
     hostUser.rooms.push(newRoom._id);
     await hostUser.save();
 
     res.locals.newRoom = newRoom;
-    console.log(newRoom);
-  } catch (e) {
-    console.log(e.message);
+    return next();
+  } catch (err) {
+    return next({
+      log: 'roomsController.openNewRoom' + err,
+      message: { err: 'roomsController.openNewRoom: ERROR: could not create room'}
+    });
   }
-
-  if (!newRoom) {
-    return res.status(404).json({ message: 'No new room was created' });
-  }
-  next();
 
 };
 
+// the below controller is currently not in use as of 10-11-22
 roomsController.getUserRooms = async (req, res, next) => {
-  const { user_id } = req.params;
-  let rooms;
+
   try {
-    rooms = await room.find({ host: user_id });
+    const { user_id } = req.params;
+
+    const rooms = await Room.find({ host: user_id });
     res.locals.userRooms = rooms;
-  } catch (e) {
-    console.log(e.message);
-  }
 
-  if (rooms.length === 0) {
-    return res.status(404).json({ message: 'There are no rooms associated to this user ID' });
+    return next();
+  } catch (err) {
+    return next({
+      log: 'roomsController.getUserRooms' + err,
+      message: { err: 'roomsController.getUserRooms: ERROR: could not get user rooms'}
+    });
   }
-
-  next();
 
 };
 
 roomsController.deleteRoom = async (req, res, next) => {
-  const { id } = req.params;
 
-  let roomDelete;
   try {
-
-    roomDelete = await room.findOneAndDelete({ _id: id });
+    const { id: _id } = req.params;
+    const roomDelete = await Room.findOneAndDelete({ _id });
     res.locals.deletedRoom = roomDelete;
-    // updated host users rooms list
 
-    const removedFromUser = await user.findOneAndUpdate({ _id: roomDelete.host },
-      { $pull: { rows: id } },
+    // updated host users rooms list
+    await User.findOneAndUpdate({ _id: roomDelete.host },
+      { $pull: { rows: _id } },
       { new: true });
 
-  } catch (e) {
-    console.log(e.message);
-  }
+    return next();
 
-  if (!roomDelete) {
-    return res.status(404).json({ message: 'Unable to find the room to delete' });
+  } catch (err) {
+    return next({
+      log: 'roomsController.deleteRoom' + err,
+      message: { err: 'roomsController.deleteRoom: ERROR: could not delete room'}
+    });
   }
-  next();
 };
 
 
 roomsController.updateRoom = async (req, res, next) => {
-  const { id } = req.params;
-  const { subject, restricted, maxallowed, allowedUsers } = req.body;
-  let updatedRoom;
+
   try {
+    // collect room information
+    const { id } = req.params;
+    const { subject, restricted, maxallowed, allowedUsers } = req.body;
 
-    updatedRoom = await room.findByIdAndUpdate(id, { subject, restricted, maxallowed, allowedUsers });
+    const updatedRoom = await Room.findByIdAndUpdate(id, { subject, restricted, maxallowed, allowedUsers });
     res.locals.updatedRoom = updatedRoom;
-  } catch (e) {
-    console.log(e.message);
-  }
 
-  if (!updatedRoom) {
-    return res.status(404).json({ message: 'Unable to find the room' });
+    return next();
+  } catch (err) {
+    return next({
+      log: 'roomsController.updateRoom' + err,
+      message: { err: 'roomsController.updateRoom: ERROR: could not update room'}
+    });
   }
-
-  next();
 };
 
 module.exports = roomsController;

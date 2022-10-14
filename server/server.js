@@ -1,29 +1,18 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const express = require('express');
-
-const apiRouter = require('./routes/api');
+require('dotenv').config();
 
 /////////////////////
-const { google } = require('googleapis');
-const jwt = require('jsonwebtoken');
-const OAuth2 = google.auth.OAuth2;
-const CONFIG = require('./config');
 const cookieParser = require('cookie-parser');
-
-const oauth2Client = new OAuth2(CONFIG.oauth2Credentials.client_id, CONFIG.oauth2Credentials.client_secret, CONFIG.oauth2Credentials.redirect_uris[0]);
+const apiRouter = require('./routes/api');
+const oAuthRouter = require('./routes/oauth');
 ///////////////////////
-
-
-// require("mongoose-type-url");
 
 const PORT = 3000;
 
-const MONGO_URI =
-  'mongodb+srv://scratch:project@scratch-project-cluster.dphri14.mongodb.net/?retryWrites=true&w=majority';
-
 mongoose
-  .connect(MONGO_URI, {
+  .connect(process.env.MONGO_URI, {
     // options for the connect method to parse the URI
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -31,15 +20,17 @@ mongoose
   .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
 
+
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 ///////////////////////
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 //////////////////////
 
 
+<<<<<<< HEAD
 // placeholder route for production
 // app.use('/build', express.static(path.join(__dirname, '../build')));
 
@@ -127,7 +118,16 @@ app.get('/get_doc', async (req, res) => {
 });
 
 
+=======
+// placeholder route for serving app 
+app.use('/', express.static(path.resolve(__dirname, '../build')));
+
+///////////////////
+>>>>>>> dev
 app.use('/api', apiRouter);
+app.use('/oauth', oAuthRouter);
+///////////////////
+
 
 app.use((req, res) =>
   res.status(404).send('Page not found')
