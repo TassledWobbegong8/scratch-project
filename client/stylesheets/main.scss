@@ -3,6 +3,7 @@
 @import './profile';
 @import './login';
 @import './room';
+@import './activeRooms.scss';
 
 * {
   margin: 0;
@@ -46,7 +47,7 @@ button:hover {
   background-color: transparent;
   background-position: 30px;
   background-size: 15px 15px;
-  padding-bottom: 11em; //y
+  padding-bottom: 14em;
 }
 
 .main-nav {

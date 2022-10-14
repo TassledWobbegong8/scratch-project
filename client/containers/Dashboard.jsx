@@ -9,6 +9,7 @@ import Profile from './Profile';
 import Room from './Room';
 import RoomContainer from './RoomContainer';
 import SettingsContainer from './SettingsContainer';
+import ActiveRooms from '../components/ActiveRooms';
 
 function Dashboard( ) {
   const [subject, setSubject] = useState('');
@@ -25,7 +26,8 @@ function Dashboard( ) {
     verifyLogin();
   }, []);
 
-  const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
+  const noSubject = <div className='active-rooms-container'><ActiveRooms /></div>;
+  // const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
   const yesSubject = <RoomContainer id={loggedIn._id} subject={subject} username={loggedIn.username}/>;
 
   return (
