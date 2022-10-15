@@ -4,7 +4,7 @@ const user = require('../models/userModel');
 
 const roomsController = {};
 
-roomsController.getAllRooms = async (req, res, next) => {
+roomsController.getRoomsSubject = async (req, res, next) => {
   let roomslist;
   const { subject } = req.params;
   try {
@@ -23,6 +23,27 @@ roomsController.getAllRooms = async (req, res, next) => {
   next();
 
 };
+
+//get all rooms to populate on the front screen
+roomsController.getAllRooms = async (req, res, next) => {
+  let allRooms;
+  try {
+
+    allRooms = await room.find().where('active').equals(true).populate('host');
+    res.locals.roomslist = allRooms;
+
+  } catch (e) {
+    console.log(e.message);
+  }
+
+  if (allRooms.length === 0) {
+    return res.status(400).json({ message: 'Could not find any active rooms' });
+  }
+  next();
+
+};
+
+
 
 roomsController.getRoom = async (req, res, next) => {
   try {
