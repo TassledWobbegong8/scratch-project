@@ -16,7 +16,7 @@ cookieController.setUserCookie = async (req, res, next) => {
       username
     }, privateKey);
 
-    await res.cookie('ssid', token, {httpOnly: true});
+    await res.cookie('ssid', token, {httpOnly: false});
     res.locals.loggedIn = true;
     return next();
   } catch (err) {
@@ -71,7 +71,7 @@ cookieController.deleteSession = async (req, res, next) => {
 cookieController.setRoomCookie = async (req, res, next) => {
   try {
     // console.log('setting cookie')
-    await res.cookie('roomId', req.body.room, {httpOnly: true});
+    await res.cookie('roomId', req.body.room, {httpOnly: false});
     return next();
   } catch (err) {
     return next({
