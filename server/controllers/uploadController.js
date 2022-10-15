@@ -11,6 +11,8 @@ const region = process.env.AWS_BUCKET_REGION;
 const awsKey = process.env.AWS_BUCKET_ACCESS_KEY;
 const awsSecret  = process.env.AWS_BUCKET_SECRET_KEY;
 
+const uploadController = {};
+
 // initializing S3Client object with id and accesskey as credentials
 const s3 = new S3Client({
   credentials: {
@@ -20,12 +22,14 @@ const s3 = new S3Client({
   region: region,
 });
 
-exports.sendFile = async (req, res, next) => {
+
+uploadController.sendFile = async (req, res, next) => {
   
-  console.log('SEND FILE MIDDLEWARE ', req.file);
+  // console.log('SEND FILE MIDDLEWARE ', req.file);
   
   try {
     //Create readstream from the req.file object
+    console.log('SENDFILE REQ', req.cookies);
     const filestream = await fs.createReadStream(req.file.path);
 
     //Define PutObjectCommand params
@@ -40,10 +44,18 @@ exports.sendFile = async (req, res, next) => {
     const command = new PutObjectCommand(params);
     const awsResponse = await s3.send(command);
 
+    // console.log('SENDFILE RESPONSE', awsResponse, 'FILENAME', req.file.filename);
+    
+    //if $metadata.httpStatusCode is 200
+    //save req.file.filename to res.locals.fileName
+    //ese send back the httpStatusCode
+    if(awsResponse.$metadata.httpStatusCode == 200) res.locals.fileName = req.file.filename;
+    else return res.status(awsResponse.$metadata.httpStatusCode).send('File could not be uploaded to aws');
     //delete file on the server once it is successfully uploaded to bucket
     unlinkFile(req.file.path);
 
-    res.status(200).json(awsResponse);
+    return next();
+    // res.status(200).json(awsResponse);
   } catch (err) {
     
     return next({
@@ -56,7 +68,7 @@ exports.sendFile = async (req, res, next) => {
   
 };
 
-exports.getUserFiles = async(req, res, next) => {
+uploadController.getUserFiles = async(req, res, next) => {
   const key = req.params.imageKey;
 
   const params = {
@@ -72,8 +84,10 @@ exports.getUserFiles = async(req, res, next) => {
   //     .catch(err => {
   //       return err; 
   //     });
-  
+  console.log(command);
   const url = await getSignedUrl(s3, command, { expiresIn: 36000 });
 
   res.status(200).send(url);
 };
+
+module.exports = uploadController;

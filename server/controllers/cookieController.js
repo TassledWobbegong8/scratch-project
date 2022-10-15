@@ -28,6 +28,7 @@ cookieController.setUserCookie = async (req, res, next) => {
 cookieController.verifyUser = async (req, res, next) => {
   // check and verify jwt in cookie
   try {
+    // console.log('VERIFYUSER: ', req);
     const token = req.cookies.ssid;
     if (!token) {
       res.locals.token = false;
