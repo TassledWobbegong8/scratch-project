@@ -10,6 +10,10 @@
   padding: 20px;
   border: 1px solid $accent-color-light;
   background-color: white;
+
+  h3 {
+    margin-bottom: 15px;
+  }
 }
 .file-picker {
   input {
@@ -19,3 +23,48 @@
     margin: 0 20px;
   }
 }
+#chatbox-input {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  form input {
+    width: 300px;
+    height: 35px;
+    padding: 2px;
+  }
+  #chatbox-input-button {
+    padding: 5px;
+  }
+}
+
+
+#message-container {
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+
+  height: 300px;
+  padding: 20px;
+
+
+  background-color: white;
+  border: 1px solid $accent-color-light;
+  border-radius: $border-radius;
+
+  h3 {
+    margin-bottom: 15px;
+    position: relative;
+  }
+
+  #message-container-inner {
+    display: flex;
+    flex-direction: column;
+  
+    height: 280px;
+    padding: 20px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
