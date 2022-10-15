@@ -8,7 +8,6 @@ usersController.getUser = async (req, res, next) => {
   // find either the id from the jwt cookie OR the username from the body
 
   try {
-    // console.log('GETUSER: ', req)
     let user;
     if (res.locals.token) {
       user = await User.findById(res.locals.token._id)
