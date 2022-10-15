@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@mui/material';
 import { io } from 'socket.io-client';
 import { useCookies } from 'react-cookie';
@@ -22,6 +22,8 @@ function Chatbox(props) {
   // indicate if message was received or sent
   const [messageHistory, setMessageHistory] = useState([]);
 
+  const last = useRef(null);
+
   const sendMessage = () => {
     // emit event to server
     // console.log('msgObj roomId -->', cookies.roomId)
@@ -37,12 +39,11 @@ function Chatbox(props) {
 
   // separate useEffect to join room chat on component render
   useEffect(() => {
-    console.log('chatbox useeffect')
+    console.log('chatbox useeffect');
     // get the user info off jwt cookie
     const decoded = jwt_decode(cookies.ssid);
     setUsername(decoded.username);
     socket.emit('join_room', props.room);
-  
   }, []);
 
   // useEffect listening to socket events containing socket listener for received messeages events to append to message history
@@ -55,26 +56,67 @@ function Chatbox(props) {
     });
   }, [socket]);
 
+  useEffect(() => {
+    last.current?.scrollIntoView({ behavior: 'smooth' });
+  });
+
   const messages = messageHistory.map((e, i) => {
-    return <p key={i}>{e.user}: { e.message }</p>;
+    console.log('messages e --> ', e);
+
+    if (e.user === username) {
+      const rightStyle = {
+        color: '#1976d2',
+        textAlign: 'right',
+        backgroundColor: '#ededed',
+        padding: '12px',
+      };
+      return (
+        <div key={i} style={rightStyle} className="chatbox-msg">
+          <p style={{ fontWeight: 'bold', fontSize: '12px' }}>{e.user}</p>
+          <p style={{ color: 'grey' }}>{e.message}</p>
+        </div>
+      );
+    } else {
+      const leftStyle = {
+        color: '#1976d2',
+        textAlign: 'left',
+        backgroundColor: '#ededee',
+        padding: '12px',
+      };
+      return (
+        <div key={i} style={leftStyle} className="chatbox-msg">
+          <p style={{ fontWeight: 'bold', fontSize: '12px' }}>{e.user}</p>
+          <p style={{ color: 'grey' }}>{e.message}</p>
+        </div>
+      );
+    }
   });
 
   return (
     <div className="chatbox">
       {console.log('chatbox renders')}
-      <div id="message-container">{messages}</div>
-      <form>
-        <input
-          type="text"
-          value={message}
-          onChange={(event) => {
-            setMessage(event.target.value);
-          }}
-        ></input>
-        <Button variant="text" onClick={sendMessage}>
-          Send
-        </Button>
-      </form>
+      <div id="message-container">
+        {messages}
+        <div ref={last} />
+      </div>
+      <div id="chatbox-input">
+        <form>
+          <input
+            type="text"
+            value={message}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
+          ></input>
+          <Button
+            id="chatbox-input-button"
+            variant="text"
+            onClick={sendMessage}
+          >
+            Send
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
