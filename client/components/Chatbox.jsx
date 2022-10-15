@@ -68,11 +68,12 @@ function Chatbox(props) {
         color: '#1976d2',
         textAlign: 'right',
         backgroundColor: '#ededed',
-        padding: '12px',
+        padding: '8px',
+        marginBottom: '5px'
       };
       return (
         <div key={i} style={rightStyle} className="chatbox-msg">
-          <p style={{ fontWeight: 'bold', fontSize: '12px' }}>{e.user}</p>
+          <p style={{ fontWeight: 'bold', fontSize: '14px' }}>{e.user}</p>
           <p style={{ color: 'grey' }}>{e.message}</p>
         </div>
       );
@@ -80,12 +81,13 @@ function Chatbox(props) {
       const leftStyle = {
         color: '#1976d2',
         textAlign: 'left',
-        backgroundColor: '#ededee',
-        padding: '12px',
+        backgroundColor: '#ededed',
+        padding: '8px',
+        marginBottom: '5px'
       };
       return (
         <div key={i} style={leftStyle} className="chatbox-msg">
-          <p style={{ fontWeight: 'bold', fontSize: '12px' }}>{e.user}</p>
+          <p style={{ fontWeight: 'bold', fontSize: '14px' }}>{e.user}</p>
           <p style={{ color: 'grey' }}>{e.message}</p>
         </div>
       );
@@ -96,7 +98,8 @@ function Chatbox(props) {
     <div className="chatbox">
       {console.log('chatbox renders')}
       <div id="message-container">
-        {messages}
+        <h3>Room Chat</h3>
+        <div id="message-container-inner">{messages}</div>
         <div ref={last} />
       </div>
       <div id="chatbox-input">
