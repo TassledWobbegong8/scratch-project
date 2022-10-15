@@ -15,17 +15,17 @@ const FileUpload = () => {
       console.log(key, value);
     }
 
-    const response = await fetch('http://localhost:3000/api/uploads', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-    });
-
-    // const response = await axios.post('http://localhost:3000/api/uploads', formData, {
-    //   headers: { 'Content-Type': 'multipart/form-data'},
+    // const response = await fetch('http://localhost:3000/api/uploads', {
+    //   method: 'POST',
+    //   body: formData,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   },
     // });
+
+    const response = await axios.post('http://localhost:3000/api/uploads', formData, {
+      headers: { 'Content-Type': 'multipart/form-data'},
+    });
     
     console.log(response);
   };
