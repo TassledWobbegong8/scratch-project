@@ -26,10 +26,11 @@ function Dashboard( ) {
   }, []);
 
   const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
-  const yesSubject = <RoomContainer id={loggedIn._id} subject={subject}/>;
+  const yesSubject = <RoomContainer id={loggedIn._id} subject={subject} user={loggedIn.username}/>;
 
   return (
     <div id='dashboard'>
+      {/* {console.log(loggedIn)} */}
       <Routes>
         <Route path="/" element={<Login setLoggedIn={setLoggedIn} />} />
         {loggedIn && <Route path="/main/*" element={<>

@@ -9,12 +9,18 @@ usersController.getUser = async (req, res, next) => {
     let user;
     if (res.locals.token) {
       user = await User.findById(res.locals.token._id)
-        .populate("rooms")
+        .populate({
+          path: 'rooms',
+          populate: { path: 'pendingUsers' }
+        })
         .populate("savedRooms");
     } else {
       const { username, password } = req.body;
       user = await User.findOne({ username, password })
-        .populate("rooms")
+        .populate({
+          path: 'rooms',
+          populate: { path: 'pendingUsers' }
+        })
         .populate("savedRooms");
     }
 

@@ -49,4 +49,12 @@ router.get('/:subject',
   (req, res) => res.status(200).json(res.locals.roomslist)
 );
 
+// route to approve pending user
+router.patch('/approve/:room_id',
+  roomsController.approveUser,
+  (req, res) => res.status(204).end()
+);
+
+
+
 module.exports = router;
