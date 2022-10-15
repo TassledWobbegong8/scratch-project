@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 
 const socket = io('http://localhost:3000');
 
-function Chatbox() {
+function Chatbox(props) {
   //Room State
   //const [room, setRoom] = useState("");
 
@@ -25,7 +25,7 @@ function Chatbox() {
   const sendMessage = () => {
     // emit event to server
     // console.log('msgObj roomId -->', cookies.roomId)
-    const messageObj = { message, room: cookies.roomId, user: username };
+    const messageObj = { message, room: props.room, user: username };
     socket.emit('send_message', messageObj);
 
     // append message object as sent message to messageHistory for rendering
@@ -37,10 +37,11 @@ function Chatbox() {
 
   // separate useEffect to join room chat on component render
   useEffect(() => {
+    console.log('chatbox useeffect')
     // get the user info off jwt cookie
     const decoded = jwt_decode(cookies.ssid);
     setUsername(decoded.username);
-    socket.emit('join_room', cookies.roomId);
+    socket.emit('join_room', props.room);
   
   }, []);
 
@@ -60,6 +61,7 @@ function Chatbox() {
 
   return (
     <div className="chatbox">
+      {console.log('chatbox renders')}
       <div id="message-container">{messages}</div>
       <form>
         <input
