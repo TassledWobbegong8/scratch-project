@@ -6,7 +6,7 @@ const privateKey = 'wobbegong';
 cookieController.setUserCookie = async (req, res, next) => {
   if (!res.locals.user) {
     res.locals.loggedIn = false;
-    return next();
+    return res.status(401).json(res.locals.loggedIn);
   }
   try {
     const { _id, username } = res.locals.user;

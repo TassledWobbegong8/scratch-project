@@ -17,9 +17,5 @@ router.get('/logout', cookieController.deleteSession, (req, res) => {
 router.post('/login', usersController.getUser, cookieController.setUserCookie, (req, res) => {
   res.status(200).json(res.locals.loggedIn);
 });
-// router.post('/login', (req, res) => {
-//   console.log(req.body);
-//   res.status(200).send('test')
-// })
 
 module.exports = router;
