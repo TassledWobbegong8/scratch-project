@@ -4,7 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function RoomCard( { info, id } ) {
+function RoomCard( { info, id, user } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -48,9 +48,11 @@ function RoomCard( { info, id } ) {
 
   const roomInfo = (
     <div className="roomInfo">
+      {console.log(info)}
       <p><span>Subject:  </span>{info.subject.toUpperCase()} </p>
       <p><span>Creator:  </span>{info.host.username} </p>
       <p><span>People Inside: </span>{info.allowedUsers} </p>
+      <p><span>Restricted: </span>{info.restricted ? 'Yes' : 'No'} </p>
       <div id='main-button'>
         <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
         {!saved && <Button variant='contained' id="saveMyRoom" onClick={saveRoom}>Save</Button>}

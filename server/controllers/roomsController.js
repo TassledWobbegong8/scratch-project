@@ -125,4 +125,29 @@ roomsController.updateRoom = async (req, res, next) => {
   next();
 };
 
+roomsController.approveUser = async (req, res, next) => {
+
+  // get room ID from params
+  const roomID = req.params.room_id;
+
+  // get user id from req body
+  const userID = req.body._id;
+
+  // put user into approved user array
+  try {
+    await room.updateOne({ _id: roomID }, { $pull: { pendingUsers: userID } });
+
+    await room.updateOne({ _id: roomID }, { $push: { allowedUsers: userID } });
+
+    return next();
+
+  } catch (e) {
+    console.log(e.message);
+  }
+
+
+};
+
+
+
 module.exports = roomsController;

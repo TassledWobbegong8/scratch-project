@@ -15,17 +15,57 @@ function ProfileRoomCard({ fetchUser, info }) {
     fetchUser();
   };
 
+  async function approvePendingUser(e) {
+    console.log('user approved');
+    console.log(info);
+    // grabbing user id
+    try {
+      const userId = {
+        _id: e._id
+      };
+      // make fetch request to backend, passing in user id
+      const data = await fetch(`/api/rooms/approve/${info._id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(userId),
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function denyPendingUser() {
+    console.log('user denied');
+  }
+
   const closeModal = (event) => {
     event.preventDefault();
     setModal(false);
   };
 
+  // map out pending users with buttons 'approve' and 'deny' 
+  const pendingUsers = info.pendingUsers.map((e, i) => {
+    console.log('pendingUsers e --> ', e);
+    return (
+      <div key={i}>
+        <span >{e.username}</span>
+        {/* <Button id="exitRoomInfo" onClick={showRoomInfo}>Back</Button>
+        <Button id="exitRoomInfo" onClick={showRoomInfo}>Back</Button> */}
+        <Button id="approvePendingUser" onClick={() => approvePendingUser(e)}>Approve</Button>
+        <Button id="denyPendingUser" onClick={denyPendingUser}>Deny</Button>
+      </div>
+    );
+      
+  });
 
   return (
     <div className='profile-room'>
+      {/* {console.log(info.pendingUsers[0].username)} */}
       <p><label>Subject: </label>{info.subject}</p>
       <p><label>Restricted: </label>{info.restricted ? 'Yes' : 'No'}</p>
       <p><label>Allowed users: </label></p>
+      <div><label>Pending users: </label>{pendingUsers}</div>
       <Link to='/main/room' state={{ info }}><Button variant='contained' id="open-room-btn" >Open Room</Button></Link>
 
       <Button variant='outlined' id="edit-room-btn" onClick={() => setModal(true)}>Edit Room</Button>
