@@ -80,7 +80,7 @@ function Chatbox(props) {
       const leftStyle = {
         color: '#1976d2',
         textAlign: 'left',
-        backgroundColor: '#ededed',
+        backgroundColor: '#ededee',
         padding: '12px',
       };
       return (
