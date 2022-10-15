@@ -8,6 +8,7 @@ function Room( ) {
   const [hostInfo, setHost] = useState({});
   const [hostView, setHostView] = useState(false);
   const [info, setInfo] = useState({});
+  const [imgUrl, setImgUrl] = useState('');
 
   const state = useLocation().state;
 
@@ -75,6 +76,18 @@ function Room( ) {
         });
       }
     }
+  }, []);
+
+  // js for setting a background image of the canvas
+  useEffect(() => {
+    const fileReader = new FileReader();
+    const input = document.getElementById('blackBoardUploadButton');
+    input.addEventListener('change', function(e) {
+      console.log(fileReader);
+      fileReader.onload = (e) => {setImgUrl(e.target.result)};
+      fileReader.readAsDataURL(this.files[0]);
+    });
+    
   }, []);
 
   // blackboard js
@@ -152,7 +165,8 @@ function Room( ) {
       <button type="button" className="collapsible">Blackboard</button>
       <div className="content">
         <div>
-          <canvas width={window.innerWidth - 188} height={(window.innerWidth - 188) / 1.5}></canvas>
+          {/* Canvas width is 90% of the screen's width minus 100px. The height is 60% of the canvas width*/}
+          <canvas style={{backgroundImage: `url(${imgUrl})`}} width={(window.innerWidth * 0.90) - 100} height={((window.innerWidth * 0.90) - 100) * .6}></canvas>
           <div className="controls">
             <div style={{paddingBottom: '50px'}}>
               <ul>
@@ -160,7 +174,7 @@ function Room( ) {
                 <li className="blue"></li>
                 <li className="yellow"></li>
               </ul>
-              <button id="revealColorSelect">New Color</button>
+              <button id="revealColorSelect" className="buttonDesign">New Color</button>
             </div>
             <div id="colorSelect">
               <span id="newColor"></span>
@@ -181,6 +195,12 @@ function Room( ) {
               <div>
                 <button id="addNewColor">Add Color</button>
               </div>
+            </div>
+            <div>
+              <label className="uploadFileLabel buttonDesign" htmlFor="">
+                <input className="buttonDesign" type='file' id='blackBoardUploadButton'/>
+                Upload File
+              </label>
             </div>
           </div>
         </div>
