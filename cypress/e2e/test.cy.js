@@ -94,7 +94,7 @@ describe('test', () => {
 
   })
 
-  context.only('avoid signup with an existing username', () => {
+  context('avoid signup with an existing username', () => {
     beforeEach(() => {
       cy.get('span').contains('Click here!').click()
     })
@@ -102,12 +102,46 @@ describe('test', () => {
       cy.get('h2').contains('Signup Details')
     })
 
-    it('try signup with an existing username', () => {
+    it('show error message', () => {
+      cy.intercept('POST', '/api/users').as('signup')
+
       cy.get('input').eq(0).type('test')
       cy.get('input').eq(1).type('test')
       cy.get('input').eq(2).type('cypress1')
-      // should not able to move forward. but still passing.
+      cy.get('button').contains('Signup').click()
+      cy.wait('@signup').then(({response}) => {
+        expect(response.statusCode).to.eq(409)
+      })
+      cy.get('.warning').contains('Please select another username.')
     })
+  })
+
+  context('avoid signup with password less than 8 digits', () => {
+    beforeEach(() => {
+      cy.get('span').contains('Click here!').click()
+    })
+    it('route to signup page', () => {
+      cy.get('h2').contains('Signup Details')
+    })
+
+    it('show error message', () => {
+      cy.intercept('POST', '/api/users').as('signup')
+
+      cy.get('input').eq(0).type('test99999')
+      cy.get('input').eq(1).type('test') // no password
+      cy.get('button').contains('Signup').click()
+      cy.wait('@signup').then(({response}) => {
+        expect(response.statusCode).to.eq(411)
+      })
+      cy.get('.warning').contains('Password need to be at least 8 digit')
+
+      cy.get('input').eq(2).type('cypress') // 7 digit
+      cy.get('button').contains('Signup').click()
+      cy.wait('@signup').then(({response}) => {
+        expect(response.statusCode).to.eq(411)
+      })
+      cy.get('.warning').contains('Password need to be at least 8 digit')
+  })
   })
 
 

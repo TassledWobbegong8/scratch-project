@@ -56,6 +56,22 @@ usersController.deleteUser = async (req, res, next) => {
   }
 };
 
+// check if username exist or password is less than 8 digits
+usersController.validateUser = async (req, res, next) => {
+  const { username, password } = req.body;
+  if (password.length < 8) return res.status(411).json({ message: 'password must be 8 digit or more' });
+  try {
+    const existingUser = await User.findOne({ username: username });
+    if (existingUser !== null) return res.status(409).json({ message: 'username has been taken' });
+    
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message });
+  }
+
+  return next();
+};
+
 usersController.createUser = async (req, res, next) => {
   const { host, username, password, nickname } = req.body;
 
