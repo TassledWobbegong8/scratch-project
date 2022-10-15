@@ -18,7 +18,8 @@ router.get('/', cookieController.verifyUser, usersController.getUser, (req, res)
   res.status(200).json(res.locals.user)
 );
 
-router.post('/', usersController.createUser, cookieController.setUserCookie, (req, res) =>
+// Controller for signup
+router.post('/', usersController.validateUser, usersController.createUser, cookieController.setUserCookie, (req, res) =>
   res.status(200).json(res.locals.user)
 );
 
