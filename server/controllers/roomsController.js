@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 const roomsController = {};
 
 roomsController.getAllRooms = async (req, res, next) => {
-  
+
   try {
     let roomsList;
     const { subject } = req.params;
@@ -15,7 +15,7 @@ roomsController.getAllRooms = async (req, res, next) => {
     }
     else {
       roomsList = await Room.find({ subject: subject }).where('active').equals(true).populate('host');
-    } 
+    }
 
     res.locals.rooms = roomsList;
 
@@ -34,6 +34,7 @@ roomsController.getAllRooms = async (req, res, next) => {
 
 roomsController.getRoom = async (req, res, next) => {
   try {
+
     // gets room id from cookie
     const roomDoc = await Room.findById(res.locals.roomId);
     console.log('roomdoc', roomDoc);
@@ -90,7 +91,7 @@ roomsController.getUserRooms = async (req, res, next) => {
 };
 
 roomsController.deleteRoom = async (req, res, next) => {
-  
+
   try {
     const { id: _id } = req.params;
     const roomDelete = await Room.findOneAndDelete({ _id });

@@ -30,6 +30,7 @@ function SubjectNav({ subject, setSubject }) {
   const handleClick = (value) => {
     // react router????
     setSubject(value);
+    console.log(subject);
   };
 
   return (

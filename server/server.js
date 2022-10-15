@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();
 
 /////////////////////
@@ -24,13 +25,14 @@ mongoose
 const app = express();
 
 ///////////////////////
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 //////////////////////
 
 
-// placeholder route for serving app 
+// placeholder route for serving app
 app.use('/', express.static(path.resolve(__dirname, '../build')));
 
 ///////////////////
@@ -54,6 +56,6 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
+module.exports = app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 }); //listens on port 3000 -> http://localhost:3000/

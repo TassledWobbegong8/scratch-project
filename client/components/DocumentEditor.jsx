@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import FilePicker from './FilePicker';
+import FileUpload from './FileUpload';
 
 function DocumentEditor({ hostView }) {
   // some fake data for rendering purposes
@@ -35,6 +36,7 @@ function DocumentEditor({ hostView }) {
     <div className='doc-editor'>
       {openPicker && <FilePicker fileList={fileList} setDocument={setDocument} />}
       {hostView && !openPicker && <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>}
+      <FileUpload/>
     </div>
   );
 }
