@@ -6,10 +6,12 @@ const uploadController = require('../controllers/uploadController');
 // set multer diskStorage configs
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    console.log('MULTER STORAGE DESTINATION ', req);
     cb(null, 'public/uploads');
   },
   filename: (req, file, cb) => {
-    const prefix = Date.now() + '_';
+    console.log(file);
+    const prefix = Date.now().toLocaleString() + '_';
     cb(null, `${prefix}${file.originalname}`);
   }
 });
@@ -26,7 +28,7 @@ const upload = multer({
   fileFilter: multerFilter
 });
 
-router.post('/', upload.single('files'), uploadController.sendFile);
+router.post('/', upload.single('file'), uploadController.sendFile);
 
 router.get('/:imageKey', uploadController.getUserFiles);
 
