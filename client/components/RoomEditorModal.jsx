@@ -13,6 +13,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
       setWarning(true);
       return;
     }
+	
     // fetch request will return new room doc
     const newRoomData = await fetch('/api/rooms', {
       method: 'POST',
