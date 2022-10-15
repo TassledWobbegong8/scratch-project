@@ -1,0 +1,59 @@
+[
+  {
+    "_id": "63461f4cfc8dbb3d2be6ac25",
+    "subject": "math",
+    "active": true,
+    "host": {
+      "_id": "63461f2bfc8dbb3d2be6ac17",
+      "host": false,
+      "username": "leo",
+      "nickname": "leo",
+      "password": "leooooooo7",
+      "rooms": ["63461f4cfc8dbb3d2be6ac25", "6348c1bc6f95d34ab1bf86a9"],
+      "savedRooms": ["63461f4cfc8dbb3d2be6ac25"],
+      "__v": 2
+    },
+    "allowedUsers": [],
+    "pendingUsers": [],
+    "restricted": false,
+    "__v": 0
+  },
+  {
+    "_id": "634621a0834d061add429256",
+    "subject": "math",
+    "active": true,
+    "host": {
+      "_id": "63461cd9e6c5c328a5e34779",
+      "host": false,
+      "username": "roger",
+      "nickname": "roger",
+      "password": "rogerwan",
+      "rooms": ["634621a0834d061add429256", "6347795d12c37b14a982986d"],
+      "savedRooms": [],
+      "__v": 2
+    },
+    "allowedUsers": [],
+    "pendingUsers": [],
+    "restricted": false,
+    "__v": 0
+  },
+  {
+    "_id": "6347795d12c37b14a982986d",
+    "subject": "math",
+    "active": true,
+    "host": {
+      "_id": "63461cd9e6c5c328a5e34779",
+      "host": false,
+      "username": "roger",
+      "nickname": "roger",
+      "password": "rogerwan",
+      "rooms": ["634621a0834d061add429256", "6347795d12c37b14a982986d"],
+      "savedRooms": [],
+      "__v": 2
+    },
+    "allowedUsers": [],
+    "pendingUsers": [],
+    "restricted": false,
+    "__v": 0
+  }
+]
