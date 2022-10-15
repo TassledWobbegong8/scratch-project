@@ -10,6 +10,9 @@ import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
 import Room from './Room';
 
+//dashboard - add fetch for the user aws array
+//fake data array, pass that through props to rooms
+
 function Dashboard( ) {
   const [subject, setSubject] = useState('');
   const [loggedIn, setLoggedIn] = useState(true);

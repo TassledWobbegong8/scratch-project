@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
+import SelectedDocument from '../components/SelectedDocument';
 
 function Room( ) {
   const [hostInfo, setHost] = useState({});
   const [hostView, setHostView] = useState(false);
   const [info, setInfo] = useState({});
+  const [activeDocument, setActiveDocument] = useState('');
 
   const state = useLocation().state;
 
@@ -61,7 +63,8 @@ function Room( ) {
       <div id='room-page-info'>
         <h2>Host: {info.host && (info.host.nickname || hostInfo.nickname)} </h2>
       </div>
-      <DocumentEditor hostView={hostView}/>
+      <DocumentEditor hostView={hostView} setActiveDocument={setActiveDocument}/>
+      {activeDocument && <SelectedDocument document={activeDocument}/>}
       <Chatbox />
     </div>
   );

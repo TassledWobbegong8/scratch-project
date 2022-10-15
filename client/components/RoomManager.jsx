@@ -18,6 +18,9 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   //   }
   //   getUser();
   // }, [addRoomModal, addSavedRoom]);
+  console.log('ROOM MANAGER ROOMS ', rooms);
+  console.log('ROOM MANAGER PROPS ', savedRoomsProps);
+  console.log('ROOM MANAGER HOST ', host);
 
   const closeModal = (event) => {
     event.preventDefault();
