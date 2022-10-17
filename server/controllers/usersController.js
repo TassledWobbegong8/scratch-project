@@ -172,21 +172,25 @@ usersController.unsaveRoom = async (req, res, next) => {
 };
 
 
-// usersController.getAllUsers = async (req, res, next) => {
-//   try {
-//     const users = await User.find().populate('rooms').populate('savedRooms');
-
-//     if (!users) {
-//       return res.status(404).json({ message: 'No users found' });
-//     }
-
-//     res.locals.users = users;
-
-//     return next();
-//   } catch (e) {
-//     console.log(e);
-//     return next(e);
-//   }
-// };
+// retrieve uploaded file key and save in user document
+usersController.saveFile = async (req, res, next) => {
+  try {
+    // console.log('SAVEFILE REQ', req);
+    const { fileName, user } = res.locals;
+    
+    // push into user file array
+    user.files.push(fileName);
+    // save new user doc
+    await user.save();
+    res.locals.fileArray = user.files;
+    console.log('Checking User',user);
+    return next();
+  } catch(err) {
+    return next({
+      log: 'usersController.saveFile' + err,
+      message: { err: 'usersController.saveFile: ERROR: could not save file to user'}
+    });
+  }
+};
 
 module.exports = usersController;
