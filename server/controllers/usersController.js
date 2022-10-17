@@ -1,21 +1,55 @@
+/* eslint-disable prefer-const */
 const bcrypt = require('bcrypt');
-
 const User = require('../models/userModel');
+const Room = require('../models/roomModel');
+const Redis = require('redis');
+
+const redisClient = Redis.createClient({
+  host: 'redis-server',
+  port: 6379
+});
+
+redisClient.connect().then(() => {
+  console.log('usersController Redis client connected');
+}).catch(err => console.error(err));
 
 const usersController = {};
 
+const redisGetOrSet = async (key, fn) => {
+  console.log(key);
+  try {
+    //Set data variable to the value corresponding to the entered key paramter and return it if it exists
+    const data = await redisClient.get(key);
+    console.log('REDIS ', data);
+    if (data) return JSON.parse(data);
+    
+    //Otherwise run the callback function, set the redis key value pair and return result of the callback
+    else {
+      const freshData = await fn();
+      console.log(freshData);
+      redisClient.set(key, JSON.stringify(freshData));
+      return freshData;
+    }
+  } catch (err) {
+    return err;
+  }
+};
+
 usersController.getUser = async (req, res, next) => {
   // find either the id from the jwt cookie OR the username from the body
-
   try {
     let user;
     if (res.locals.token) {
+      // user = await redisGetOrSet(`getUser${res.locals.token._id}`, async () => {
+      //   return await User.findById(res.locals.token._id)
+      //     .populate('rooms')
+      //     .populate('savedRooms');
+      // });
       user = await User.findById(res.locals.token._id)
         .populate('rooms')
         .populate('savedRooms');
     } else {
       const { username, password } = req.body;
-      console.log('password', password);
 
       const passwordHash = await User.findOne({username});
 
@@ -30,15 +64,8 @@ usersController.getUser = async (req, res, next) => {
             .populate('savedRooms');
         } 
       }
-    
-
-      // user = await User.findOne({username, password})
-      //   .populate('rooms')
-      //   .populate('savedRooms');
     }
-
     res.locals.user = user;
-
     return next();
   } catch (e) {
     console.log(e);
@@ -48,8 +75,12 @@ usersController.getUser = async (req, res, next) => {
 
 usersController.getUserById = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    let user;
+    user = await redisGetOrSet(`getUserById${req.params.id}`, async () => {
+      const { id } = req.params;
+      const user = await User.findById(id);
+      return user;
+    });
     res.locals.user = user;
     return next();
   } catch (err) {
@@ -66,6 +97,21 @@ usersController.deleteUser = async (req, res, next) => {
 
     if (!deleteDoc) {
       return res.status(400).json({ message: 'Could not delete user' });
+    }
+
+    await redisClient.del(`getUserById${id}`);
+
+    //Loop through the deleted user's rooms and delete them as well from both the db and redis
+    for await (const room of deleteDoc.rooms) {
+      await Room.findByIdAndDelete({ _id: room });
+      await redisClient.del(`getRoom${room}`);
+    }
+
+    if (deleteDoc.rooms.length > 0) {
+      
+      for await (const subject of ['math', 'english', 'histoy', 'science', 'languages', 'miscellaneous', 'all']) {
+        await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
+      }
     }
 
     return next();
@@ -180,10 +226,13 @@ usersController.saveFile = async (req, res, next) => {
     
     // push into user file array
     user.files.push(fileName);
+
     // save new user doc
     await user.save();
     res.locals.fileArray = user.files;
-    console.log('Checking User',user);
+
+    await redisClient.set(`getUserById${user._id}`, JSON.stringify(user));
+    console.log('userController saveFile result: ', user);
     return next();
   } catch(err) {
     return next({
