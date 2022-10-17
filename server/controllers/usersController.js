@@ -138,19 +138,26 @@ usersController.updateUserInfo = async (req, res, next) => {
 };
 
 usersController.saveRoom = async (req, res, next) => {
-  // get the id of user
-  const id = res.locals.token._id;
-
-  // get room ID to save from request body
-  const { savedRooms } = req.body;
-
   try {
-    await User.updateOne({ _id: id }, { $push: { savedRooms: savedRooms } });
+    // get the id of user
+    const { _id}  = res.locals.token;
+    // get room ID to save from request body
+    const { savedRoom } = req.body;
 
+    // retrieve user and check if room is already in array
+    const { savedRooms } = await User.findById(_id);
+    // console.log(savedRoom, savedRooms)
+    if (savedRooms.includes(savedRoom)) {
+      res.locals.saved = false;
+      // console.log('already saved!')
+    } else {
+      await User.updateOne({ _id }, { $push: { savedRooms: savedRoom } });
+      res.locals.saved = true;
+      // console.log('saved room!')
+    }
     return next();
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json({ message: e.message });
+  } catch (err) {
+    return next(err);
   }
 };
 

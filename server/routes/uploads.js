@@ -33,8 +33,8 @@ const upload = multer({
 // ROUTING START HERE ///
 router.post('/', 
   (req, res, next) => {
-    console.log('COOKIE BEFORE multer',req.cookies)
-    return next()
+    console.log('COOKIE BEFORE multer',req.cookies);
+    return next();
   },
   upload.single('file'), 
   uploadController.sendFile, 
