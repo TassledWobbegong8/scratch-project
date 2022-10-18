@@ -1,13 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
 
 
 const Dropdown = ({subjectList, setSubjectList,sub, setSub }) => {
 
-  const chooseSub = (event) => {
+  const chooseSub = async (event) => {
     setSub(event.target.value);
+    const list = await Axios.get('/');
     
-  }
+    
+  };
 
   return (
     <form >
