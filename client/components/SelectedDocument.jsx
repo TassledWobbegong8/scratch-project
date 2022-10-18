@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-function SelectedDocument ({ activeURL }){
+function SelectedDocument ({ activeURL, document }){
   
   const [url, setURL] = useState(activeURL);
-
-  console.log('selectdocument component ', activeURL);
+  
+  
   return (
-    <div>
-      <h1>this is the selected document</h1>
-      {activeURL && <img src={activeURL}/>}
+    <div className="doc-container">
+      <h1 className="doc-header">{document.replace(/.*?_/, '').replace(/\.[^/.]+$/, '')}</h1>
+      {activeURL && <iframe
+        src={activeURL} 
+        height="1000px"
+        width="auto"/>}
     </div>  
   );
 

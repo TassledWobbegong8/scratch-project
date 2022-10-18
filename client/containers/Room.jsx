@@ -74,15 +74,12 @@ function Room( ) {
   console.log('ROOM COMPONENT HOSTINFO', hostInfo);
   console.log('ROOM COMPONENT ACTIVE DOC', activeDocument);
 
-  
-
-
   return (
     <div className="room-page">
       <div id='room-page-info'>
         <h2>Host: {info.host && (info.host.nickname || hostInfo.nickname)} </h2>
       </div>
-      <DocumentEditor hostView={hostView} documents={info.host?.files} setActiveDocumentHandler={setActiveDocumentHandler}/>
+      <DocumentEditor hostView={hostView} documents={info.files ? info.files : info.host?.files} setActiveDocumentHandler={setActiveDocumentHandler}/>
       {activeDocument && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
       <Chatbox />
     </div>

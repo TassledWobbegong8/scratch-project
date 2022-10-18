@@ -35,23 +35,6 @@ function DocumentEditor({ hostView, documents, setActiveDocumentHandler}) {
     setPicker(true);
   };
 
-  //After login in Dashboard - fetch aws files for username and pass all the way to Dropdown
-  //in Dashboard create a piece of state set to empty obj that stores info on the file
-  //original name (to be rendered in dropdown)
-  //our unique aws name with timestamp and username in that name
-  //pull this information from fetch user request
-  //convert aws filename to original name
-  //[awsFileName,awsFileName, awsFileName]
-
-
-  //In Dropdown have list of files to choose (edit so only original file name). After selection, update the state through setActiveDocument 
-
-  //SelectedDocument pullls the updated setActiveDocument state, use that filename to reference obj in Dashboard
-  //how to render in an iframe
-
-  //have fileupload
-
-
   return (
     <div className='doc-editor'>
       {openPicker && <FilePicker fileList={fileList} setDocument={setDocument} />}

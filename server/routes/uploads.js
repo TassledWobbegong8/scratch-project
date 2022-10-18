@@ -19,10 +19,10 @@ const storage = multer.diskStorage({
 });
 
 //multer filter function to filter out video file types
-// const multerFilter = (req, file, cb) => {
-//   if (file.mimetype.startsWith('video')) cb('No videos allowed', false);
-//   else cb(null, true);
-// };
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('video')) cb('No videos allowed', false);
+  else cb(null, true);
+};
 
 //define upload function as multer object with storage set to storage configs
 const upload = multer({ 

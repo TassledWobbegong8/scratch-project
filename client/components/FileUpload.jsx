@@ -32,8 +32,8 @@ const FileUpload = () => {
   };
 
   return (
-    <form onSubmit={submit} >
-      <input type="file" name="file" onChange={e => setFile(e.target.files[0])}/>
+    <form id="file-form" onSubmit={submit} >
+      <input id="file-upload" type="file" name="file" onChange={e => setFile(e.target.files[0])}/>
       <button type="submit">Submit</button>
     </form>
   );
