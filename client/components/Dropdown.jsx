@@ -7,9 +7,13 @@ const Dropdown = ({subjectList, setSubjectList,sub, setSub }) => {
 
   const chooseSub = async (event) => {
     setSub(event.target.value);
-    const list = await Axios.get('/');
-    
-    
+    try {
+      const list = await Axios.get('/home',{subject:sub})
+        .then((data) => console.log(data));
+    }
+    catch (err) {
+      console.log(err);
+    }
   };
 
   return (
