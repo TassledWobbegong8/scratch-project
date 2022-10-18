@@ -10,8 +10,13 @@ import Room from './Room';
 import RoomContainer from './RoomContainer';
 import SettingsContainer from './SettingsContainer';
 import ActiveRooms from '../components/ActiveRooms';
+const SERVER = "http://127.0.0.1:8080";
+
 
 function Dashboard( ) {
+ <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+
+ 
   const [subject, setSubject] = useState('');
   const [loggedIn, setLoggedIn] = useState(true);
 
