@@ -11,6 +11,10 @@ const cookieController = require('../controllers/cookieController');
 //   roomsController.getRoom,
 //   (req, res) => res.status(200).json(res.locals.room)
 // );
+router.get('/allRooms',
+  roomsController.getAllRooms,
+  (req, res) => res.status(200).json(res.locals.roomslist)
+);
 
 router.post('/',
   cookieController.verifyUser,
@@ -50,7 +54,7 @@ router.post('/cookie',
 );
 
 router.get('/:subject',
-  roomsController.getAllRooms,
+  roomsController.getRoomsSubject,
   (req, res) => res.status(200).json(res.locals.roomslist)
 );
 
