@@ -69,7 +69,7 @@ uploadController.sendFile = async (req, res, next) => {
 };
 
 uploadController.getUserFiles = async(req, res, next) => {
-  const key = req.params.imageKey;
+  const key = req.params.fileKey;
 
   const params = {
     Bucket: bucket,
@@ -84,10 +84,10 @@ uploadController.getUserFiles = async(req, res, next) => {
   //     .catch(err => {
   //       return err; 
   //     });
-  console.log(command);
+  console.log('SENDING GET OBJECT AWS ', command);
   const url = await getSignedUrl(s3, command, { expiresIn: 36000 });
 
-  res.status(200).send(url);
+  res.status(200).json(url);
 };
 
 module.exports = uploadController;
