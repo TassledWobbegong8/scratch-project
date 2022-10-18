@@ -18,7 +18,7 @@ export default function SettingsCard() {
 
   const loginDetails = (
     <div className='details-container' id="settings-container">
-      <h2 id="login-text">Login Details</h2>
+      <h2 id="login-text">Why is this here?</h2>
       <TextField label="Email Address"/>
       <TextField label="Password"/>
       <TextField label="Confirm Password"/>

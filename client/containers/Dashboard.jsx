@@ -11,8 +11,9 @@ import Login from '../components/Login';
 import Room from './Room';
 
 function Dashboard( ) {
-  const [subject, setSubject] = useState('');
-  const [loggedIn, setLoggedIn] = useState(true);
+  //Using React hooks, declare new state variables 'subject' and 'loggedIn'
+  const [subject, setSubject] = useState('');//the state of subject is set to an empty string
+  const [loggedIn, setLoggedIn] = useState(true);//the state  of logged in is set to boolean true
 
   const verifyLogin = async () => {
     const logged = await fetch('/api/auth/verify').then(response => response.json());

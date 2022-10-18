@@ -26,6 +26,10 @@ export default function Login({ setLoggedIn }) {
 
     setLoggedIn(user);
     if (user) navigate('/main/home');
+    if (!user) {
+      console.log('wrong password or username');
+      const authError = true;
+    }
   };
 
   const signUp = async () => {
