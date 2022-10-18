@@ -13,9 +13,7 @@ flashController.getFlashCard = async (req, res, next) => {
     return next();
   }
   catch (err) {
-    return next(
-      console.log('error occured@getFlashCard Controller')
-    );
+    return next(err);
   }
 };
 
