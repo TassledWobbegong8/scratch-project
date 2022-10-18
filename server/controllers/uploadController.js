@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const multer = require('multer');
 const fs = require('fs');
@@ -69,25 +69,66 @@ uploadController.sendFile = async (req, res, next) => {
 };
 
 uploadController.getUserFiles = async(req, res, next) => {
-  const key = req.params.imageKey;
+  try{
+    const key = req.params.fileKey;
+    
+    if (!key) return res.status(400).json('Please provide doc Id');
 
-  const params = {
-    Bucket: bucket,
-    Key: key,
-  };
+    const params = {
+      Bucket: bucket,
+      Key: key,
+    };
+  
+    const command = new GetObjectCommand(params);
+    //   const response = await s3.send(command).promise()
+    //     .then(res => {
+    //       return res.Body.toString('utf-8');
+    //     })
+    //     .catch(err => {
+    //       return err; 
+    //     });
+    console.log('COMMAND OBJECT AFTER FILE RETIEVE',command);
+    res.locals.fileURL = await getSignedUrl(s3, command, { expiresIn: 36000 });
+    res.locals.fileName = key;
+    return next();
+  } catch (err) {
+    
+    return next({
+      log: 'Error in sendFile middleware',
+      message: {
+        err: err.message
+      },
+    });
+  }
 
-  const command = new GetObjectCommand(params);
-  //   const response = await s3.send(command).promise()
-  //     .then(res => {
-  //       return res.Body.toString('utf-8');
-  //     })
-  //     .catch(err => {
-  //       return err; 
-  //     });
-  console.log(command);
-  const url = await getSignedUrl(s3, command, { expiresIn: 36000 });
 
-  res.status(200).send(url);
+
+  // res.status(200).send(url);
 };
+
+uploadController.deleteUserFiles = async(req, res, next) => {
+  try{
+    const key = req.params.fileKey;
+    if (!key) return res.status(400).json('Please provide doc Id');
+    const params = {
+      Bucket: bucket,
+      Key: key,
+    };
+
+    const command = new DeleteObjectCommand(params);
+
+    const deleteResult = await s3.send(command);
+    console.log('DELETE OBJECT', deleteResult);
+
+    res.locals.fileName = key;
+    return next();
+  } catch (err) {  
+    return next({
+      log: 'Error in deleteUserFiles middleware',
+      message: {
+        err: err.message
+      },
+    });
+  }};
 
 module.exports = uploadController;

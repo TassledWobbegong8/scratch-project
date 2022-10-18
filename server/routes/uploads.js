@@ -4,6 +4,7 @@ const multer = require('multer');
 const uploadController = require('../controllers/uploadController');
 const usersController = require('../controllers/usersController');
 const cookieController = require('../controllers/cookieController');
+const roomsController = require('../controllers/roomsController');
 
 // set multer diskStorage configs
 const storage = multer.diskStorage({
@@ -45,7 +46,25 @@ router.post('/',
     res.status(200).json(res.locals.fileArray);
   });
 
-router.get('/:fileKey', uploadController.getUserFiles);
+router.get('/:fileKey', 
+  uploadController.getUserFiles,
+  cookieController.getRoomCookie,
+  roomsController.setActiveFile,
+  (req, res) => {
+    res.status(200).json(res.locals.fileURL);
+  });
+//ensure getfilekey successful
+//if so, get roomId via cookieController
+//save filename is activeFile of current room
+
+router.delete('/:fileKey',
+  uploadController.deleteUserFiles,
+  cookieController.verifyUser, 
+  usersController.getUser,
+  usersController.deleteFile,
+  (req, res) => {
+    res.status(200).json('successfully deleted file!')
+  });
 
 
 module.exports = router;
