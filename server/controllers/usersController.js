@@ -1,4 +1,6 @@
 const User = require("../models/userModel");
+const bcrypt = require('bcryptjs');
+const SALT_WORK_FACTOR = 10;
 
 const usersController = {};
 
@@ -67,10 +69,11 @@ usersController.createUser = async (req, res, next) => {
   const { host, username, password, nickname } = req.body;
 
   try {
+    const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
     const newUser = await User.create({
       host: host,
       username: username,
-      password: password,
+      password: hashedPassword,
       nickname: nickname,
     });
 
@@ -93,6 +96,8 @@ usersController.updateUserInfo = async (req, res, next) => {
 
   const { username, password } = req.body;
 
+  const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+  
   const update = {};
 
   if (username) {
@@ -100,7 +105,7 @@ usersController.updateUserInfo = async (req, res, next) => {
   }
 
   if (password) {
-    update.password = password;
+    update.password = hashedPassword;
   }
 
   try {
