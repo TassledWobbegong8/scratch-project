@@ -48,8 +48,10 @@ roomsController.openNewRoom = async (req, res, next) => {
     // add new room to host user's rooms list
     const hostUser = await user.findById(host);
     hostUser.rooms.push(newRoom._id);
+    newRoom.allowedUsers.push(host);
     await hostUser.save();
 
+    console.log('newRoom', newRoom)
     res.locals.newRoom = newRoom;
     // console.log(newRoom);
   } catch (e) {
@@ -146,6 +148,20 @@ roomsController.approveUser = async (req, res, next) => {
   }
 
 
+};
+
+roomsController.addPendingUser = async (req, res, next) => {
+  const roomID = req.params.room_id;
+  const userID = req.body._id;
+
+  try {
+    await room.updateOne({ _id: roomID }, { $push: { pendingUsers: userID } });
+    console.log('inside addPendingUser controller')
+
+    return next();
+  } catch(e) {
+    console.log('Error in roomsController.addPendingUser', e.message);
+  }
 };
 
 
