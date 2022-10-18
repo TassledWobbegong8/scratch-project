@@ -61,4 +61,10 @@ router.get('/chats/:room_id',
   (req, res) => res.status(200).json(res.locals.chatHistory)
 );
 
+router.patch('/add-pending-user/:room_id', roomsController.addPendingUser, (req, res) => {
+  res.status(200).json('adding pending user');
+});
+
+
+
 module.exports = router;
