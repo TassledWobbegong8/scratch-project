@@ -1,6 +1,7 @@
 const { findById, findByIdAndUpdate } = require('../models/roomModel');
 const room = require('../models/roomModel');
 const user = require('../models/userModel');
+const chat = require('../models/chatModel');
 
 const roomsController = {};
 
@@ -144,8 +145,17 @@ roomsController.approveUser = async (req, res, next) => {
   } catch (e) {
     console.log(e.message);
   }
+};
 
-
+roomsController.getChatHistory = async (req, res, next) => {
+  const roomID = req.params.room_id;
+  let chatHistory;
+  try {
+    chatHistory = await chat.find({ room: roomID });
+    res.locals.chatHistory = chatHistory;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 

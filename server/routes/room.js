@@ -55,6 +55,10 @@ router.patch('/approve/:room_id',
   (req, res) => res.status(204).end()
 );
 
-
+// route to get chat history for a room
+router.get('/chats/:room_id',
+  roomsController.getChatHistory,
+  (req, res) => res.status(200).json(res.locals.chatHistory)
+);
 
 module.exports = router;
