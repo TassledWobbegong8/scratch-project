@@ -18,7 +18,8 @@ usersController.getUser = async (req, res, next) => {
         .populate("savedRooms");
     } else {
       const { username, password } = req.body;
-      user = await User.findOne({ username, password })
+      const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+      user = await User.findOne({ username, hashedPassword })
         .populate({
           path: 'rooms',
           populate: { path: 'pendingUsers' }
@@ -70,6 +71,8 @@ usersController.createUser = async (req, res, next) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+
+    // console.log('backend username & hashed pw --> ', username, hashedPassword);
     const newUser = await User.create({
       host: host,
       username: username,
