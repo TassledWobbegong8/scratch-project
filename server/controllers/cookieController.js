@@ -1,6 +1,11 @@
 const jwt = require('jsonwebtoken');
 const cookieController = {};
 
+cookieController.testRoute = (req, res, next) => {
+  console.log(req.cookies);
+  res.status(200).json(req.cookies);
+};
+
 cookieController.setUserCookie = async (req, res, next) => {
   if (!res.locals.user) {
     res.locals.loggedIn = false;
@@ -82,8 +87,8 @@ cookieController.setRoomCookie = async (req, res, next) => {
 
 cookieController.getRoomCookie = async (req, res, next) => {
   try {
+    console.log('cookies: ', req.cookies);
     res.locals.roomId = req.cookies.roomId;
-    console.log('cookie', res.locals.roomId);
     return next();
   } catch (err) {
     return next({

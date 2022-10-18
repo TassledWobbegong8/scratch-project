@@ -13,6 +13,12 @@ redisClient.connect().then(() => {
   console.log('roomsController Redis client connected');
 }).catch(err => console.error(err));
 
+process.on('exit', async () => {
+  await redisClient.flushAll();
+  await redisClient.close();
+  console.log('Closing server...');
+});
+
 //Function to get or set a key in redis client
 const redisGetOrSet = async (key, fn) => {
   try {
@@ -68,7 +74,8 @@ roomsController.getRoom = async (req, res, next) => {
   try {
     let roomDoc;
     roomDoc = await redisGetOrSet(`getRoom${res.locals.roomId}`, async () => {
-      return await Room.findById(res.locals.roomId);
+      console.log('GET ROOM CONTROLLER DB QUERY');
+      return await Room.findById(res.locals.roomId).populate('host');
     });
     // gets room id from cookie
     console.log('roomdoc', roomDoc);

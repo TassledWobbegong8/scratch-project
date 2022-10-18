@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Chatbox from '../components/Chatbox';
 import DocumentEditor from '../components/DocumentEditor';
 import SelectedDocument from '../components/SelectedDocument';
+import axios from 'axios';
 
 function Room( ) {
   const [hostInfo, setHost] = useState({});//whoever is logged in
@@ -57,8 +58,10 @@ function Room( ) {
   }, [info]);
 
   const setActiveDocumentHandler = async (filename) => {
+    //Check if the entered filename is empty or matches the current activeDocument
     if (!filename.trim().length || filename.trim() === activeDocument) return;
 
+    //Set the activeDocument and then fetch the file from aws bucket endpoint
     await setActiveDocument(filename);
 
     const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`);
@@ -69,17 +72,42 @@ function Room( ) {
     }
   };
 
+  const fetchRoomInfo = async (id) => {
+    // try {
+    //   const response = await fetch('http://localhost:3000/api/rooms/cookie');
+    
+    //   if (response.ok) {
+    //     const room = await response.json().roomDoc;
+    //     console.log('Updated Room: ', room);
+    //     setInfo(room);
+    //   }
+    // } catch (err) {
+    //   console.log('Error fetching room info: ', err.message);
+    // }
+    const response = await axios.get('http://localhost:3000/api/rooms/cookie', {withCredentials: true});
+
+    if (response.status === 200) {
+      const room = response.data;
+      console.log('Updated Room: ', room);
+      setInfo(room);
+    }
+  };
+
   console.log('ROOM COMPONENT STATE', state);
   console.log('ROOM COMPONENT INFO', info);
   console.log('ROOM COMPONENT HOSTINFO', hostInfo);
-  console.log('ROOM COMPONENT ACTIVE DOC', activeDocument);
 
   return (
     <div className="room-page">
       <div id='room-page-info'>
         <h2>Host: {info.host && (info.host.nickname || hostInfo.nickname)} </h2>
       </div>
-      <DocumentEditor hostView={hostView} documents={info.files ? info.files : info.host?.files} setActiveDocumentHandler={setActiveDocumentHandler}/>
+      {hostView && 
+      <DocumentEditor 
+        hostView={hostView} 
+        documents={info.files ? info.files : info.host?.files} 
+        setActiveDocumentHandler={setActiveDocumentHandler}
+        updateRoom={fetchRoomInfo}/>}
       {activeDocument && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
       <Chatbox />
     </div>

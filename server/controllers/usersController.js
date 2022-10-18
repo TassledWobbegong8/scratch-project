@@ -232,6 +232,10 @@ usersController.saveFile = async (req, res, next) => {
     res.locals.fileArray = user.files;
 
     await redisClient.set(`getUserById${user._id}`, JSON.stringify(user));
+
+    for await (const room of user.rooms) {
+      await redisClient.set(`getRoom${room._id}`, 'fetchAgain');
+    }
     
     for await (const subject of ['math', 'english', 'histoy', 'science', 'languages', 'miscellaneous', 'all']) {
       await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');

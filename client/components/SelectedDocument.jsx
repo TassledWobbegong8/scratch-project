@@ -11,7 +11,8 @@ function SelectedDocument ({ activeURL, document }){
       {activeURL && <iframe
         src={activeURL} 
         height="1000px"
-        width="auto"/>}
+        width="auto"
+        align="center"/>}
     </div>  
   );
 
