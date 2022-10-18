@@ -7,6 +7,6 @@ const flashShema = new Schema({
   questions:{type: Array, required: true},
 });
 
-const Flash = mongoose.model(Flash, flashShema);
+const Flash = mongoose.model('Flash', flashShema);
 
 module.exports = Flash;

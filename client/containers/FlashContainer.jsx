@@ -5,7 +5,6 @@ import flashdata from './flashdata';
 import '../stylesheets/flash.scss';
 
 
-
 const FlashContainer = () => {
   const [subjectList, setSubjectList] = useState([]);
   const [sub, setSub] = useState(flashdata[0].subject);
