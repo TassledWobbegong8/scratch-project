@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 const PORT = 3000;
 
 const MONGO_URI =
-  'mongodb+srv://scratch:project@scratch-project-cluster.dphri14.mongodb.net/?retryWrites=true&w=majority';
+  'mongodb+srv://teentitans:vrdrK8aFTY3mUGmf@teentitanscluster.u4m5naw.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, {
