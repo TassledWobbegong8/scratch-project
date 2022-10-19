@@ -38,7 +38,7 @@ router.patch(
   '/saveroom',
   cookieController.verifyUser,
   usersController.saveRoom,
-  (req, res) => res.status(200).json({ message: 'Room successfully saved' })
+  (req, res) => res.status(200).json(res.locals.saved)
 );
 
 router.patch(
