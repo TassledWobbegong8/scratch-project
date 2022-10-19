@@ -4,12 +4,10 @@ const Flash = require('../models/flashModel');
 const flashController = {};
 
 flashController.getFlashCard = async (req, res, next) => {
-  // const sub = req.body.subject; 
-  // console.log(sub);
+  const { subject } = req.body; 
   try {
-    const card = await Flash.find();
-    res.locals.cards = card; 
-    console.log(card);
+    const card = await Flash.find({subject});
+    res.locals.questions = card; 
     return next();
   }
   catch (err) {

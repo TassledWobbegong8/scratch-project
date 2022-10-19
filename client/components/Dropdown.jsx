@@ -1,27 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { NextPlan } from '@mui/icons-material';
+import Axios from 'axios';
 
 
 const Dropdown = ({subjectList, setSubjectList,sub, setSub }) => {
 
   const chooseSub = async (event) => {
-    setSub(event.target.value);
+    const subject = event.target.value;
     try {
-      const list = await fetch('api/home', {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json'
-        },
-      })
-      const  newList = await list.json();
-      console.log(newList);
+      Axios.post('/api/home', { subject })
+        .then(res => console.log(res.data[0].questions[0][0]));
     }
     catch (err) {
       console.log(err);
     }
   };
-
   return (
     <form >
       <label>
