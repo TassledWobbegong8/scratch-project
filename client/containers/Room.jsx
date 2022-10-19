@@ -97,6 +97,8 @@ function Room( ) {
   console.log('ROOM COMPONENT INFO', info);
   console.log('ROOM COMPONENT HOSTINFO', hostInfo);
 
+  const deleteFile = "test"
+
   return (
     <div className="room-page">
       <div id='room-page-info'>
@@ -107,7 +109,9 @@ function Room( ) {
         hostView={hostView} 
         documents={info.files ? info.files : info.host?.files} 
         setActiveDocumentHandler={setActiveDocumentHandler}
-        updateRoom={fetchRoomInfo}/>}
+        updateRoom={fetchRoomInfo}
+        deleteFile = {deleteFile}
+        />}
       {activeDocument && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
       <Chatbox />
     </div>
