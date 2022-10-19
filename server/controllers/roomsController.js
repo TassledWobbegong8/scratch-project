@@ -196,4 +196,20 @@ roomsController.updateRoom = async (req, res, next) => {
   }
 };
 
+roomsController.setActiveFile = async (req, res, next) => {
+  try {
+  // grab room id from res.locals
+    const { roomId, fileName } = res.locals;
+    // grab fileName from req.params and set activefile in room doc
+    await Room.findByIdAndUpdate(roomId, {activeFile: fileName});
+    return next();
+    
+  } catch(err) {
+    return next({
+      log: 'roomsController.setActiveFile' + err,
+      message: { err: 'roomsController.setActiveFile: ERROR: could not set ActiveFile'}
+    });
+  }
+};
+
 module.exports = roomsController;
