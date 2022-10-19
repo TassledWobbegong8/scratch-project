@@ -43,19 +43,42 @@ function Room( ) {
   };
 
   // update room info
-  useEffect(() => {
-    // if state exists then set info
-    if (state) setInfo(state.info);
-    // if info is null (no state) then retrieve room info
-    if (!state) getRoom();
-  }, [hostView]);
+  //setRoomCookie and retrieve info from cookie
+  // useEffect(() => {
+  //   // if state exists then set info
+  //   console.log('ROOM COMPONENT USEEFFECT SETINFO STATE');
+  //   if (state) setInfo(state.info);
+  //   // if info is null (no state) then retrieve room info
+  //   if (!state) getRoom();
+  // }, [hostView]);
 
   // set host and set cookie for room
   useEffect(() => {
     if (info.host) fetchHost();
     // if info was read from state then save id
-    if (state) saveRoom();
+    // if (state) saveRoom();
   }, [info]);
+
+  useEffect(()=>{
+    fetchRoomInfo();
+  }, []);
+
+
+  useEffect(() => {
+    if (info.activeFile) {
+      setActiveDocument(info.activeFile);
+      fetchFromS3(info.activeFile);
+    }
+  }, [info]);
+
+  const fetchFromS3 = async (filename) => {
+    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`);
+    if (awsFile.ok){
+      const url = await awsFile.json();
+      console.log('FETCH FROMS3 url', url);
+      await setActiveURL(url);
+    }
+  };
 
   const setActiveDocumentHandler = async (filename) => {
     //Check if the entered filename is empty or matches the current activeDocument
@@ -72,18 +95,8 @@ function Room( ) {
     }
   };
 
-  const fetchRoomInfo = async (id) => {
-    // try {
-    //   const response = await fetch('http://localhost:3000/api/rooms/cookie');
-    
-    //   if (response.ok) {
-    //     const room = await response.json().roomDoc;
-    //     console.log('Updated Room: ', room);
-    //     setInfo(room);
-    //   }
-    // } catch (err) {
-    //   console.log('Error fetching room info: ', err.message);
-    // }
+  const fetchRoomInfo = async () => {
+   
     const response = await axios.get('http://localhost:3000/api/rooms/cookie', {withCredentials: true});
 
     if (response.status === 200) {
@@ -97,7 +110,25 @@ function Room( ) {
   console.log('ROOM COMPONENT INFO', info);
   console.log('ROOM COMPONENT HOSTINFO', hostInfo);
 
-  const deleteFile = "test"
+  const deleteFile = async (selectedDocument) => {
+    const response = await fetch(`/api/uploads/${selectedDocument}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({room: info._id})
+    });
+    
+    if (response.ok) {
+      const deleted = await response.json();
+      if (selectedDocument === activeDocument) {
+        setActiveDocument('');
+        setActiveURL('');
+      }
+      await fetchRoomInfo();
+    }
+        
+  };
 
   return (
     <div className="room-page">
@@ -111,8 +142,8 @@ function Room( ) {
         setActiveDocumentHandler={setActiveDocumentHandler}
         updateRoom={fetchRoomInfo}
         deleteFile = {deleteFile}
-        />}
-      {activeDocument && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
+      />}
+      {(activeDocument && activeURL) && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
       <Chatbox />
     </div>
   );
