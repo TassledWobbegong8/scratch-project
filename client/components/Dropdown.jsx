@@ -14,8 +14,9 @@ const Dropdown = ({subjectList, setSubjectList,sub, setSub }) => {
         headers: {
           'Content-type': 'application/json'
         },
-      }).then(response => console.log(response));
-      
+      })
+      const  newList = await list.json();
+      console.log(newList);
     }
     catch (err) {
       console.log(err);
