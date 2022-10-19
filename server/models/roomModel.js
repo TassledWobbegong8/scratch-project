@@ -24,6 +24,7 @@ const roomSchema = new Schema({
   maxallowed: { type: Number, max: 6 },
   restricted: { type: Boolean, required: true },
   documentId: { type: String },
+  classroom: { type: Boolean, required: true }
 });
 
 const Room = mongoose.model('Room', roomSchema);
