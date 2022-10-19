@@ -19,3 +19,47 @@
     margin: 0 20px;
   }
 }
+
+// input[type='file'] {
+//   display: none;
+// }
+
+#file-form{
+  display: flex;
+  width: 20%;
+  justify-content: space-between;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+
+select{
+  text-align-last: center;
+  width: 300px;
+  height: 30px;
+  border: 1px blue solid;
+  border-radius: 5px;
+}
+
+.doc-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  border: 1px solid $mui-text-color;
+  background-color: white;
+}
+
+.doc-container iframe {
+  width: 100%;
+}
+
+h1.doc-header{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}

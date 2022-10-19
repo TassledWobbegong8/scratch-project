@@ -2,16 +2,18 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const uploadController = require('../controllers/uploadController');
+const usersController = require('../controllers/usersController');
+const cookieController = require('../controllers/cookieController');
 
 // set multer diskStorage configs
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log('MULTER STORAGE DESTINATION ', req);
+    // console.log('MULTER STORAGE DESTINATION ', req);
     cb(null, 'public/uploads');
   },
   filename: (req, file, cb) => {
-    console.log(file);
-    const prefix = Date.now().toLocaleString() + '_';
+    // console.log(file);
+    const prefix = Date.now() + '_';
     cb(null, `${prefix}${file.originalname}`);
   }
 });
@@ -25,12 +27,25 @@ const multerFilter = (req, file, cb) => {
 //define upload function as multer object with storage set to storage configs
 const upload = multer({ 
   storage: storage,
-  fileFilter: multerFilter
+  // fileFilter: multerFilter
 });
 
-router.post('/', upload.single('file'), uploadController.sendFile);
+// ROUTING START HERE ///
+router.post('/', 
+  (req, res, next) => {
+    console.log('COOKIE BEFORE multer',req.cookies);
+    return next();
+  },
+  upload.single('file'), 
+  uploadController.sendFile, 
+  cookieController.verifyUser, 
+  usersController.getUser, 
+  usersController.saveFile, 
+  (req, res) => {
+    res.status(200).json(res.locals.fileArray);
+  });
 
-router.get('/:imageKey', uploadController.getUserFiles);
+router.get('/:fileKey', uploadController.getUserFiles);
 
 
 module.exports = router;

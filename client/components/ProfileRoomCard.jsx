@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import RoomEditor from './RoomEditorModal';
 
-function ProfileRoomCard({ fetchUser, info }) {
+function ProfileRoomCard({ fetchUser, info, files }) {
   const [editRoomModal, setModal] = useState(false);
 
   // create function to delete card via delete req and update room list (to be drilled down to Room)
@@ -20,7 +20,10 @@ function ProfileRoomCard({ fetchUser, info }) {
     setModal(false);
   };
 
-
+  useEffect(() => {
+    info['files'] = files;
+  }, [info, files]);
+    
   return (
     <div className='profile-room'>
       <p><label>Subject: </label>{info.subject}</p>

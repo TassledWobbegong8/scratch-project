@@ -18,7 +18,7 @@ function RoomContainer({ subject, id }) {
     fetchRooms();
   }, [subject]);
 
-
+  console.log('ROOM CONTAINER ', rooms);
   const roomCards = rooms.map((e, i) => {
     return (<RoomCard info={e} key={JSON.stringify(e)} id={id} />);
   });
