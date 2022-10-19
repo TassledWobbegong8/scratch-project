@@ -63,7 +63,7 @@ router.delete('/:fileKey',
   usersController.getUser,
   usersController.deleteFile,
   (req, res) => {
-    res.status(200).json('successfully deleted file!')
+    res.status(200).json('successfully deleted file!');
   });
 
 

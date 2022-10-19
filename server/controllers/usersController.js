@@ -261,7 +261,7 @@ usersController.saveFile = async (req, res, next) => {
 usersController.deleteFile = async (req, res, next) => {
   try {
     const { fileName, user } = res.locals;
-    console.log('RES LOCALs', res.locals)
+    console.log('RES LOCALs', res.locals);
     const response = await User.updateOne({ _id: user._id }, { $pull: { files: fileName } });
 
     console.log('deletefile', response, 'USER', await User.findById(user._id));
@@ -272,6 +272,6 @@ usersController.deleteFile = async (req, res, next) => {
       message: { err: 'usersController.deleteFile: ERROR: could not delete file from user'}
     });
   }
-}
+};
 
 module.exports = usersController;
