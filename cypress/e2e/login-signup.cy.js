@@ -22,12 +22,12 @@ context('login and signup testing', () => {
       cy.get('input').last().type('testtest')
       cy.get('button').contains('Login').click()
       cy.wait('@login').then(({response}) => {
-        expect(response.statusCode).to.eq(200)
+        expect(response.statusCode).to.be.oneOf([200,304])
       })
       cy.get('h2').contains('Subjects')
       cy.get('button').contains('Logout').click()
       cy.wait('@logout').then(({response}) => {
-        expect(response.statusCode).to.eq(304)
+        expect(response.statusCode).to.be.oneOf([200,304])
       })
     })
   })
