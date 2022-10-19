@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-export default function SavedRoomCard({fetchUser, info, id}) {
+export default function SavedRoomCard({fetchUser, info, id, setRoomCookie, roomId}) {
   const [host, setHost] = useState('');
 
   const getHost = async () => {
@@ -27,7 +27,7 @@ export default function SavedRoomCard({fetchUser, info, id}) {
       <p><label>Restricted: </label>{info.restricted ? 'Yes' : 'No'}</p>
       <p><label>Allowed users: </label></p>
       <Link to={'/main/room'} state={{info}}>
-        <Button variant='contained' id="joinRoom">Join Room</Button>
+        <Button variant='contained' id="joinRoom" onClick={async() => await setRoomCookie(roomId)}>Join Room</Button>
       </Link>
       <Button variant='outlined' id="removeMyRoom" onClick={deleteSavedRoom}>Remove</Button>
     </div>

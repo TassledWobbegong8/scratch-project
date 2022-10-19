@@ -19,7 +19,6 @@ function RoomCard( { info, id } ) {
   //   return event.target.value
   // }
   console.log('ROOM CARD INFO ', info);
-  console.log('ROOM CARD ID', id);
   async function saveRoom () {
     const options = {
       method: 'PATCH', 

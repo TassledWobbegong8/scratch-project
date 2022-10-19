@@ -46,27 +46,10 @@ function Room( ) {
   //   if (!state) getRoom();
   // }, [hostView]);
 
-  // set host and set cookie for room
-  useEffect(() => {
-    if (info.host) fetchHost();
-    // if info was read from state then save id
-    // if (state) saveRoom();
-  }, [info]);
-
-  useEffect(()=>{
-    fetchRoomInfo();
-  }, []);
-
-
-  useEffect(() => {
-    if (info.activeFile) {
-      setActiveDocument(info.activeFile);
-      fetchFromS3(info.activeFile);
-    }
-  }, [info]);
-
   const fetchFromS3 = async (filename) => {
-    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`);
+    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`, {
+      credentials: 'include',
+    });
     if (awsFile.ok){
       const url = await awsFile.json();
       console.log('FETCH FROMS3 url', url);
@@ -81,7 +64,9 @@ function Room( ) {
     //Set the activeDocument and then fetch the file from aws bucket endpoint
     await setActiveDocument(filename);
 
-    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`);
+    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`, {
+      credentials: 'include',
+    });
     if (awsFile.ok){
       const url = await awsFile.json();
       console.log('url', url);
@@ -100,9 +85,28 @@ function Room( ) {
     }
   };
 
-  console.log('ROOM COMPONENT STATE', state);
+  useEffect(()=>{
+    console.log('fetching room info...');
+    fetchRoomInfo();
+  }, []);
+
+  // set host and set cookie for room
+  useEffect(() => {
+    if (info?.host) fetchHost();
+    // if info was read from state then save id
+    // if (state) saveRoom();
+  }, [info]);
+
+  useEffect(() => {
+    if (info?.activeFile) {
+      setActiveDocument(info.activeFile);
+      fetchFromS3(info.activeFile);
+    }
+  }, [info]);
+
+  // console.log('ROOM COMPONENT STATE', state);
   console.log('ROOM COMPONENT INFO', info);
-  console.log('ROOM COMPONENT HOSTINFO', hostInfo);
+  // console.log('ROOM COMPONENT HOSTINFO', hostInfo);
 
   const deleteFile = async (selectedDocument) => {
     const response = await fetch(`/api/uploads/${selectedDocument}`, {
