@@ -26,7 +26,7 @@ function Dashboard( ) {
     verifyLogin();
   }, []); //Run this once at the beginning
 
-  const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
+  const noSubject = <p id='no-subject' className='warning'></p>;
   const yesSubject = <RoomContainer id={loggedIn._id} subject={subject}/>;
 
   return (

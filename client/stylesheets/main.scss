@@ -14,6 +14,10 @@ a {
   text-decoration: none;
 }
 
+h3 {
+  color: rgb(0, 0, 0);
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -50,18 +54,21 @@ button:hover {
 .main-nav {
   display: flex;
   align-items: center;
-  background-color: $background-color;
-  height: 50px;
+  background-color: $accent-color-light;
+  height: 60px;
   border-bottom: 1px solid $accent-color-light;
 }
 .main-nav-btn {
   margin: 0 10px;
+  color:black;
 }
 .logo {
   font-family: 'Rubik', sans-serif;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 400;
-  padding: 5px;
+  padding: 8px;
+  padding-bottom: 15px;
+  padding-right: 8px;
   margin-left: 20px;
   span {
     font-weight: 300;
@@ -92,4 +99,13 @@ button:hover {
   padding: 20px;
   row-gap: 20px;
   width: 500px;
+}
+
+.subject-link-icon {
+    color:rgb(58, 58, 58);
+}
+
+.subject-img {
+  height: 200px;
+  width: 200px;
 }

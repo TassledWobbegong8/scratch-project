@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import ProfileRoomCard from '../components/ProfileRoomCard';
 import RoomEditor from './RoomEditorModal';
 import SavedRoomCard from './SavedRoomCard';
+import AppointmentsPg from './Appointments';
 
 function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
-  const [addRoomModal, setModal] = useState(false);
-  const [addSavedRoom, setSavedRoom] = useState(false);
+  //Using React hooks, declare new state variables 'addRoomModal' and 'setSavedRoom'
+  const [addRoomModal, setModal] = useState(false); //the initial state of setModal is set to false
+  const [addSavedRoom, setSavedRoom] = useState(false);//the initial state of addSavedRoom is set to false
+  const [selectedTab, setSelectedTab] = useState(false);
 
   // console.log(fetchUser);
   // console.log(rooms);
@@ -31,10 +34,13 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
     <div />
   );
 
+  //return appointments page
+  // const appointmentsPg = 
+
   //Room manager tab is a div with a header. If addRoomModal is false, add button and onclick, setModal is true
   const hostedRooms = (
     <div className="profile-room-container">
-      <h2>Hosted Rooms:</h2>
+      <h3> Hosted Rooms</h3>
       {!addRoomModal ? (
         <button id="open-add-room" onClick={() => setModal(true)}>
           +
@@ -47,20 +53,23 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
         />
       )}
       {roomCards}
+      <h3> Saved Rooms</h3>
+      {savedRoomCards}
     </div>
   );
 
   const savedRooms = (
     <div className="profile-room-container">
-      <h2>Saved Rooms:</h2>
+      <h3>Saved Rooms</h3>
       {savedRoomCards}
     </div>
   );
 
-  //Appointments modal
+  //Appointments tab
   const appointments = (
     <div className="profile-room-container">
-      <h2>Appointments:</h2>
+      <h3>Appointments</h3>
+      <AppointmentsPg />
     </div>
   );
 
@@ -82,22 +91,69 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
         </button>
 
         <button 
-          onClick={() => setSavedRoom(true)} 
+          onClick={() => {
+            setModal(false);
+            setSavedRoom(true);
+          }}
           id="saved-rooms-tab">
-          Saved Rooms
-        </button>
-
-        <button 
-          onClick={() => setSavedRoom(true)}
-          id="appointments-tab">
           Appointments
         </button>
 
-      </div>
-      {!addSavedRoom ? hostedRooms : savedRooms}
+        {/* <button 
+          onClick={() => {
+            setModal(false);
+            setSelectedTab(true);
+          }}
+          id="appointments-tab">
+          Appointments
+        </button> */}
 
+      </div>
+      { !addSavedRoom ? hostedRooms : appointments}
     </div>
   );
 }
 
 export default RoomManager;
+
+
+//tab if selected... then display that tab
+//if initial state is false---then
+// {!addSavedRoom ? hostedRooms : savedRooms}
+
+{/* <div id="tabs">
+
+<button
+  onClick={() => {
+    setModal(false);
+    setSavedRoom((prevState) => {
+      return false;
+    });
+  }}
+  id="profile-tab"
+>
+  Room Manager
+</button>
+
+<button 
+  onClick={() => {
+    setModal(false);
+    setSavedRoom((prevState) => {
+      return false;
+    });
+  }}
+  id="saved-rooms-tab">
+  Saved Rooms
+</button>
+
+<button 
+  onClick={() => {
+    setModal(false);
+    setSavedRoom(true);
+  }}
+  id="appointments-tab">
+  Appointments
+</button>
+
+</div>
+{ !addSavedRoom ? hostedRooms : appointments} */}
