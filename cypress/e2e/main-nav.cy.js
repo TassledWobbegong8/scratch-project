@@ -25,10 +25,10 @@ context('main navbar', () => {
     cy.get('#home-link').should('exist').and('have.text', 'Home').click();
     cy.location('pathname').should('eq', '/main/home');
 
-    cy.get('#settings-link').should('exist').and('have.text', 'Settings').click();
-    cy.location('pathname').should('eq', '/main/settings');
-    cy.get('#home-link').should('exist').and('have.text', 'Home').click();
-    cy.location('pathname').should('eq', '/main/home');
+    // cy.get('#settings-link').should('exist').and('have.text', 'Settings').click();
+    // cy.location('pathname').should('eq', '/main/settings');
+    // cy.get('#home-link').should('exist').and('have.text', 'Home').click();
+    // cy.location('pathname').should('eq', '/main/home');
   });
 
   specify('profile should have your name and username rendered based on your login', () => {
@@ -63,7 +63,7 @@ context('main navbar', () => {
     cy.get('#delete-room-btn').should('not.exist');
   });
 
-  specify.only('button in profile/saved rooms tab should show saved rooms and allow to join or remove', () => {
+  specify('button in profile/saved rooms tab should show saved rooms and allow to join or remove', () => {
     // create new room first to save that later
     cy.get('#profile-link').click();
     cy.get('#profile-tab').click();
@@ -72,15 +72,35 @@ context('main navbar', () => {
     cy.get('#room-editor-modal-btns > button').contains('Add new room').click();
     cy.get('#room-editor-modal-btns > button').contains('Cancel').click();
 
+    // join room
     cy.get('#home-link').click();
     cy.location('pathname').should('eq', '/main/home');
     cy.get('button').contains('miscellaneous').click();
     cy.contains('test-user Room').click();
-    // cy.get('#saved-rooms-tab').click();
-  });
+    cy.get('button').contains('Join Room').click();
+    cy.location('pathname').should('eq', '/main/room');
+    cy.get('.room-page').should('be.visible');
+    cy.get('#exit-room-btn').click();
+    cy.location('pathname').should('eq', '/main/home');
 
-  specify('settings button should take you to the settings page', () => {
-    cy.get('button#settings-link').click();
-    cy.location('pathname').should('eq', '/main/settings');
+    // save room
+    cy.get('button').contains('miscellaneous').click();
+    cy.contains('test-user Room').click();
+    cy.get('#saveMyRoom').click();
+    cy.get('#profile-link').click();
+    cy.location('pathname').should('eq', '/main/profile');
+    cy.get('#saved-rooms-tab').click();
+    cy.get('.saved-room').should('be.visible');
+    cy.get('#joinRoom').click();
+    cy.location('pathname').should('eq', '/main/room');
+    cy.get('.room-page').should('be.visible');
+    cy.get('#profile-link').click();
+    cy.location('pathname').should('eq', '/main/profile');
+    cy.get('#saved-rooms-tab').click();
+    cy.get('#removeMyRoom').click();
+    cy.get('#removeMyRoom').should('not.exist');
+    cy.get('#profile-tab').click();
+    cy.get('#delete-room-btn').click();
+    cy.get('#delete-room-btn').should('not.exist');
   });
 });
