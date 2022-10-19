@@ -28,7 +28,7 @@ const multerFilter = (req, file, cb) => {
 //define upload function as multer object with storage set to storage configs
 const upload = multer({ 
   storage: storage,
-  fileFilter: multerFilter
+  // fileFilter: multerFilter
 });
 
 // ROUTING START HERE ///

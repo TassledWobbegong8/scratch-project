@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import FilePicker from './FilePicker';
 import FileUpload from './FileUpload';
+import Dropdown from './Dropdown';
+import SelectedDocument from './SelectedDocument';
+import { PropaneSharp } from '@mui/icons-material';
 
-function DocumentEditor({ hostView }) {
+function DocumentEditor({ hostView, documents, setActiveDocumentHandler, updateRoom}) {
   // some fake data for rendering purposes
   const fakeFileList = ['test1', 'someDocument', 'my story'];
 
   const [openPicker, setPicker] = useState(false);
   const [fileList, setFiles] = useState(fakeFileList);
   const [document, setDocument] = useState({});
+
 
   const connectAuth = async () => {
     console.log('click auth');
@@ -31,12 +35,12 @@ function DocumentEditor({ hostView }) {
     setPicker(true);
   };
 
-
   return (
     <div className='doc-editor'>
       {openPicker && <FilePicker fileList={fileList} setDocument={setDocument} />}
       {hostView && !openPicker && <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>}
-      <FileUpload/>
+      <FileUpload updateRoom={updateRoom}/>
+      <Dropdown setActiveDocumentHandler={setActiveDocumentHandler} documents={documents}/>
     </div>
   );
 }

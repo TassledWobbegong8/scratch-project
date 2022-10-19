@@ -4,7 +4,7 @@ import ProfileRoomCard from '../components/ProfileRoomCard';
 import RoomEditor from './RoomEditorModal';
 import SavedRoomCard from './SavedRoomCard';
 
-function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
+function RoomManager({ fetchUser, rooms, savedRoomsProps, host, files }) {
   const [addRoomModal, setModal] = useState(false);
   const [addSavedRoom, setSavedRoom] = useState(false);
 
@@ -18,6 +18,9 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   //   }
   //   getUser();
   // }, [addRoomModal, addSavedRoom]);
+  console.log('ROOM MANAGER ROOMS ', rooms);
+  console.log('ROOM MANAGER PROPS ', savedRoomsProps);
+  console.log('ROOM MANAGER HOST ', host);
 
   const closeModal = (event) => {
     event.preventDefault();
@@ -25,7 +28,7 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   };
 
   const roomCards = rooms.map((e, i) => {
-    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} />;
+    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} files={files}/>;
   });
 
   const savedRoomCards = savedRoomsProps ? savedRoomsProps.map((e, i) => {
