@@ -4,14 +4,14 @@ const express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http, 
-    {
+  {
     cors: {
-        origin: "http://localhost:8080",
-        methods: ['GET', 'POST']
+      origin: 'http://localhost:8080',
+      methods: ['GET', 'POST']
     }
-}
-)
-const {Server} = require('socket.io')
+  }
+);
+const {Server} = require('socket.io');
 
 
 
@@ -61,11 +61,11 @@ app.use('/', express.static(path.resolve(__dirname, '../build')));
 
 
 io.on('connection', (socket)=>{
-    console.log('client connected');
-    // console.log(socket)
+  console.log('client connected');
+  // console.log(socket)
 
-    // socket.emit('connection', null)
-})
+  // socket.emit('connection', null)
+});
 
 
 app.get('/auth', (req, res) => {
