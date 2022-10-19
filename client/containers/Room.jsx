@@ -36,16 +36,7 @@ function Room( ) {
     if (!info.host._id || info.host._id === details._id) setHostView(true);
   };
 
-  // update room info
-  //setRoomCookie and retrieve info from cookie
-  // useEffect(() => {
-  //   // if state exists then set info
-  //   console.log('ROOM COMPONENT USEEFFECT SETINFO STATE');
-  //   if (state) setInfo(state.info);
-  //   // if info is null (no state) then retrieve room info
-  //   if (!state) getRoom();
-  // }, [hostView]);
-
+  // fetch document from s3 bucket and set the response to the active url
   const fetchFromS3 = async (filename) => {
     const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`, {
       credentials: 'include',
@@ -57,6 +48,7 @@ function Room( ) {
     }
   };
 
+  // handler function to change toggle active document when host changes what to display
   const setActiveDocumentHandler = async (filename) => {
     //Check if the entered filename is empty or matches the current activeDocument
     if (!filename.trim().length || filename.trim() === activeDocument) return;
@@ -74,6 +66,7 @@ function Room( ) {
     }
   };
 
+  //Fetches room information. Used when the component first mounts
   const fetchRoomInfo = async () => {
    
     const response = await axios.get('http://localhost:3000/api/rooms/cookie', {withCredentials: true});
@@ -105,10 +98,15 @@ function Room( ) {
   }, [info]);
 
   // console.log('ROOM COMPONENT STATE', state);
-  console.log('ROOM COMPONENT INFO', info);
+  // console.log('ROOM COMPONENT INFO', info);
   // console.log('ROOM COMPONENT HOSTINFO', hostInfo);
+  // console.log('ROOM COMPONENT HOST VIEW ', hostView);
 
   const deleteFile = async (selectedDocument) => {
+    if (selectedDocument === activeDocument) {
+      setActiveDocument('');
+      setActiveURL('');
+    }
     const response = await fetch(`/api/uploads/${selectedDocument}`, {
       method: 'DELETE',
       headers: {
@@ -119,10 +117,6 @@ function Room( ) {
     
     if (response.ok) {
       const deleted = await response.json();
-      if (selectedDocument === activeDocument) {
-        setActiveDocument('');
-        setActiveURL('');
-      }
       await fetchRoomInfo();
     }
         
