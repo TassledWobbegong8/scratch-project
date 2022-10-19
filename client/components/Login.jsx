@@ -9,6 +9,7 @@ export default function Login({ setLoggedIn }) {
 
   const [signup, setSignup] = useState(false);
   const [warning, setWarning] = useState(false);
+  const [badLogin, setBadLogin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ export default function Login({ setLoggedIn }) {
     if (user) navigate('/main/home');
     if (!user) {
       console.log('wrong password or username');
-      const authError = true;
+      setBadLogin(true);
     }
   };
 
@@ -57,9 +58,12 @@ export default function Login({ setLoggedIn }) {
   const loginDetails = (
     <div className="auth-container details-container">
       <h2 id="login-text">Login Details</h2>
-      <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
+      <TextField label="Username" onChange={(event) => {
+        setUsername(event.target.value);
+        setBadLogin(false);
+      }} />
       <TextField type='password' label="Password" onChange={(event) => setPassword(event.target.value)} />
-      
+      {badLogin && <p>This username or password is incorrect.</p>}
       <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
       
       <p>{'Don\'t have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
@@ -83,7 +87,8 @@ export default function Login({ setLoggedIn }) {
     <>
       <p className='logo' id='main-logo'>stud<span>if</span>y</p>
       <p id='slogan'><span>{'"does studying make you cry? use studify!"'}</span> - Confucius</p>
-      {signup ? signupDetails : loginDetails}
+      {signup ? signupDetails : loginDetails}  
+   
     </>
     
   );

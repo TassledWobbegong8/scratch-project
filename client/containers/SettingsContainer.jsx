@@ -8,7 +8,6 @@ export default function SettingsContainer() {
 
   const settings = [
     'LOGIN DETAILS',
-    'COMMUNICATION PREFERENCES',
     'CREDITS',
   ];
 

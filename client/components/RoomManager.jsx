@@ -1,5 +1,4 @@
-import { Button } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ProfileRoomCard from '../components/ProfileRoomCard';
 import RoomEditor from './RoomEditorModal';
 import SavedRoomCard from './SavedRoomCard';
@@ -12,22 +11,18 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   // console.log(rooms);
   // console.log(savedRoomsProps);
 
-  // useEffect(() => {
-  //   async function getUser() {
-  //     user = await fetchUser();
-  //   }
-  //   getUser();
-  // }, [addRoomModal, addSavedRoom]);
-
   const closeModal = (event) => {
+    // e.preventDefault() prevents all the default behavior by the browser
     event.preventDefault();
     setModal(false);
   };
 
+  //returns an array of profile room objects
   const roomCards = rooms.map((e, i) => {
     return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} />;
   });
 
+  //if there are savedrooms,then return an array of saved room card objects, else return div
   const savedRoomCards = savedRoomsProps ? (
     savedRoomsProps.map((e, i) => {
       return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser} />;
@@ -36,6 +31,7 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
     <div />
   );
 
+  //Room manager tab is a div with a header. If addRoomModal is false, add button and onclick, setModal is true
   const hostedRooms = (
     <div className="profile-room-container">
       <h2>Hosted Rooms:</h2>
@@ -61,9 +57,18 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
     </div>
   );
 
+  //Appointments modal
+  const appointments = (
+    <div className="profile-room-container">
+      <h2>Appointments:</h2>
+    </div>
+  );
+
   return (
     <div id="room-manager">
+
       <div id="tabs">
+
         <button
           onClick={() => {
             setModal(false);
@@ -75,11 +80,22 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
         >
           Room Manager
         </button>
-        <button onClick={() => setSavedRoom(true)} id="saved-rooms-tab">
+
+        <button 
+          onClick={() => setSavedRoom(true)} 
+          id="saved-rooms-tab">
           Saved Rooms
         </button>
+
+        <button 
+          onClick={() => setSavedRoom(true)}
+          id="appointments-tab">
+          Appointments
+        </button>
+
       </div>
       {!addSavedRoom ? hostedRooms : savedRooms}
+
     </div>
   );
 }
