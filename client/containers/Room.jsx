@@ -27,12 +27,6 @@ function Room( ) {
     const saved = await response.json();
   };
 
-  const getRoom = async () => {
-    const response = await fetch('/api/rooms/cookie');
-    const room = response.json();
-    setInfo(room);
-  };
-
   // fetch host if info doesn't already exist
   const fetchHost = async () => {
     const response = await fetch('/api/users');
