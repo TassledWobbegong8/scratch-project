@@ -264,6 +264,16 @@ usersController.deleteFile = async (req, res, next) => {
     console.log('RES LOCALs', res.locals);
     const response = await User.updateOne({ _id: user._id }, { $pull: { files: fileName } });
 
+    await redisClient.set(`getUserById${user._id}`, JSON.stringify(user));
+
+    for await (const room of user.rooms) {
+      await redisClient.set(`getRoom${room._id}`, 'fetchAgain');
+    }
+    
+    for await (const subject of ['math', 'english', 'histoy', 'science', 'languages', 'miscellaneous', 'all']) {
+      await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
+    }
+
     console.log('deletefile', response, 'USER', await User.findById(user._id));
     return next();
   } catch(err) {
