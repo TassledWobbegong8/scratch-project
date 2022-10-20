@@ -64,7 +64,7 @@ function Room( ) {
     //Set the activeDocument and then fetch the file from aws bucket endpoint
     await setActiveDocument(filename);
 
-    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`);
+    const awsFile = await fetch(`/api/uploads/${filename}`);
     if (awsFile.ok){
       const url = await awsFile.json();
       console.log('url', url);

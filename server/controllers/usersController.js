@@ -21,13 +21,18 @@ const redisGetOrSet = async (key, fn) => {
     //Set data variable to the value corresponding to the entered key paramter and return it if it exists
     const data = await redisClient.get(key);
     console.log('REDIS ', data);
-    if (data) return JSON.parse(data);
+    if (data) {
+      console.log('SAVE FILE CACHE HIT', data);
+      return JSON.parse(data);
+    }
+    
     
     //Otherwise run the callback function, set the redis key value pair and return result of the callback
     else {
       const freshData = await fn();
       console.log(freshData);
       redisClient.set(key, JSON.stringify(freshData));
+      console.log('SAVE FILE FETCH HIT', data);
       return freshData;
     }
   } catch (err) {
@@ -240,11 +245,12 @@ usersController.saveFile = async (req, res, next) => {
 
     await redisClient.set(`getUserById${user._id}`, JSON.stringify(user));
 
+    // not sure this is necessary?
     for await (const room of user.rooms) {
       await redisClient.set(`getRoom${room._id}`, 'fetchAgain');
     }
     
-    for await (const subject of ['math', 'english', 'histoy', 'science', 'languages', 'miscellaneous', 'all']) {
+    for await (const subject of ['math', 'english', 'history', 'science', 'languages', 'miscellaneous', 'all']) {
       await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
     }
 
