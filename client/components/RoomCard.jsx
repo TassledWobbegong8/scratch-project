@@ -34,14 +34,13 @@ function RoomCard( { info, id } ) {
   };
 
   const setRoomCookie = async (roomID) => {
-    const response = await fetch('http://localhost:3000/api/rooms/cookie', {
+    const response = await fetch('/api/rooms/cookie', {
       method: 'POST',
       body: JSON.stringify({ room: roomID }),
       credentials: 'include',
       headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        'Origin': 'http://localhost:8080'
       },
     });
 
