@@ -1,21 +1,20 @@
-
 import React, { useState, useEffect } from 'react';
-import { NextPlan } from '@mui/icons-material';
-import Axios from 'axios';
 
 
-const Dropdown = ({subjectList, setSubjectList,sub, setSub }) => {
+const Dropdown = ({ subjectList, setSub, questions, setQuestions }) => {
 
-  const chooseSub = async (event) => {
+  const chooseSub =  (event) => {
     const subject = event.target.value;
-    try {
-      Axios.post('/api/home', { subject })
-        .then(res => console.log(res.data[0].questions[0][0]));
+    for (const obj of subjectList) {
+      if (obj.subject === subject) {
+        setQuestions(obj.questions);
+        // console.log(questions[0][0]);
+
+      }
     }
-    catch (err) {
-      console.log(err);
-    }
+    setSub(subject);
   };
+
   return (
     <form >
       <label>

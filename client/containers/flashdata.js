@@ -17,7 +17,7 @@ const flashdata = [
   },
   {
     subject: 'harry potter',
-    questions: [],
+    questions: [ '赫敏'],
   },
 ];
 
