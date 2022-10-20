@@ -4,6 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+
 function RoomCard( { info, id } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -32,8 +33,26 @@ function RoomCard( { info, id } ) {
     setRoomInfoBoolean(!roomInfoBoolean);
   };
 
+  const setRoomCookie = async (roomID) => {
+    const response = await fetch('/api/rooms/cookie', {
+      method: 'POST',
+      body: JSON.stringify({ room: roomID }),
+      credentials: 'include',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
+
+    const success = await response.json();
+    console.log(success);
+  };
+
   const mainRoom = (
-    <div className="mainRoom" onClick={showRoomInfo}>
+    <div className="mainRoom" onClick={() => {
+      showRoomInfo();
+      setRoomCookie(id);
+    }}>
       {/* <div > */}
       {/* <div>
           <img src='https://csunshinetoday.csun.edu/wp-content/uploads/Math4-web.jpg' width="192" height="144"/>

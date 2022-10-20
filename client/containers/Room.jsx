@@ -27,12 +27,6 @@ function Room( ) {
     const saved = await response.json();
   };
 
-  const getRoom = async () => {
-    const response = await fetch('/api/rooms/cookie');
-    const room = response.json();
-    setInfo(room);
-  };
-
   // fetch host if info doesn't already exist
   const fetchHost = async () => {
     const response = await fetch('/api/users');
@@ -42,21 +36,19 @@ function Room( ) {
     if (!info.host._id || info.host._id === details._id) setHostView(true);
   };
 
-  // update room info
-  useEffect(() => {
-    // if state exists then set info
-    if (state) setInfo(state.info);
-    // if info is null (no state) then retrieve room info
-    if (!state) getRoom();
-  }, [hostView]);
+  // fetch document from s3 bucket and set the response to the active url
+  const fetchFromS3 = async (filename) => {
+    const awsFile = await fetch(`http://localhost:3000/api/uploads/${filename}`, {
+      credentials: 'include',
+    });
+    if (awsFile.ok){
+      const url = await awsFile.json();
+      console.log('FETCH FROMS3 url', url);
+      await setActiveURL(url);
+    }
+  };
 
-  // set host and set cookie for room
-  useEffect(() => {
-    if (info.host) fetchHost();
-    // if info was read from state then save id
-    if (state) saveRoom();
-  }, [info]);
-
+  // handler function to change toggle active document when host changes what to display
   const setActiveDocumentHandler = async (filename) => {
     //Check if the entered filename is empty or matches the current activeDocument
     if (!filename.trim().length || filename.trim() === activeDocument) return;
@@ -64,7 +56,9 @@ function Room( ) {
     //Set the activeDocument and then fetch the file from aws bucket endpoint
     await setActiveDocument(filename);
 
-    const awsFile = await fetch(`/api/uploads/${filename}`);
+    const awsFile = await fetch(`/api/uploads/${filename}`, {
+      credentials: 'include',
+    });
     if (awsFile.ok){
       const url = await awsFile.json();
       console.log('url', url);
@@ -72,18 +66,9 @@ function Room( ) {
     }
   };
 
-  const fetchRoomInfo = async (id) => {
-    // try {
-    //   const response = await fetch('http://localhost:3000/api/rooms/cookie');
-    
-    //   if (response.ok) {
-    //     const room = await response.json().roomDoc;
-    //     console.log('Updated Room: ', room);
-    //     setInfo(room);
-    //   }
-    // } catch (err) {
-    //   console.log('Error fetching room info: ', err.message);
-    // }
+  //Fetches room information. Used when the component first mounts
+  const fetchRoomInfo = async () => {
+   
     const response = await axios.get('http://localhost:3000/api/rooms/cookie', {withCredentials: true});
 
     if (response.status === 200) {
@@ -93,9 +78,49 @@ function Room( ) {
     }
   };
 
-  console.log('ROOM COMPONENT STATE', state);
-  console.log('ROOM COMPONENT INFO', info);
-  console.log('ROOM COMPONENT HOSTINFO', hostInfo);
+  useEffect(()=>{
+    console.log('fetching room info...');
+    fetchRoomInfo();
+  }, []);
+
+  // set host and set cookie for room
+  useEffect(() => {
+    if (info?.host) fetchHost();
+    // if info was read from state then save id
+    // if (state) saveRoom();
+  }, [info]);
+
+  useEffect(() => {
+    if (info?.activeFile) {
+      setActiveDocument(info.activeFile);
+      fetchFromS3(info.activeFile);
+    }
+  }, [info]);
+
+  // console.log('ROOM COMPONENT STATE', state);
+  // console.log('ROOM COMPONENT INFO', info);
+  // console.log('ROOM COMPONENT HOSTINFO', hostInfo);
+  // console.log('ROOM COMPONENT HOST VIEW ', hostView);
+
+  const deleteFile = async (selectedDocument) => {
+    if (selectedDocument === activeDocument) {
+      setActiveDocument('');
+      setActiveURL('');
+    }
+    const response = await fetch(`/api/uploads/${selectedDocument}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({room: info._id})
+    });
+    
+    if (response.ok) {
+      const deleted = await response.json();
+      await fetchRoomInfo();
+    }
+        
+  };
 
   return (
     <div className="room-page">
@@ -107,8 +132,10 @@ function Room( ) {
         hostView={hostView} 
         documents={info.files ? info.files : info.host?.files} 
         setActiveDocumentHandler={setActiveDocumentHandler}
-        updateRoom={fetchRoomInfo}/>}
-      {activeDocument && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
+        updateRoom={fetchRoomInfo}
+        deleteFile = {deleteFile}
+      />}
+      {(activeDocument && activeURL) && <SelectedDocument document={activeDocument} activeURL={activeURL}/>}
       <Chatbox />
     </div>
   );

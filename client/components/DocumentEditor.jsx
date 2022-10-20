@@ -6,7 +6,7 @@ import Dropdown from './Dropdown';
 import SelectedDocument from './SelectedDocument';
 import { PropaneSharp } from '@mui/icons-material';
 
-function DocumentEditor({ hostView, documents, setActiveDocumentHandler, updateRoom}) {
+function DocumentEditor({ hostView, documents, setActiveDocumentHandler, updateRoom, deleteFile}) {
   // some fake data for rendering purposes
   const fakeFileList = ['test1', 'someDocument', 'my story'];
 
@@ -40,7 +40,7 @@ function DocumentEditor({ hostView, documents, setActiveDocumentHandler, updateR
       {openPicker && <FilePicker fileList={fileList} setDocument={setDocument} />}
       {hostView && !openPicker && <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>}
       <FileUpload updateRoom={updateRoom}/>
-      <Dropdown setActiveDocumentHandler={setActiveDocumentHandler} documents={documents}/>
+      <Dropdown setActiveDocumentHandler={setActiveDocumentHandler} documents={documents} deleteFile={deleteFile}/>
     </div>
   );
 }

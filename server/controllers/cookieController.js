@@ -33,7 +33,7 @@ cookieController.setUserCookie = async (req, res, next) => {
 cookieController.verifyUser = async (req, res, next) => {
   // check and verify jwt in cookie
   try {
-    // console.log('VERIFYUSER: ', req);
+    console.log('VERIFYUSER: ', req.cookies);
     const token = req.cookies.ssid;
     if (!token) {
       res.locals.token = false;
@@ -74,8 +74,8 @@ cookieController.deleteSession = async (req, res, next) => {
 
 cookieController.setRoomCookie = async (req, res, next) => {
   try {
-    console.log('setting cookie');
-    await res.cookie('roomId', req.body.room, {httpOnly: true});
+    console.log('setting cookie ', req.body.room);
+    res.cookie('roomId', req.body.room, {httpOnly: true});
     return next();
   } catch (err) {
     return next({

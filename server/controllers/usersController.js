@@ -21,11 +21,7 @@ const redisGetOrSet = async (key, fn) => {
     //Set data variable to the value corresponding to the entered key paramter and return it if it exists
     const data = await redisClient.get(key);
     console.log('REDIS ', data);
-    if (data) {
-      console.log('SAVE FILE CACHE HIT', data);
-      return JSON.parse(data);
-    }
-    
+    if (data && (data !== 'fetchAgain')) return JSON.parse(data);
     
     //Otherwise run the callback function, set the redis key value pair and return result of the callback
     else {
@@ -267,10 +263,28 @@ usersController.saveFile = async (req, res, next) => {
 usersController.deleteFile = async (req, res, next) => {
   try {
     const { fileName, user } = res.locals;
-    console.log('RES LOCALs', res.locals)
+    console.log('RES LOCALs', res.locals);
     const response = await User.updateOne({ _id: user._id }, { $pull: { files: fileName } });
 
-    console.log('deletefile', response, 'USER', await User.findById(user._id));
+    const updatedUser = await User.findById(user._id);
+
+    for await (const room of updatedUser.rooms) {
+      const roomDoc = await Room.findById(room);
+      console.log(roomDoc);
+      if (roomDoc.activeFile === fileName) roomDoc.activeFile = null;
+      await roomDoc.save();
+    }
+
+    await redisClient.set(`getUserById${user._id}`, 'fetchAgain');
+
+    for await (const room of updatedUser.rooms) {
+      await redisClient.set(`getRoom${room}`, 'fetchAgain');
+    }
+    
+    for await (const subject of ['math', 'english', 'history', 'science', 'languages', 'miscellaneous', 'all']) {
+      await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
+    }
+
     return next();
   } catch(err) {
     return next({
@@ -278,6 +292,6 @@ usersController.deleteFile = async (req, res, next) => {
       message: { err: 'usersController.deleteFile: ERROR: could not delete file from user'}
     });
   }
-}
+};
 
 module.exports = usersController;

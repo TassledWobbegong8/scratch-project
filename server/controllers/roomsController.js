@@ -202,14 +202,15 @@ roomsController.setActiveFile = async (req, res, next) => {
     const { roomId, fileName } = res.locals;
     // console.log('ROOM ID:',roomId)
     // grab fileName from req.params and set activefile in room doc
-    await Room.findByIdAndUpdate(roomId, {activeFile: fileName});
-
-    // update rooms in cache to reflect new active file
+    const room = await Room.findByIdAndUpdate(roomId, {activeFile: fileName}, {new: true}).populate('host');
+    console.log(room);
+    
+    //update roomid query
+    await redisClient.set(`getRoom${roomId}`, JSON.stringify(room));
+    
+    //Set both allRooms and allRoomsSubject keys to fetchAgain so the next time they are queried the correct database query will be run
     await redisClient.set('getAllRoomsall', 'fetchAgain');
-    const roomDoc = await Room.findById(roomId);
-    const {subject} = roomDoc;
-    // console.log('SUBJECT',subject);
-    await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
+    await redisClient.set(`getAllRooms${room.subject}`, 'fetchAgain');
 
     return next();
     
