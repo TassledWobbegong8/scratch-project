@@ -20,8 +20,6 @@ export default function SettingsCard() {
     <div className='details-container' id="settings-container">
       <h2 id="login-text">Login Details</h2>
       <TextField label="Email Address"/>
-      <TextField label="Password"/>
-      <TextField label="Confirm Password"/>
       <Button variant="contained" style={{maxWidth: '240px', maxHeight: '50px', minWidth: '240px', minHeight: '50px', margin: '0 auto', position: 'relative'}}>Submit </Button>
     </div>);
 

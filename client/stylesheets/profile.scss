@@ -72,6 +72,35 @@
   }
 }
 
+#saved-rooms-tab:first-child {
+  margin-right: 10px;
+}
+
+#appointments-tab {
+  align-self: start;
+  padding: 10px 40px;
+  color: $mui-text-color;
+  background-color: white;
+  font-weight: 700;
+  border-radius: $border-radius $border-radius 0 0 ;
+  border-top: 1px solid $accent-color-light;
+  border-left: 1px solid $accent-color-light;
+  border-right: 1px solid $accent-color-light;
+  border-bottom: 0px;
+  z-index: 1;
+  &:hover{
+    background-color: darken($color: white, $amount: 3%);
+    &::after {
+      opacity: 0;
+      transition: all 0.8s
+    }
+  }
+}
+
+#appointments-tab:first-child {
+  margin-right: 10px;
+}
+
 .profile-room-container {
   flex: 1;
   text-align: left;

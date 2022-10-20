@@ -25,7 +25,7 @@ function RoomContainer({ subject, id }) {
 
   return (
     <div id='room-container'>
-      <h2>Active {subject} Rooms</h2>
+      <h3>Active {subject} Rooms</h3>
       {roomCards}
     </div>
   );

@@ -20,7 +20,7 @@ function ProfileRoomCard({ fetchUser, info }) {
     setModal(false);
   };
 
-
+  //hosted rooms card
   return (
     <div className='profile-room'>
       <p><label>Subject: </label>{info.subject}</p>

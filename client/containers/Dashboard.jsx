@@ -12,8 +12,9 @@ import Room from './Room';
 import FlashContainer from './FlashContainer';
 
 function Dashboard( ) {
-  const [subject, setSubject] = useState('');
-  const [loggedIn, setLoggedIn] = useState(true);
+  //Using React hooks, declare new state variables 'subject' and 'loggedIn'
+  const [subject, setSubject] = useState('');//the initial state of subject is set to an empty string
+  const [loggedIn, setLoggedIn] = useState(true);//the initial state  of logged in is set to boolean true
 
   const verifyLogin = async () => {
     const logged = await fetch('/api/auth/verify').then(response => response.json());
@@ -24,9 +25,9 @@ function Dashboard( ) {
   // check session if dashboard remounts
   useEffect(() => {
     verifyLogin();
-  }, []);
+  }, []); //Run this once at the beginning
 
-  const noSubject = <p id='no-subject' className='warning'>Please select a subject!</p>;
+  const noSubject = <p id='no-subject' className='warning'></p>;
   const yesSubject = <RoomContainer id={loggedIn._id} subject={subject}/>;
 
   return (

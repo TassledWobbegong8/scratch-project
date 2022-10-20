@@ -8,7 +8,6 @@ export default function SettingsContainer() {
 
   const settings = [
     'LOGIN DETAILS',
-    'COMMUNICATION PREFERENCES',
     'CREDITS',
   ];
 
@@ -27,7 +26,7 @@ export default function SettingsContainer() {
   });
 
   return (
-    <div className='subject-nav'>
+    <div className='settings-nav'>
       <h2 style={{'textAlign': 'center'}}>Settings</h2>
       <div id='subject-links-container'>
         {settingsBtns}

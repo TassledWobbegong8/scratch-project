@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Roboto:ital,wght@0,100;0,400;0,700;1,400&family=Rubik:wght@300;400&display=swap');
 $main-font: 'Roboto', sans-serif;
-$main-text-color: #000000;
+$main-text-color: #b71b1b;
 
-$mui-text-color: #1976d2;
-$accent-color: #34B3F1;
+$mui-text-color: #0c0c0c;
+$accent-color: #5aa069;
 $accent-color-light: lighten($accent-color, 24%);
 $accent-shadow: lighten($accent-color, 15%);
 
 $background-color: lighten($accent-color, 30%);
-$background-color-light: #EEEEEE;
+$background-color-light: #f0f0f0;
 
 $card-background: lighten($background-color-light, 3%);
 $mui-text-color-dark: darken($mui-text-color, 15%);
-$warning-color: #F15412;
+$warning-color: #000000;
 
 $border-radius: 4px;
