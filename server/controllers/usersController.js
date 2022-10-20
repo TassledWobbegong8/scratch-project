@@ -28,6 +28,7 @@ const redisGetOrSet = async (key, fn) => {
       const freshData = await fn();
       console.log(freshData);
       redisClient.set(key, JSON.stringify(freshData));
+      console.log('SAVE FILE FETCH HIT', data);
       return freshData;
     }
   } catch (err) {
@@ -240,11 +241,12 @@ usersController.saveFile = async (req, res, next) => {
 
     await redisClient.set(`getUserById${user._id}`, JSON.stringify(user));
 
+    // not sure this is necessary?
     for await (const room of user.rooms) {
       await redisClient.set(`getRoom${room._id}`, 'fetchAgain');
     }
     
-    for await (const subject of ['math', 'english', 'histoy', 'science', 'languages', 'miscellaneous', 'all']) {
+    for await (const subject of ['math', 'english', 'history', 'science', 'languages', 'miscellaneous', 'all']) {
       await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
     }
 
@@ -279,7 +281,7 @@ usersController.deleteFile = async (req, res, next) => {
       await redisClient.set(`getRoom${room}`, 'fetchAgain');
     }
     
-    for await (const subject of ['math', 'english', 'histoy', 'science', 'languages', 'miscellaneous', 'all']) {
+    for await (const subject of ['math', 'english', 'history', 'science', 'languages', 'miscellaneous', 'all']) {
       await redisClient.set(`getAllRooms${subject}`, 'fetchAgain');
     }
 

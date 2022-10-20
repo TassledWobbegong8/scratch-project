@@ -29,7 +29,7 @@ uploadController.sendFile = async (req, res, next) => {
   
   try {
     //Create readstream from the req.file object
-    console.log('SENDFILE REQ', req.cookies);
+    // console.log('SENDFILE REQ', req.cookies);
     const filestream = await fs.createReadStream(req.file.path);
 
     //Define PutObjectCommand params
@@ -87,7 +87,7 @@ uploadController.getUserFiles = async(req, res, next) => {
     //     .catch(err => {
     //       return err; 
     //     });
-    console.log('COMMAND OBJECT AFTER FILE RETIEVE',command);
+    // console.log('COMMAND OBJECT AFTER FILE RETIEVE',command);
     res.locals.fileURL = await getSignedUrl(s3, command, { expiresIn: 36000 });
     res.locals.fileName = key;
     return next();
@@ -118,7 +118,7 @@ uploadController.deleteUserFiles = async(req, res, next) => {
     const command = new DeleteObjectCommand(params);
 
     const deleteResult = await s3.send(command);
-    console.log('DELETE OBJECT', deleteResult);
+    // console.log('DELETE OBJECT', deleteResult);
 
     res.locals.fileName = key;
     return next();
