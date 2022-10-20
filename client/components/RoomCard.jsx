@@ -1,61 +1,73 @@
 import { Button } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import SchoolIcon from '@mui/icons-material/School';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function RoomCard( { info, id } ) {
+function RoomCard({ info, id }) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  // const textOnSubmit = event => {
-  //   event.preventDefault();
-  //   setName((prevName) => {return newName})
-  // }
-
-  // function handleChange() {
-  //   newName = event.target.value
-  //   return event.target.value
-  // }
-
-  async function saveRoom () {
-    const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'savedRooms': `${info._id}`})};
+  async function saveRoom() {
+    const options = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ savedRooms: `${info._id}` }),
+    };
     await fetch('/api/users/saveroom', options);
     console.log('Room Saved!');
     setSaved(true);
   }
 
-  const showRoomInfo = event => {
+  const showRoomInfo = (event) => {
     setRoomInfoBoolean(!roomInfoBoolean);
   };
 
   const mainRoom = (
     <div className="mainRoom" onClick={showRoomInfo}>
-      {/* <div > */}
-      {/* <div>
-          <img src='https://csunshinetoday.csun.edu/wp-content/uploads/Math4-web.jpg' width="192" height="144"/>
-        </div> */}
-      {info.host.nickname} Room
-      {/* <InfoIcon fontSize="small" onClick={showRoomInfo}></InfoIcon> */}
-      {/* </div> */}
-      {/* <form>
-        <input id="nameInput" type="text" placeholder="Your Name Here" onChange={handleChange}></input>
-        <button id="onSubmitButton" onClick={textOnSubmit}>Enter</button>
-        <button id="showRoomInfo" onClick={showRoomInfo}>Show Room Info</button>
-      </form> */}
+      {console.log(info)}
+      {info.host.nickname.concat(info.classroom ? `'s Classroom` : `'s room`)}
+      {info.classroom ? (
+        <SchoolIcon className="schoolIcon" fontSize="medium"></SchoolIcon>
+      ) : (
+        <MeetingRoomIcon
+          className="meetingRoomIcon"
+          fontSize="medium"></MeetingRoomIcon>
+      )}
     </div>
   );
 
   const roomInfo = (
     <div className="roomInfo">
-      <p><span>Subject:  </span>{info.subject.toUpperCase()} </p>
-      <p><span>Creator:  </span>{info.host.username} </p>
-      <p><span>People Inside: </span>{info.allowedUsers} </p>
-      <div id='main-button'>
-        <Link to='/main/room' state={{ info }}><Button variant='contained'>Join Room</Button></Link>
-        {!saved && <Button variant='contained' id="saveMyRoom" onClick={saveRoom}>Save</Button>}
-        {saved && <Button variant='outlined' id="saveMyRoom">Saved!</Button>}
-        <Button id="exitRoomInfo" onClick={showRoomInfo}>Back</Button>
+      <p>
+        <span>Subject: </span>
+        {info.subject.toUpperCase()}{' '}
+      </p>
+      <p>
+        <span>Creator: </span>
+        {info.host.username}{' '}
+      </p>
+      <p>
+        <span>People Inside: </span>
+        {info.allowedUsers}{' '}
+      </p>
+      <div id="main-button">
+        <Link to="/main/room" state={{ info }}>
+          <Button variant="contained">Join Room</Button>
+        </Link>
+        {!saved && (
+          <Button variant="contained" id="saveMyRoom" onClick={saveRoom}>
+            Save
+          </Button>
+        )}
+        {saved && (
+          <Button variant="outlined" id="saveMyRoom">
+            Saved!
+          </Button>
+        )}
+        <Button id="exitRoomInfo" onClick={showRoomInfo}>
+          Back
+        </Button>
       </div>
     </div>
   );

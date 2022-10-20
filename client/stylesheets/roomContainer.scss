@@ -48,6 +48,11 @@
   margin-right: 10px;
 }
 
+.meetingRoomIcon{
+
+
+
+}
 .mainRoom {
   color: $mui-text-color-dark;
   border: 1px solid black;
@@ -63,6 +68,9 @@
     transform: scale(1.1);
     box-shadow: 1px 1px $accent-shadow;
   }
+  display:inline-flex;
+  justify-content: space-between;
+
 }
 
 .roomInfo {
@@ -83,6 +91,7 @@
     margin: 5px;
   }
 }
+
 
 #main-button {
   display: flex;

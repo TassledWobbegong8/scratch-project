@@ -24,8 +24,8 @@ function ProfileRoomCard({ fetchUser, info }) {
   return (
     <div className='profile-room'>
       <p><label>Subject: </label>{info.subject}</p>
-      <p><label>Restricted: </label>{info.restricted ? 'Yes' : 'No'}</p>
-      <p><label>Allowed users: </label></p>
+      <p><label>Classroom: </label>{info.classroom ? 'Yes' : 'No'}</p>
+      <p><label>Allowed Students: </label></p>
       <Link to='/main/room' state={{ info }}><Button variant='contained' id="open-room-btn" >Open Room</Button></Link>
 
       <Button variant='outlined' id="edit-room-btn" onClick={() => setModal(true)}>Edit Room</Button>

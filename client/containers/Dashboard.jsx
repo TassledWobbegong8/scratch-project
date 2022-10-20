@@ -9,6 +9,7 @@ import SettingsContainer from './SettingsContainer';
 import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
 import Room from './Room';
+import FlashContainer from './FlashContainer';
 
 function Dashboard( ) {
   //Using React hooks, declare new state variables 'subject' and 'loggedIn'
@@ -40,6 +41,7 @@ function Dashboard( ) {
               <div id='main-container'>
                 <SubjectNav subject={subject} setSubject={setSubject} />
                 {!subject ? noSubject : yesSubject}
+                <FlashContainer />
               </div>}
             />
             <Route path='/profile' element={<Profile />} />
