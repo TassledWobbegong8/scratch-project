@@ -1,0 +1,62 @@
+{
+  "_id": "634766c0ea42b4b223748d22",
+  "host": false,
+  "username": "test",
+  "nickname": "test",
+  "password": "testtest",
+  "rooms": [
+    {
+      "_id": "1",
+      "subject": "HostedRoom1",
+      "active": true,
+      "host": "634766c0ea42b4b223748d22",
+      "allowedUsers": [],
+      "pendingUsers": [],
+      "restricted": false,
+      "__v": 0
+    },
+    {
+      "_id": "2",
+      "subject": "HostedRoom2",
+      "active": true,
+      "host": "634766c0ea42b4b223748d22",
+      "allowedUsers": [],
+      "pendingUsers": [],
+      "restricted": false,
+      "__v": 0
+    }
+  ],
+  "savedRooms": [
+    {
+      "_id": "3",
+      "subject": "SavedRoom1",
+      "active": true,
+      "host": "634766c0ea42b4b223748d22",
+      "allowedUsers": [],
+      "pendingUsers": [],
+      "restricted": false,
+      "__v": 0
+    },
+    {
+      "_id": "4",
+      "subject": "SavedRoom2",
+      "active": true,
+      "host": "634766c0ea42b4b223748d22",
+      "allowedUsers": [],
+      "pendingUsers": [],
+      "restricted": false,
+      "__v": 0
+    },
+    {
+      "_id": "5",
+      "subject": "SavedRoom3",
+      "active": true,
+      "host": "634766c0ea42b4b223748d22",
+      "allowedUsers": [],
+      "pendingUsers": [],
+      "restricted": false,
+      "__v": 0
+    }
+  ],
+  "__v": 1
+}

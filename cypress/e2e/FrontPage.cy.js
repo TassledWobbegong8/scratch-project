@@ -24,4 +24,12 @@ describe('Front page', () => {
     cy.get("[id='logout-link']").should('be.visible')
   })
 
+  it('should log out', () => {
+    cy.get("[id=':r0:']").type("test")
+    cy.get("[id=':r1:']").type("testtest")
+    cy.contains('button','Login').click()
+    cy.get("[id='logout-link']").contains("Logout").click()
+    cy.contains('#main-logo', 'studify').should('be.visible')
+    cy.contains('Login Details').should('be.visible')
+  })
 })
