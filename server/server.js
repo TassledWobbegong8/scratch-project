@@ -2,7 +2,35 @@ const mongoose = require('mongoose');
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
+const { Server } = require('socket.io');
+
 require('dotenv').config();
+
+const app = express();
+const server = http.createServer(app);
+
+//// SOCKET.IO ///////
+const io = new Server(server);
+
+
+io.on('connection', (socket) => {
+  console.log('client connected: ', socket.id);
+  //join room
+  socket.on('join_room', (roomId)=> {
+    socket.join(roomId);
+
+  })
+  socket.on('message', data => {
+    io.emit('message', data);
+    console.log(data, socket.id);
+  });
+  socket.on('disconnect', () => {
+    console.log(socket.id, ' disconnected');
+  });
+});
+
+
 
 /////////////////////
 const cookieParser = require('cookie-parser');
@@ -22,7 +50,6 @@ mongoose
   .catch((err) => console.log(err));
 
 
-const app = express();
 
 ///////////////////////
 app.use(cors({credentials: true, origin: true}));
@@ -63,6 +90,6 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-module.exports = app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 }); //listens on port 3000 -> http://localhost:3000/
