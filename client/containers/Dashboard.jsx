@@ -9,6 +9,7 @@ import SettingsContainer from './SettingsContainer';
 import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
 import Room from './Room';
+import FlashContainer from './FlashContainer';
 
 function Dashboard( ) {
   const [subject, setSubject] = useState('');
@@ -39,6 +40,7 @@ function Dashboard( ) {
               <div id='main-container'>
                 <SubjectNav subject={subject} setSubject={setSubject} />
                 {!subject ? noSubject : yesSubject}
+                <FlashContainer />
               </div>}
             />
             <Route path='/profile' element={<Profile />} />

@@ -1,0 +1,24 @@
+
+
+const flashdata = [
+  {
+    subject: 'javascript',
+    questions: [
+      ['what\'re the primitive data types?', 'number, bigInt,NaN, etc'],
+      ['what does OOP stand for?', 'object-oriented programming'],
+    ],
+  },
+  {
+    subject: 'math',
+    questions: [
+      [' 1 + 1 = ?', '2'],
+      ['2 + 2 = ?', '4'],
+    ],
+  },
+  {
+    subject: 'harry potter',
+    questions: [ '赫敏'],
+  },
+];
+
+export default flashdata;

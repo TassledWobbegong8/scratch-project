@@ -1,0 +1,39 @@
+.flashcontainer {
+    border: solid;
+    height: 400px;
+    width: 400px;
+    text-align: center;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 2rem;
+ 
+
+}
+
+.topbutton {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.questionindex {
+    margin-top: 20px;
+}
+
+.flashcard {
+    border: solid lightblue;
+    margin: auto;
+    margin-top: 30px;
+    height: 200px;
+    width: 350px;
+    text-align: center;
+    background-color: lightblue;
+    border-radius: 1rem;
+}
+.question{
+    margin:40px;
+}
+.flashbutton{
+   
+    margin:30px
+}
