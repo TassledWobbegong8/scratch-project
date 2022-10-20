@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "634af9c614fe8ee99ca4d566",
+    "subject": "test",
+    "active": true,
+    "host": {
+      "_id": "634766c0ea42b4b223748d22",
+      "host": false,
+      "username": "test",
+      "nickname": "test",
+      "password": "testtest",
+      "rooms": ["634af9c614fe8ee99ca4d566"],
+      "savedRooms": [],
+      "__v": 1
+    },
+    "allowedUsers": [],
+    "pendingUsers": [],
+    "restricted": false,
+    "__v": 0
+  }
+]
