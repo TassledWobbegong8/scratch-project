@@ -22,7 +22,6 @@ const roomSchema = new Schema({
   allowedUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   pendingUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   maxallowed: { type: Number, max: 6 },
-  restricted: { type: Boolean, required: true },
   documentId: { type: String },
   classroom: { type: Boolean, required: true }
 });
