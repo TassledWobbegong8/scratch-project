@@ -22,17 +22,32 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host, files }) {
   console.log('ROOM MANAGER PROPS ', savedRoomsProps);
   console.log('ROOM MANAGER HOST ', host);
 
+  const setRoomCookie =  async(roomID) => {
+    const response = await fetch('http://localhost:3000/api/rooms/cookie', {
+      method: 'POST',
+      body: JSON.stringify({ room: roomID }),
+      credentials: 'include',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Origin': 'http://localhost:8080'
+      },
+    });
+
+    const success = await response.json();
+  };
+
   const closeModal = (event) => {
     event.preventDefault();
     setModal(false);
   };
 
   const roomCards = rooms.map((e, i) => {
-    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} files={files}/>;
+    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} files={files} setRoomCookie={setRoomCookie} roomId={e._id}/>;
   });
 
   const savedRoomCards = savedRoomsProps ? savedRoomsProps.map((e, i) => {
-    return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser}/>;
+    return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser} setRoomCookie={setRoomCookie} roomId={e._id}/>;
   }) : <div/>;
 
 
