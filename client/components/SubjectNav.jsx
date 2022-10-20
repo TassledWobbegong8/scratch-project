@@ -27,14 +27,15 @@ function SubjectNav({ subject, setSubject }) {
   const subjectBtns = subjects.map((e, i) => {
     return (
 
-      <Button variant='text'
+      <Button 
+        variant='text'
         key={i}
         value={e[0]}
         id='subject-links'
         onClick={(event) => handleClick(event.target.value)}>
-        <img className='subject-img' src= {subjectImgs[i]} alt="math"></img>
-        {e[1]}
+        <img className='subject-img' src= {subjectImgs[i]} alt="subject image"></img>
         {e[0]}
+        {/* {e[1]} */}
       </Button>
     );
   });

@@ -57,7 +57,7 @@ export default function Login({ setLoggedIn }) {
 
   const loginDetails = (
     <div className="auth-container details-container">
-      <h2 id="login-text">Login Details</h2>
+      <h3 id="login-text"></h3>
       <TextField label="Username" onChange={(event) => {
         setUsername(event.target.value);
         setBadLogin(false);
@@ -71,7 +71,7 @@ export default function Login({ setLoggedIn }) {
 
   const signupDetails = (
     <div className="auth-container  details-container">
-      <h2 id="login-text">Signup Details</h2>
+      <h3 id="login-text"></h3>
       <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
       <TextField label="Nickname" onChange={(event) => setNickname(event.target.value)} />
       <TextField type='password' placeholder='Must be at least 8 characters' label="Password"  onChange={(event) => setPassword(event.target.value)} />
@@ -86,7 +86,7 @@ export default function Login({ setLoggedIn }) {
   return (
     <>
       <p className='logo' id='main-logo'>stud<span>if</span>y</p>
-      <p id='slogan'><span>{'"does studying make you cry? use studify!"'}</span> - Confucius</p>
+      <p id='slogan'><span>{'"When studying makes you cry-- use studify!"'}</span> - Confucius</p>
       {signup ? signupDetails : loginDetails}  
    
     </>

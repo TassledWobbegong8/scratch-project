@@ -20,14 +20,25 @@
   // background-color: $background-color;
 }
 
-#subject-links-container {
+.settings-nav {
   display: flex;
   flex-direction: column;
+  height: 50%;
   padding: 10px;
+}
+
+#subject-links-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-column-gap: 10px;
+  // display: flex;
+  // flex-direction: row;
+  // padding: 10px;
 }
 
 #subject-links {
   margin: 10px 0;
+  padding-left: 20px;
   justify-content: start;
   &:hover {
     background-color: $background-color-light
