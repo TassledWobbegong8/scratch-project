@@ -3,7 +3,7 @@ import { Button, Switch, Select, InputLabel, MenuItem } from '@mui/material';
 
 function RoomEditor({ fetchUser, closeModal, action, id }) {
   const [warning, setWarning] = useState(false);
-  const [updatedRoom, setRoom] = useState({subject: '', restricted: false});
+  const [updatedRoom, setRoom] = useState({ subject: '', classroom: false });
 
   // create function to add card via post req and update room list
   const addRoom = async () => {
@@ -13,19 +13,21 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
       setWarning(true);
       return;
     }
-	
+
     // fetch request will return new room doc
     const newRoomData = await fetch('/api/rooms', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        ...updatedRoom, 
-        allowedUsers: [], 
+        ...updatedRoom,
+        allowedUsers: [],
         pendingUsers: [],
-        active: true})
-    }).then(response => response.json());
+        active: true,
+        classroom: true,
+      }),
+    }).then((response) => response.json());
 
     // update user to reset state
     fetchUser();
@@ -43,25 +45,41 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
     const updatedRoomData = await fetch(`/api/room/${id}`, {
       method: 'PATCH',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
-      body: JSON.stringify(updatedRoom)
-    }).then(response => response.json());
+      body: JSON.stringify(updatedRoom),
+    }).then((response) => response.json());
 
     // update user to reset state
     fetchUser();
   };
 
-  const addRoomBtn = <Button variant='contained' onClick={(event) => {
-    event.preventDefault();
-    addRoom();}}>Add new room</Button>;
+  const addRoomBtn = (
+    <Button
+      variant="contained"
+      onClick={(event) => {
+        event.preventDefault();
+        addRoom();
+      }}
+    >
+      Add new room
+    </Button>
+  );
 
-  const editRoomBtn = <Button variant='contained' onClick={(event) => {
-    event.preventDefault();
-    editRoom();}}>Update room</Button>;
+  const editRoomBtn = (
+    <Button
+      variant="contained"
+      onClick={(event) => {
+        event.preventDefault();
+        editRoom();
+      }}
+    >
+      Update room
+    </Button>
+  );
 
   return (
-    <div id='room-editor-modal'>
+    <div id="room-editor-modal">
       <form>
         <InputLabel id="subject-label">Subject</InputLabel>
         <Select
@@ -69,7 +87,9 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
           id="subject-select"
           value={updatedRoom.subject}
           label="Subject"
-          onChange={event => setRoom({...updatedRoom, subject: event.target.value})}
+          onChange={(event) =>
+            setRoom({ ...updatedRoom, subject: event.target.value })
+          }
         >
           <MenuItem value={'english'}>English</MenuItem>
           <MenuItem value={'math'}>Math</MenuItem>
@@ -78,16 +98,20 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
           <MenuItem value={'history'}>History</MenuItem>
           <MenuItem value={'miscellaneous'}>Miscellaneous</MenuItem>
         </Select>
-        <label className='room-editor-label'>Restricted: </label>
-        <Switch onClick={() => setRoom({...updatedRoom, restricted: !updatedRoom.restricted})} />
+        <label className="room-editor-label">Classroom: </label>
+        <Switch
+          onClick={() =>
+            setRoom({ ...updatedRoom, classroom: !updatedRoom.classroom })
+          }
+        />
         {warning && <p className="warning">All fields must be filled!</p>}
       </form>
-      <div id='room-editor-modal-btns'>
-        <Button variant='text' onClick={closeModal}>Cancel</Button>
+      <div id="room-editor-modal-btns">
+        <Button variant="text" onClick={closeModal}>
+          Cancel
+        </Button>
         {action === 'add' ? addRoomBtn : editRoomBtn}
-        
       </div>
-
     </div>
   );
 }
