@@ -4,6 +4,7 @@
 @import './login';
 @import './room';
 
+
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +13,10 @@
 }
 a {
   text-decoration: none;
+}
+
+h3 {
+  color: rgb(0, 0, 0);
 }
 
 body {
@@ -42,6 +47,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   background-image: radial-gradient(white 20%, transparent 20%);
+  // background-image: url("../assets/math.png");
   background-color: transparent;
   background-position: 30px;
   background-size: 15px 15px;
@@ -50,27 +56,46 @@ button:hover {
 .main-nav {
   display: flex;
   align-items: center;
-  background-color: $background-color;
-  height: 50px;
-  border-bottom: 1px solid $accent-color-light;
+  background-color: white;
+  height: 60px;
+  //border-bottom: 1px solid $accent-color-light;
 }
 .main-nav-btn {
   margin: 0 10px;
+  color:black;
 }
 .logo {
   font-family: 'Rubik', sans-serif;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 400;
-  padding: 5px;
+  padding: 8px;
+  padding-bottom: 15px;
+  padding-right: 8px;
   margin-left: 20px;
   span {
     font-weight: 300;
   }
 }
+
 #logout-link {
   color: $warning-color;
   flex: 1;
   justify-self: end;
+}
+
+#profile-link {
+  color: $warning-color;
+  padding-left: 30px;
+}
+
+#home-link {
+  color: $warning-color;
+  padding-left: 90px;
+}
+
+#settings-link {
+  color: $warning-color;
+  padding-left: 30px;
 }
 
 #login-text {
@@ -92,4 +117,18 @@ button:hover {
   padding: 20px;
   row-gap: 20px;
   width: 500px;
+}
+
+.subject-link-icon {
+    color:rgb(58, 58, 58);
+}
+
+.subject-img {
+  height: 200px;
+  width: 200px;
+  border: 1px solid $accent-color-light;
+}
+
+.sub-btn {
+  color:green;
 }

@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function MainNav({ setSubject, setLoggedIn }) {
   const logOut = async () => {
@@ -11,10 +15,10 @@ function MainNav({ setSubject, setLoggedIn }) {
   return (
     <div className='main-nav'>
       <p className='logo'>stud<span>if</span>y</p>
-      <Link className='main-nav-btn' to='/main/home'><Button onClick={() => setSubject('')} variant="text" id='home-link'>Home</Button></Link>
-      <Link className='main-nav-btn' to='/main/profile'><Button variant="text" id='profile-link'>Profile</Button></Link>
-      <Link className='main-nav-btn' to='/main/settings'><Button variant="text" id='settings-link'>Settings</Button></Link>
-      <Link className='main-nav-btn' to='/' id='logout-link'><Button onClick={logOut} variant="text" id='logout-link' sx={{float: 'right'}}>Logout</Button></Link>
+      <Link className='main-nav-btn' to='/main/home'><Button onClick={() => setSubject('')} variant="text" id='home-link'> <HomeIcon fontSize="22px"/>  Home</Button></Link>
+      <Link className='main-nav-btn' to='/main/profile'><Button variant="text" id='profile-link'><PersonIcon fontSize="22px" margin="5px"/> Profile</Button></Link>
+      <Link className='main-nav-btn' to='/main/settings'><Button variant="text" id='settings-link'><SettingsIcon fontSize="22px"/> Settings</Button></Link>
+      <Link className='main-nav-btn' to='/' id='logout-link'><Button onClick={logOut} variant="text" id='logout-link' sx={{float: 'right'}}> <LogoutIcon fontSize="22px"/>Logout</Button></Link>
     </div>
   );
 }

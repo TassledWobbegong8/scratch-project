@@ -9,6 +9,7 @@ export default function Login({ setLoggedIn }) {
 
   const [signup, setSignup] = useState(false);
   const [warning, setWarning] = useState(false);
+  const [badLogin, setBadLogin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,6 +27,10 @@ export default function Login({ setLoggedIn }) {
 
     setLoggedIn(user);
     if (user) navigate('/main/home');
+    if (!user) {
+      console.log('wrong password or username');
+      setBadLogin(true);
+    }
   };
 
   const signUp = async () => {
@@ -52,10 +57,13 @@ export default function Login({ setLoggedIn }) {
 
   const loginDetails = (
     <div className="auth-container details-container">
-      <h2 id="login-text">Login Details</h2>
-      <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
+      <h3 id="login-text"></h3>
+      <TextField label="Username" onChange={(event) => {
+        setUsername(event.target.value);
+        setBadLogin(false);
+      }} />
       <TextField type='password' label="Password" onChange={(event) => setPassword(event.target.value)} />
-      
+      {badLogin && <p>This username or password is incorrect.</p>}
       <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
       
       <p>{'Don\'t have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
@@ -63,7 +71,7 @@ export default function Login({ setLoggedIn }) {
 
   const signupDetails = (
     <div className="auth-container  details-container">
-      <h2 id="login-text">Signup Details</h2>
+      <h3 id="login-text"></h3>
       <TextField label="Username" onChange={(event) => setUsername(event.target.value)} />
       <TextField label="Nickname" onChange={(event) => setNickname(event.target.value)} />
       <TextField type='password' placeholder='Must be at least 8 characters' label="Password"  onChange={(event) => setPassword(event.target.value)} />
@@ -78,8 +86,9 @@ export default function Login({ setLoggedIn }) {
   return (
     <>
       <p className='logo' id='main-logo'>stud<span>if</span>y</p>
-      <p id='slogan'><span>{'"does studying make you cry? use studify!"'}</span> - Confucius</p>
-      {signup ? signupDetails : loginDetails}
+      <p id='slogan'><span>{'"When studying makes you cry-- use studify!"'}</span> - Confucius</p>
+      {signup ? signupDetails : loginDetails}  
+   
     </>
     
   );
