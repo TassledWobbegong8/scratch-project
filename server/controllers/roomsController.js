@@ -38,11 +38,11 @@ roomsController.getRoom = async (req, res, next) => {
 
 roomsController.openNewRoom = async (req, res, next) => {
   const { _id: host } = res.locals.token;
-  const { subject, restricted, allowedUsers, active } = req.body;
+  const { subject, classroom, allowedUsers, active } = req.body;
   let newRoom;
   try {
     newRoom = await room.create({
-      host, subject, restricted,
+      host, subject, classroom,
       allowedUsers, active
     });
     // add new room to host user's rooms list
@@ -108,11 +108,34 @@ roomsController.deleteRoom = async (req, res, next) => {
 
 roomsController.updateRoom = async (req, res, next) => {
   const { id } = req.params;
-  const { subject, restricted, maxallowed, allowedUsers } = req.body;
+  const { subject, classroom, maxallowed, allowedUsers } = req.body;
   let updatedRoom;
   try {
 
-    updatedRoom = await room.findByIdAndUpdate(id, { subject, restricted, maxallowed, allowedUsers });
+    updatedRoom = await room.findByIdAndUpdate(id, { subject, classroom, maxallowed, allowedUsers });
+    res.locals.updatedRoom = updatedRoom;
+  } catch (e) {
+    console.log(e.message);
+  }
+
+  if (!updatedRoom) {
+    return res.status(404).json({ message: 'Unable to find the room' });
+  }
+
+  next();
+};
+
+roomsController.updateAllowedUsers = async (req, res, next) => {
+  const { id } = req.params;
+  const { subject, classroom, maxallowed, allowedUsers } = req.body;
+  let updatedRoom;
+  try {
+    updatedRoom = await room.findByIdAndUpdate(id, {
+      subject,
+      classroom,
+      maxallowed,
+      allowedUsers,
+    });
     res.locals.updatedRoom = updatedRoom;
   } catch (e) {
     console.log(e.message);
