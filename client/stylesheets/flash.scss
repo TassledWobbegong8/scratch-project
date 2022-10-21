@@ -1,12 +1,20 @@
 .flashcontainer {
-    border: solid;
-    height: 400px;
-    width: 400px;
+    border: solid #5aa069;
+    height: 500px;
+    width: 500px;
     text-align: center;
     margin: auto;
     margin-top: 100px;
     border-radius: 2rem;
+    position:relative;
  
+
+}
+.flashCardPopup {
+  position:absolute;
+  top:20px;
+  left:20px;
+  display:none;
 
 }
 
@@ -21,19 +29,111 @@
 }
 
 .flashcard {
-    border: solid lightblue;
+    border: solid #5aa069;
     margin: auto;
     margin-top: 30px;
     height: 200px;
     width: 350px;
     text-align: center;
-    background-color: lightblue;
-    border-radius: 1rem;
+    background-color: white;
+    border-radius: 3rem;
+    
 }
+
 .question{
     margin:40px;
 }
 .flashbutton{
    
-    margin:30px
+    margin:20px
+}
+
+.flipbtn{
+    margin:100px;
+    
+}
+
+.btn{
+    border:transparent;
+}
+
+// following are for flashcard rotation effect
+
+.flip-box {
+    background-color: transparent;
+    width: 400px;
+    height: 250px;
+    border: 1px #f1f1f1;
+    perspective: 1000px;
+    margin:auto;
+    margin-top: 20px;
+    text-align: center;
+    
+   
+    
+
+    /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box:hover .flip-box-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-box-front,
+.flip-box-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // -webkit-backface-visibility: hidden;
+    /* Safari */
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front {
+    background-color:white;
+    color: black;
+    border-radius: 2rem;
+}
+
+/* Style the back side */
+.flip-box-back {
+    background-color: #5aa069;
+    color: white;
+    border-radius: 2rem;
+    transform: rotateY(180deg);
+}
+
+.flashcardtext{
+    padding:0.5rem;
+    margin-top: 50px;
+
+}
+.flashh2{
+    margin-top: 15px;
+}
+.dropdown{
+    height: 30px;
+    color: white;
+    background-color: #5aa069;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: sans-serif;
+    }
+    
+.addbtn{
+    height:2rem;
+    width:2rem;
 }
