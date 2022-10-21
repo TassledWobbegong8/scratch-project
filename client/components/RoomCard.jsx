@@ -104,12 +104,23 @@ function RoomCard({ info, currentUserId, id }) {
             ? pendingRequest
             : requestRoom}
         {!saved && (
-          <Button variant="contained" id="saveMyRoom" onClick={saveRoom}>
+          <Button 
+            style={{
+              backgroundColor: '#5aa069',
+              padding: '10px 18px',
+              fontSize: '14px'
+            }}
+            variant="contained" id="saveMyRoom" onClick={saveRoom}>
             Save
           </Button>
         )}
         {saved && (
-          <Button variant="outlined" id="saveMyRoom">
+          <Button 
+            style={{
+              color: '#5aa069',
+              padding: '10px 18px',
+              fontSize: '14px'
+            }}variant="outlined" id="saveMyRoom">
             Saved!
           </Button>
         )}

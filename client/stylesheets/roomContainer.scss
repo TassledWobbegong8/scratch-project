@@ -1,7 +1,7 @@
 #room-container {
   display: flex;
   flex-direction: column;
-  padding: 40px;
+  padding: 60px;
   row-gap: 20px;
   h2 {
     color: $mui-text-color;
@@ -11,7 +11,7 @@
 
 .subject-nav {
   height: 80%;
-  padding: 10px;
+  padding: 50px;
   width: 70%;
   h2 {
     padding: 10px;
@@ -29,8 +29,9 @@
 
 #subject-links-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  grid-column-gap: 10px;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-column-gap: 0px;
+  row-gap: 20px;
   // display: flex;
   // flex-direction: row;
   // padding: 10px;
@@ -38,21 +39,30 @@
 
 #subject-links {
   margin: 10px 0;
-  padding-left: 20px;
+  font-weight: medium;
+  font-size: 18px;
+  text-align: right;
+  color: $accent-color-light;
+  padding-right: 10px;
   justify-content: start;
   &:hover {
-    background-color: $background-color-light
+    background-color: $accent-color-light
   }
 }
-.subject-link-icon {
-  margin-right: 10px;
-}
+
+// #subject-text-cont {
+//  display:block;
+//  text-align: bottom;
+// }
+
+// .subject-link-icon {
+//   margin-right: 0px;
+// }
 
 .meetingRoomIcon{
-
-
-
+color: black;
 }
+
 .mainRoom {
   color: $mui-text-color-dark;
   border: 1px solid black;
@@ -91,7 +101,6 @@
     margin: 5px;
   }
 }
-
 
 #main-button {
   display: flex;
