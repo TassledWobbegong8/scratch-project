@@ -41,7 +41,6 @@ function Dashboard( ) {
               <div id='main-container'>
                 <SubjectNav subject={subject} setSubject={setSubject} />
                 {!subject ? noSubject : yesSubject}
-                <FlashContainer />
               </div>}
             />
             <Route path='/profile' element={<Profile />} />

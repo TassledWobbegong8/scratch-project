@@ -26,7 +26,7 @@ function RoomCard({ info, id }) {
   const mainRoom = (
     <div className="mainRoom" onClick={showRoomInfo}>
       {console.log(info)}
-      {info.host.nickname.concat(info.classroom ? `'s Classroom` : `'s room`)}
+      {info.host.nickname.concat(info.classroom ? '\'s Classroom' : '\'s room')}
       {info.classroom ? (
         <SchoolIcon className="schoolIcon" fontSize="medium"></SchoolIcon>
       ) : (
@@ -53,15 +53,31 @@ function RoomCard({ info, id }) {
       </p>
       <div id="main-button">
         <Link to="/main/room" state={{ info }}>
-          <Button variant="contained">Join Room</Button>
+          <Button style={{
+            backgroundColor: '#5aa069',
+            padding: '10px 18px',
+            fontSize: '14px'
+          }}
+          variant="contained">Join Room</Button>
         </Link>
         {!saved && (
-          <Button variant="contained" id="saveMyRoom" onClick={saveRoom}>
+          <Button 
+            style={{
+              backgroundColor: '#5aa069',
+              padding: '10px 18px',
+              fontSize: '14px'
+            }}
+            variant="contained" id="saveMyRoom" onClick={saveRoom}>
             Save
           </Button>
         )}
         {saved && (
-          <Button variant="outlined" id="saveMyRoom">
+          <Button 
+            style={{
+              color: '#5aa069',
+              padding: '10px 18px',
+              fontSize: '14px'
+            }}variant="outlined" id="saveMyRoom">
             Saved!
           </Button>
         )}

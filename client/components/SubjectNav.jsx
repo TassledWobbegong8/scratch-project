@@ -3,7 +3,7 @@ import { Calculate, Book, HistoryEdu, Language, School, Science } from '@mui/ico
 import React, { useState, useContext } from 'react';
 import mathImg from '../assets/math.png';
 import englishImg from '../assets/english.png';
-import historyImg from '../assets/history.png';
+import historyImg from '../assets/History.png';
 import scienceImg from '../assets/science.png';
 import langImg from '../assets/language.png';
 import miscImg from '../assets/misc.png';
@@ -25,17 +25,21 @@ function SubjectNav({ subject, setSubject }) {
   const subjectImgs = [mathImg,englishImg,historyImg, scienceImg,langImg, miscImg];
 
   const subjectBtns = subjects.map((e, i) => {
+    
     return (
 
       <Button 
+        sx= {{ textTransform: 'capitalize',
+          textAlign: 'right',
+          fontSize: '20px'}}
         variant='text'
         key={i}
         value={e[0]}
-        id='subject-links'
+        id='theme'
         onClick={(event) => handleClick(event.target.value)}>
         <img className='subject-img' src= {subjectImgs[i]} alt="subject image"></img>
-        {e[0]}
         {/* {e[1]} */}
+        {/* {e[0]} */}
       </Button>
     );
   });
@@ -47,7 +51,6 @@ function SubjectNav({ subject, setSubject }) {
 
   return (
     <div className='subject-nav'>
-      <h3 ></h3>
       <div id='subject-links-container'>
         {subjectBtns}
       </div>
