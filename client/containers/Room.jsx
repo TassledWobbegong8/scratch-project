@@ -9,6 +9,7 @@ function Room() {
   const [hostView, setHostView] = useState(false);
   const [info, setInfo] = useState({});
   const [imgUrl, setImgUrl] = useState('');
+  const [username, setUsername] = useState('');
 
   const state = useLocation().state;
 
@@ -35,6 +36,13 @@ function Room() {
     console.log(room);
     setInfo(room);
   };
+  
+  const fetchUsername = async () => {
+    const userData = await fetch('/api/users').then(response => response.json());
+    console.log('profile user data', userData);
+    setUsername(userData.username);
+  };
+  fetchUsername();
 
   // fetch host if info doesn't already exist
   const fetchHost = async () => {
@@ -98,6 +106,7 @@ function Room() {
 
   // blackboard js
   useEffect(() => {
+    //https://codepen.io/aundreyd/pen/WxYNeV
     let color = $(".selected").css("background-color");
     const $canvas = $("canvas");
     let context = $canvas[0].getContext("2d");
@@ -212,7 +221,7 @@ function Room() {
         </div>
       </div>
       <DocumentEditor hostView={hostView}/>
-      <Chatbox />
+      <Chatbox username={username} roomInfo={state.info}/>
     </div>
   );
 }

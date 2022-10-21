@@ -3,7 +3,6 @@ import FlashCard from '../components/Flashcard';
 import Dropdown from '../components/Dropdown';
 import flashdata from './flashdata';
 import '../stylesheets/flash.scss';
-import Axios from 'axios';
 
 
 const FlashContainer = () => {

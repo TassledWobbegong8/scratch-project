@@ -44,15 +44,12 @@ roomsController.getRoom = async (req, res, next) => {
 
 roomsController.openNewRoom = async (req, res, next) => {
   const { _id: host } = res.locals.token;
-  const { subject, classroom, allowedUsers, active } = req.body;
+  const { subject, classroom, allowedUsers, active, messageList } = req.body;
   let newRoom;
   try {
     newRoom = await room.create({
-      host,
-      subject,
-      classroom,
-      allowedUsers: [host],
-      active,
+      host, subject, classroom,
+      allowedUsers: [host], active
     });
     // add new room to host user's rooms list
     const hostUser = await user.findById(host);
@@ -118,15 +115,12 @@ roomsController.deleteRoom = async (req, res, next) => {
 
 roomsController.updateRoom = async (req, res, next) => {
   const { id } = req.params;
-  const { subject, classroom, maxallowed, allowedUsers } = req.body;
+  const { subject, restricted, maxallowed, allowedUsers, messageList } = req.body;
   let updatedRoom;
+
   try {
-    updatedRoom = await room.findByIdAndUpdate(id, {
-      subject,
-      classroom,
-      maxallowed,
-      allowedUsers,
-    });
+    updatedRoom = await room.findByIdAndUpdate(id, { subject, classroom, maxallowed, allowedUsers, messageList });
+    console.log('updatedRoom', updatedRoom)
     res.locals.updatedRoom = updatedRoom;
   } catch (e) {
     console.log(e.message);
@@ -164,7 +158,8 @@ roomsController.updateRoom = async (req, res, next) => {
 
 roomsController.addUser = async (req, res, next) => {
   const { id } = req.params;
-  const { currentUserId } = req.body;
+  const { currentUserId} = req.body;
+
   try {
     const updatedRoom = await room.findById(id);
     updatedRoom.pendingUsers.push(currentUserId);
