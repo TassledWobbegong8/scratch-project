@@ -37,7 +37,7 @@
 }
 .buttonDesign {
   display: block;
-  background: #ffffff;
+  background: #21ab3e;
   margin: 10px auto;
   padding: 5px 20px;
   width: 160px;
@@ -50,6 +50,9 @@
   line-height: 40px;
   text-shadow: 0 1px #6A845F;
   cursor: pointer;
+}
+.buttonDesign:hover {
+  background: #21ab3e;
 }
 
 // blackboard styling
