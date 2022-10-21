@@ -9,12 +9,32 @@ usersController.getUser = async (req, res, next) => {
     let user;
     if (res.locals.token) {
       user = await User.findById(res.locals.token._id)
-        .populate('rooms')
+        .populate({
+          path: 'rooms',
+          populate: [
+            {
+              path: 'pendingUsers',
+              model: 'User',
+            },
+
+            { path: 'allowedUsers', model: 'User' },
+          ],
+        })
         .populate('savedRooms');
     } else {
       const { username, password } = req.body;
-      user = await User.findOne({username, password})
-        .populate('rooms')
+      user = await User.findOne({ username, password })
+        .populate({
+          path: 'rooms',
+          populate: [
+            {
+              path: 'pendingUsers',
+              model: 'User',
+            },
+
+            { path: 'allowedUsers', model: 'User' },
+          ],
+        })
         .populate('savedRooms');
     }
 
@@ -141,7 +161,6 @@ usersController.unsaveRoom = async (req, res, next) => {
     return res.status(400).json({ message: e.message });
   }
 };
-
 
 // usersController.getAllUsers = async (req, res, next) => {
 //   try {

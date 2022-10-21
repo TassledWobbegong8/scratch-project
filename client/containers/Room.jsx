@@ -10,6 +10,7 @@ function Room() {
   const [hostView, setHostView] = useState(false);
   const [info, setInfo] = useState({});
   const [imgUrl, setImgUrl] = useState('');
+  const [username, setUsername] = useState('');
 
   const state = useLocation().state;
 
@@ -36,6 +37,13 @@ function Room() {
     console.log(room);
     setInfo(room);
   };
+  
+  const fetchUsername = async () => {
+    const userData = await fetch('/api/users').then(response => response.json());
+    console.log('profile user data', userData);
+    setUsername(userData.username);
+  };
+  fetchUsername();
 
   // fetch host if info doesn't already exist
   const fetchHost = async () => {
@@ -91,7 +99,7 @@ function Room() {
     const input = document.getElementById('blackBoardUploadButton');
     input.addEventListener('change', function(e) {
       console.log(fileReader);
-      fileReader.onload = (e) => {setImgUrl(e.target.result)};
+      fileReader.onload = (e) => {setImgUrl(e.target.result);};
       fileReader.readAsDataURL(this.files[0]);
     });
     
@@ -99,9 +107,10 @@ function Room() {
 
   // blackboard js
   useEffect(() => {
+    //https://codepen.io/aundreyd/pen/WxYNeV
     let color = $('.selected').css('background-color');
     const $canvas = $('canvas');
-    let context = $canvas[0].getContext('2d');
+    const context = $canvas[0].getContext('2d');
     let lastEvent;
     let mouseDown = false;
     
@@ -124,9 +133,9 @@ function Room() {
     
     //update the new color span
     function changeColor() {
-      let r = $('#red').val();
-      let g = $('#green').val();
-      let b = $('#blue').val();
+      const r = $('#red').val();
+      const g = $('#green').val();
+      const b = $('#blue').val();
       $('#newColor').css('background-color', 'rgb(' + r + ',' + g + ', ' + b + ')');
     }
     
@@ -214,7 +223,7 @@ function Room() {
       </div>
       <FlashContainer />
       <DocumentEditor hostView={hostView}/>
-      <Chatbox />
+      <Chatbox username={username} roomInfo={state.info}/>
     </div>
   );
 }
