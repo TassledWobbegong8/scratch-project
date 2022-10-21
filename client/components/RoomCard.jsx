@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 function RoomCard({ info, currentUserId, id }) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [requested, setRequested] = useState(false);
 
   async function saveRoom() {
     const options = {
@@ -49,7 +50,8 @@ function RoomCard({ info, currentUserId, id }) {
       body: JSON.stringify({ currentUserId: currentUserId }),
     };
     await fetch(`/api/rooms/addUser/${info._id}`, options);
-    console.log("Added current user to room's pending list");
+    console.log('Added current user to room\'s pending list');
+    setRequested(true);
   };
 
   //what a roomcard looks like before it is clicked
@@ -58,7 +60,7 @@ function RoomCard({ info, currentUserId, id }) {
   const mainRoom = (
     <div className="mainRoom" onClick={showRoomInfo}>
       {capitalizedNickname(info.host.nickname).concat(
-        info.classroom ? "'s Classroom" : "'s Room"
+        info.classroom ? '\'s Classroom' : '\'s Room'
       )}
 
       {info.classroom ? (
@@ -98,9 +100,9 @@ function RoomCard({ info, currentUserId, id }) {
       <div id="main-button">
         {ableToJoin(info)
           ? joinRoom
-          : isPendingRequest(info)
-          ? pendingRequest
-          : requestRoom}
+          : requested || isPendingRequest(info)
+            ? pendingRequest
+            : requestRoom}
         {!saved && (
           <Button variant="contained" id="saveMyRoom" onClick={saveRoom}>
             Save

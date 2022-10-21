@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -28,7 +29,7 @@ function ProfileRoomCard({ fetchUser, info }) {
     event.preventDefault();
     setModal(false);
   };
-
+  console.log('info', info);
   //hosted rooms card
   return (
     <div className="profile-room">
@@ -43,7 +44,7 @@ function ProfileRoomCard({ fetchUser, info }) {
       <p>
         <label>Allowed Students: </label>
         {info.allowedUsers.length > 0
-          ? info.allowedUsers.map((e) => (e.nickname)).join(", ")
+          ? info.allowedUsers.map((e) => e.nickname).join(', ')
           : 'None'}
       </p>
       <Link to="/main/room" state={{ info }}>
@@ -64,11 +65,9 @@ function ProfileRoomCard({ fetchUser, info }) {
 
       {info.pendingUsers.length > 0
         ? info.pendingUsers.map((e) => (
-            <p id={'pending' + e._id}>
+            <p key={'pending' + e._id}>
               {e.nickname}
-              <button variant="contained" onClick={() => approveUser(e._id)}>
-                Approve User?{' '}
-              </button>
+              <button onClick={() => approveUser(e._id)}>Approve User? </button>
             </p>
           ))
         : ''}

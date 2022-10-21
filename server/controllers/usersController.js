@@ -11,14 +11,14 @@ usersController.getUser = async (req, res, next) => {
       user = await User.findById(res.locals.token._id)
         .populate({
           path: 'rooms',
-          populate: {
-            path: 'pendingUsers',
-            model: 'User',
-          },
-          populate: {
-            path: 'allowedUsers',
-            model: 'User',
-          },
+          populate: [
+            {
+              path: 'pendingUsers',
+              model: 'User',
+            },
+
+            { path: 'allowedUsers', model: 'User' },
+          ],
         })
         .populate('savedRooms');
     } else {
@@ -26,14 +26,14 @@ usersController.getUser = async (req, res, next) => {
       user = await User.findOne({ username, password })
         .populate({
           path: 'rooms',
-          populate: {
-            path: 'pendingUsers',
-            model: 'User',
-          },
-          populate: {
-            path: 'allowedUsers',
-            model: 'User',
-          },
+          populate: [
+            {
+              path: 'pendingUsers',
+              model: 'User',
+            },
+
+            { path: 'allowedUsers', model: 'User' },
+          ],
         })
         .populate('savedRooms');
     }

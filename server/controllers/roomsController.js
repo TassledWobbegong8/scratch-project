@@ -115,12 +115,12 @@ roomsController.deleteRoom = async (req, res, next) => {
 
 roomsController.updateRoom = async (req, res, next) => {
   const { id } = req.params;
-  const { subject, restricted, maxallowed, allowedUsers, messageList } = req.body;
+  const { subject, classroom, maxallowed, allowedUsers, messageList } = req.body;
   let updatedRoom;
 
   try {
     updatedRoom = await room.findByIdAndUpdate(id, { subject, classroom, maxallowed, allowedUsers, messageList });
-    console.log('updatedRoom', updatedRoom)
+    console.log('updatedRoom', updatedRoom);
     res.locals.updatedRoom = updatedRoom;
   } catch (e) {
     console.log(e.message);
