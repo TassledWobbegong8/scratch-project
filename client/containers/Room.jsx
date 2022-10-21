@@ -74,18 +74,18 @@ function Room() {
 
   // js for collapsible button
   useEffect(() => {
-    const coll = document.getElementsByClassName("collapsible");
+    const coll = document.getElementsByClassName('collapsible');
     
     for (let i = 0; i < coll.length; i++) {
       console.log(coll[i].getAttribute('listener'));
       if(coll[i].getAttribute('listener') !== 'true') {
-        coll[i].addEventListener("click", function() {
-          this.classList.toggle("active");
+        coll[i].addEventListener('click', function() {
+          this.classList.toggle('active');
           const content = this.nextElementSibling;
           if (content.style.maxHeight){
             content.style.maxHeight = null;
           } else {
-            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.maxHeight = content.scrollHeight + 'px';
           }
         });
       }
@@ -98,7 +98,7 @@ function Room() {
     const input = document.getElementById('blackBoardUploadButton');
     input.addEventListener('change', function(e) {
       console.log(fileReader);
-      fileReader.onload = (e) => {setImgUrl(e.target.result)};
+      fileReader.onload = (e) => {setImgUrl(e.target.result);};
       fileReader.readAsDataURL(this.files[0]);
     });
     
@@ -107,46 +107,46 @@ function Room() {
   // blackboard js
   useEffect(() => {
     //https://codepen.io/aundreyd/pen/WxYNeV
-    let color = $(".selected").css("background-color");
-    const $canvas = $("canvas");
-    let context = $canvas[0].getContext("2d");
+    let color = $('.selected').css('background-color');
+    const $canvas = $('canvas');
+    const context = $canvas[0].getContext('2d');
     let lastEvent;
     let mouseDown = false;
     
     //When clicking on control list items
-    $(".controls").on("click", "li", function() {
+    $('.controls').on('click', 'li', function() {
       //Deselect sibling elements
-      $(this).siblings().removeClass("selected");
+      $(this).siblings().removeClass('selected');
       //Select clicked element
-      $(this).addClass("selected");
+      $(this).addClass('selected');
       //cache current color
-      color = $(this).css("background-color");
+      color = $(this).css('background-color');
     });
     
     //When "New Color" is pressed
-    $("#revealColorSelect").click(function() {
+    $('#revealColorSelect').click(function() {
       //Show color select or hide the color select
       changeColor();
-      $("#colorSelect").toggle();
+      $('#colorSelect').toggle();
     });
     
     //update the new color span
     function changeColor() {
-      let r = $("#red").val();
-      let g = $("#green").val();
-      let b = $("#blue").val();
-      $("#newColor").css("background-color", "rgb(" + r + "," + g + ", " + b + ")");
+      const r = $('#red').val();
+      const g = $('#green').val();
+      const b = $('#blue').val();
+      $('#newColor').css('background-color', 'rgb(' + r + ',' + g + ', ' + b + ')');
     }
     
     //When color sliders change
-    $("input[type=range]").change(changeColor);
+    $('input[type=range]').change(changeColor);
     
     //When "Add Color" is pressed
-    $("#addNewColor").click(function() {
+    $('#addNewColor').click(function() {
       //Append the color to the controls ul
-      var $newColor = $("<li></li>");
-      $newColor.css("background-color", $("#newColor").css("background-color"));
-      $(".controls ul").append($newColor);
+      var $newColor = $('<li></li>');
+      $newColor.css('background-color', $('#newColor').css('background-color'));
+      $('.controls ul').append($newColor);
       //Select the new color
       $newColor.click();
     });
