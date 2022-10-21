@@ -11,19 +11,27 @@ const app = express();
 const server = http.createServer(app);
 
 //// SOCKET.IO ///////
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:8080',
+    methods: ['GET','POST']
+  }
+});
 
 
 io.on('connection', (socket) => {
   console.log('client connected: ', socket.id);
   //join room
   socket.on('join_room', (roomId)=> {
+    
+    console.log('join room request received: ', roomId);
     socket.join(roomId);
 
-  })
-  socket.on('message', data => {
-    io.emit('message', data);
-    console.log(data, socket.id);
+  });
+  socket.on('send_message', (data, roomId) => {
+    // collect roomid from frontend and emit to specific room
+    console.log('send_message request received: ', data, roomId);
+    io.in(roomId).emit('received_message', data);
   });
   socket.on('disconnect', () => {
     console.log(socket.id, ' disconnected');
