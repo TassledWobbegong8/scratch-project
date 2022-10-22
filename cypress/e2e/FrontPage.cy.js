@@ -8,13 +8,14 @@ describe('Front page', () => {
 
   it('should display login page', () => {
     cy.contains('#main-logo', 'studify').should('be.visible')
-    cy.contains('Login Details').should('be.visible')
+    // cy.contains('Login Details').should('be.visible')
     cy.contains('button', 'Login').should('be.visible')
   })
 
   it('should display signup page', () => {
     cy.contains("span", "Click here!").click()
-    cy.contains("Signup Details").should("be.visible")
+    // cy.contains("Signup Details").should("be.visible")
+    cy.contains('button', 'Signup').should('be.visible')
   })
 
   it('should log in', () => {
@@ -30,6 +31,6 @@ describe('Front page', () => {
     cy.contains('button','Login').click()
     cy.get("[id='logout-link']").contains("Logout").click()
     cy.contains('#main-logo', 'studify').should('be.visible')
-    cy.contains('Login Details').should('be.visible')
+    cy.contains('button', 'Login').should('be.visible')
   })
 })
