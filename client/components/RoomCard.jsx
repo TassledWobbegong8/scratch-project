@@ -31,9 +31,12 @@ function RoomCard({ info, currentUserId, id }) {
 
   //checks if current user is in room's allowed user list
   const ableToJoin = (userInfoObject) => {
-    return userInfoObject.allowedUsers
-      .map((e) => e._id)
-      .includes(currentUserId);
+    if (userInfoObject.classroom) {
+      return userInfoObject.allowedUsers
+        .map((e) => e._id)
+        .includes(currentUserId);
+    }
+    return true;
   };
 
   const isPendingRequest = (userInfoObject) => {
@@ -50,7 +53,7 @@ function RoomCard({ info, currentUserId, id }) {
       body: JSON.stringify({ currentUserId: currentUserId }),
     };
     await fetch(`/api/rooms/addUser/${info._id}`, options);
-    console.log('Added current user to room\'s pending list');
+    console.log("Added current user to room's pending list");
     setRequested(true);
   };
 
@@ -60,7 +63,7 @@ function RoomCard({ info, currentUserId, id }) {
   const mainRoom = (
     <div className="mainRoom" onClick={showRoomInfo}>
       {capitalizedNickname(info.host.nickname).concat(
-        info.classroom ? '\'s Classroom' : '\'s Room'
+        info.classroom ? "'s Classroom" : "'s Room"
       )}
 
       {info.classroom ? (
@@ -101,8 +104,8 @@ function RoomCard({ info, currentUserId, id }) {
         {ableToJoin(info)
           ? joinRoom
           : requested || isPendingRequest(info)
-            ? pendingRequest
-            : requestRoom}
+          ? pendingRequest
+          : requestRoom}
         {!saved && (
           <Button variant="contained" id="saveMyRoom" onClick={saveRoom}>
             Save

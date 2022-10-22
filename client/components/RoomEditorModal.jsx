@@ -25,8 +25,10 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
         allowedUsers: [],
         pendingUsers: [],
         active: true,
-        classroom: true,
-        messageList: [{name: "Lewis", body: "yo!"}, {name: "Peipei", body: "bye"}],
+        messageList: [
+          { name: 'Lewis', body: 'yo!' },
+          { name: 'Peipei', body: 'bye' },
+        ],
       }),
     }).then((response) => response.json());
 
@@ -61,8 +63,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
       onClick={(event) => {
         event.preventDefault();
         addRoom();
-      }}
-    >
+      }}>
       Add new room
     </Button>
   );
@@ -73,8 +74,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
       onClick={(event) => {
         event.preventDefault();
         editRoom();
-      }}
-    >
+      }}>
       Update room
     </Button>
   );
@@ -90,8 +90,7 @@ function RoomEditor({ fetchUser, closeModal, action, id }) {
           label="Subject"
           onChange={(event) =>
             setRoom({ ...updatedRoom, subject: event.target.value })
-          }
-        >
+          }>
           <MenuItem value={'english'}>English</MenuItem>
           <MenuItem value={'math'}>Math</MenuItem>
           <MenuItem value={'science'}>Science</MenuItem>

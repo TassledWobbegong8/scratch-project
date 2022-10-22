@@ -35,15 +35,18 @@ export default function SavedRoomCard({ fetchUser, info, id }) {
       body: JSON.stringify({ currentUserId: currentUserId }),
     };
     await fetch(`/api/rooms/addUser/${info._id}`, options);
-    console.log('Added current user to room\'s pending list');
+    console.log("Added current user to room's pending list");
     setRequested(true);
   };
 
   //checks if current user is in room's allowed user list
   const ableToJoin = (userInfoObject) => {
-    return userInfoObject.allowedUsers
-      .map((e) => e._id)
-      .includes(currentUserId);
+    if (userInfoObject.classroom) {
+      return userInfoObject.allowedUsers
+        .map((e) => e._id)
+        .includes(currentUserId);
+    }
+    return true;
   };
 
   const isPendingRequest = (userInfoObject) => {
@@ -83,8 +86,8 @@ export default function SavedRoomCard({ fetchUser, info, id }) {
       {ableToJoin(info)
         ? joinRoom
         : requested || isPendingRequest(info)
-          ? pendingRequest
-          : requestRoom}
+        ? pendingRequest
+        : requestRoom}
       <Button variant="outlined" id="removeMyRoom" onClick={deleteSavedRoom}>
         Remove
       </Button>
