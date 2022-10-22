@@ -63,8 +63,17 @@ export default function Login({ setLoggedIn }) {
         setBadLogin(false);
       }} />
       <TextField type='password' label="Password" onChange={(event) => setPassword(event.target.value)} />
-      {badLogin && <p>This username or password is incorrect.</p>}
-      <Button onClick={logIn} variant="contained" id='auth-btn'>Login</Button>
+      {badLogin && <p className='switch-auth'>This username or password is incorrect.</p>}
+      <Button 
+        onClick={logIn} 
+        style={{
+          backgroundColor: '#5aa069',
+          padding: '10px 18px',
+          fontSize: '18px'
+        }}
+        variant="contained" 
+        id='auth-btn'>Login
+      </Button>
       
       <p>{'Don\'t have an account?'} <span className='switch-auth' onClick={() => setSignup(true)}>Click here!</span></p>
     </div>);
@@ -77,7 +86,13 @@ export default function Login({ setLoggedIn }) {
       <TextField type='password' placeholder='Must be at least 8 characters' label="Password"  onChange={(event) => setPassword(event.target.value)} />
       {warning && <p className='warning'>Please fill in all fields!</p>}
       
-      <Button onClick={signUp} variant="contained" id='auth-btn'>Signup</Button>
+      <Button onClick={signUp} 
+        style={{
+          backgroundColor: '#5aa069',
+          padding: '10px 18px',
+          fontSize: '18px'
+        }}
+        variant="contained" id='auth-btn'>Signup</Button>
       
       <p>{'Already have an account?'} <span className='switch-auth' onClick={() => setSignup(false)}>Click here!</span></p>
     </div>
@@ -86,7 +101,7 @@ export default function Login({ setLoggedIn }) {
   return (
     <>
       <p className='logo' id='main-logo'>stud<span>if</span>y</p>
-      <p id='slogan'><span>{'"When studying makes you cry-- use studify!"'}</span> - Confucius</p>
+      <p id='slogan'><span>{'"When studying makes you cry, use studify!"'}</span> - Confucius</p>
       {signup ? signupDetails : loginDetails}  
    
     </>

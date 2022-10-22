@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 
 function Chatbox(props) {
-  const [messagesArr, setMessageArr] = useState([{name: 'Lewis', body: 'yo!'}, {name: 'Peipei', body: 'bye'}]);
+  const [messagesArr, setMessageArr] = useState([{name: "Lewis", body: "yo!"}, {name: "Peipei", body: "bye"}]);
 
   const sendMessage = () => {
     const inputVal = document.getElementById('chatInput').value;

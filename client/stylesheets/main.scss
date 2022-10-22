@@ -119,14 +119,15 @@ button:hover {
   width: 500px;
 }
 
-.subject-link-icon {
-    color:rgb(58, 58, 58);
-}
+// .subject-link-icon {
+//     color:rgb(58, 58, 58);
+// }
 
-.subject-img {
+#theme {
   height: 200px;
-  width: 200px;
-  border: 1px solid $accent-color-light;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .sub-btn {

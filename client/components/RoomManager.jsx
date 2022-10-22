@@ -34,9 +34,6 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
     <div />
   );
 
-  //return appointments page
-  // const appointmentsPg = 
-
   //Room manager tab is a div with a header. If addRoomModal is false, add button and onclick, setModal is true
   const hostedRooms = (
     <div className="profile-room-container">
@@ -98,16 +95,6 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
           id="saved-rooms-tab">
           Appointments
         </button>
-
-        {/* <button 
-          onClick={() => {
-            setModal(false);
-            setSelectedTab(true);
-          }}
-          id="appointments-tab">
-          Appointments
-        </button> */}
-
       </div>
       { !addSavedRoom ? hostedRooms : appointments}
     </div>
@@ -116,44 +103,3 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
 
 export default RoomManager;
 
-
-//tab if selected... then display that tab
-//if initial state is false---then
-// {!addSavedRoom ? hostedRooms : savedRooms}
-
-{/* <div id="tabs">
-
-<button
-  onClick={() => {
-    setModal(false);
-    setSavedRoom((prevState) => {
-      return false;
-    });
-  }}
-  id="profile-tab"
->
-  Room Manager
-</button>
-
-<button 
-  onClick={() => {
-    setModal(false);
-    setSavedRoom((prevState) => {
-      return false;
-    });
-  }}
-  id="saved-rooms-tab">
-  Saved Rooms
-</button>
-
-<button 
-  onClick={() => {
-    setModal(false);
-    setSavedRoom(true);
-  }}
-  id="appointments-tab">
-  Appointments
-</button>
-
-</div>
-{ !addSavedRoom ? hostedRooms : appointments} */}

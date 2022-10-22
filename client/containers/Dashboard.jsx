@@ -10,6 +10,7 @@ import SettingsCard from '../components/SettingsCard';
 import Login from '../components/Login';
 import Room from './Room';
 import FlashContainer from './FlashContainer';
+import Flashcard from '../components/Flashcard';
 
 function Dashboard( ) {
   //Using React hooks, declare new state variables 'subject' and 'loggedIn'
@@ -41,16 +42,18 @@ function Dashboard( ) {
               <div id='main-container'>
                 <SubjectNav subject={subject} setSubject={setSubject} />
                 {!subject ? noSubject : yesSubject}
-                <FlashContainer />
               </div>}
             />
             <Route path='/profile' element={<Profile />} />
+            {/* created new path to flashcard feature */}
+            <Route path='/flashcard' element={<FlashContainer />} />
             <Route path='/settings' element={<div id='main-container'>
               <SettingsContainer />
               <div id="login-details-container">
                 <SettingsCard/>
               </div>
-            </div>}/>
+            </div>} />
+            
             <Route path='/room' element={<Room />} />
           </Routes>
         </>} />}

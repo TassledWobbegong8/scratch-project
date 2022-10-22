@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
 
 
-const Dropdown = ({ subjectList, setSub, questions, setQuestions }) => {
+
+const Dropdown = ({ subjectList, questions, setQuestions,setSub }) => {
 
   const chooseSub =  (event) => {
     const subject = event.target.value;
+    setSub(subject);
+  
     for (const obj of subjectList) {
       if (obj.subject === subject) {
         setQuestions(obj.questions);
-        // console.log(questions[0][0]);
-
+        console.log('questions picked');
       }
     }
-    setSub(subject);
+ 
   };
 
   return (
     <form >
       <label>
-        <select onChange={chooseSub}>
+       
+        <select onChange={chooseSub} className = 'dropdown'>
+          
           {subjectList.map((sub,index) => <option value={sub.subject} key = {index}>{sub.subject}</option>)}
         </select>
+        
       </label>
     </form>
   );
