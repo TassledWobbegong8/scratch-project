@@ -36,8 +36,8 @@ function SubjectNav({ subject, setSubject }) {
         key={i}
         value={e[0]}
         id='theme'
-        onClick={(event) => handleClick(event.target.value)}>
-        <img className='subject-img' src= {subjectImgs[i]} alt="subject image"></img>
+        onClick={(event) => {handleClick(event.target.value); console.log('target',event.target);}}
+        style={{backgroundImage:`url(${subjectImgs[i]})`}}>
         {/* {e[1]} */}
         {/* {e[0]} */}
       </Button>

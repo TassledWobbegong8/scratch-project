@@ -123,10 +123,11 @@ button:hover {
 //     color:rgb(58, 58, 58);
 // }
 
-.subject-img {
-  height: 250px;
-  width: 250px;
-  border: 1px solid $accent-color-light;
+#theme {
+  height: 200px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .sub-btn {

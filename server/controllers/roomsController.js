@@ -49,7 +49,7 @@ roomsController.openNewRoom = async (req, res, next) => {
   try {
     newRoom = await room.create({
       host, subject, classroom,
-      allowedUsers: [host], active
+      allowedUsers: [host], active, messageList
     });
     // add new room to host user's rooms list
     const hostUser = await user.findById(host);
