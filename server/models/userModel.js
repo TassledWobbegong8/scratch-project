@@ -4,12 +4,12 @@ const Room = require('./roomModel');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  host: { type: Boolean, required: true },
   username: { type: String, required: true, unique: true },
   nickname: { type: String },
   password: { type: String, required: true, minlength: 8 },
   rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
   savedRooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
+  files: [{type: String}]
 });
 
 userSchema.pre('save', function (next) {

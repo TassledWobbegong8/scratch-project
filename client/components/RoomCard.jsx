@@ -4,6 +4,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+
 function RoomCard( { info, id } ) {
   const [roomInfoBoolean, setRoomInfoBoolean] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -17,20 +18,41 @@ function RoomCard( { info, id } ) {
   //   newName = event.target.value
   //   return event.target.value
   // }
-
+  console.log('ROOM CARD INFO ', info);
   async function saveRoom () {
-    const options = {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'savedRooms': `${info._id}`})};
-    await fetch('/api/users/saveroom', options);
-    console.log('Room Saved!');
-    setSaved(true);
+    const options = {
+      method: 'PATCH', 
+      headers: {'Content-Type': 'application/json'}, 
+      body: JSON.stringify({savedRoom: id})};
+    const saved = await fetch('/api/users/saveroom', options).then(response => response.json());
+
+    setSaved(saved);
   }
 
   const showRoomInfo = event => {
     setRoomInfoBoolean(!roomInfoBoolean);
   };
 
+  const setRoomCookie = async (roomID) => {
+    const response = await fetch('/api/rooms/cookie', {
+      method: 'POST',
+      body: JSON.stringify({ room: roomID }),
+      credentials: 'include',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
+
+    const success = await response.json();
+    console.log(success);
+  };
+
   const mainRoom = (
-    <div className="mainRoom" onClick={showRoomInfo}>
+    <div className="mainRoom" onClick={() => {
+      showRoomInfo();
+      setRoomCookie(id);
+    }}>
       {/* <div > */}
       {/* <div>
           <img src='https://csunshinetoday.csun.edu/wp-content/uploads/Math4-web.jpg' width="192" height="144"/>

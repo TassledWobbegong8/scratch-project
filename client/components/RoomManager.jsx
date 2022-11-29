@@ -4,7 +4,7 @@ import ProfileRoomCard from '../components/ProfileRoomCard';
 import RoomEditor from './RoomEditorModal';
 import SavedRoomCard from './SavedRoomCard';
 
-function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
+function RoomManager({ fetchUser, rooms, savedRoomsProps, host, files }) {
   const [addRoomModal, setModal] = useState(false);
   const [addSavedRoom, setSavedRoom] = useState(false);
 
@@ -18,6 +18,24 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   //   }
   //   getUser();
   // }, [addRoomModal, addSavedRoom]);
+  console.log('ROOM MANAGER ROOMS ', rooms);
+  console.log('ROOM MANAGER PROPS ', savedRoomsProps);
+  console.log('ROOM MANAGER HOST ', host);
+
+  const setRoomCookie =  async(roomID) => {
+    const response = await fetch('http://localhost:3000/api/rooms/cookie', {
+      method: 'POST',
+      body: JSON.stringify({ room: roomID }),
+      credentials: 'include',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Origin': 'http://localhost:8080'
+      },
+    });
+
+    const success = await response.json();
+  };
 
   const closeModal = (event) => {
     event.preventDefault();
@@ -25,11 +43,11 @@ function RoomManager({ fetchUser, rooms, savedRoomsProps, host }) {
   };
 
   const roomCards = rooms.map((e, i) => {
-    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} />;
+    return <ProfileRoomCard info={e} key={i} fetchUser={fetchUser} files={files} setRoomCookie={setRoomCookie} roomId={e._id}/>;
   });
 
   const savedRoomCards = savedRoomsProps ? savedRoomsProps.map((e, i) => {
-    return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser}/>;
+    return <SavedRoomCard id={host} info={e} key={i} fetchUser={fetchUser} setRoomCookie={setRoomCookie} roomId={e._id}/>;
   }) : <div/>;
 
 

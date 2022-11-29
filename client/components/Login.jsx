@@ -12,6 +12,7 @@ export default function Login({ setLoggedIn }) {
 
   const navigate = useNavigate();
 
+
   const logIn = async () => {
     const user = await fetch('/api/auth/login', {
       method: 'POST',
@@ -41,7 +42,6 @@ export default function Login({ setLoggedIn }) {
         username,
         password,
         nickname,
-        host: false,
       })
     });
 

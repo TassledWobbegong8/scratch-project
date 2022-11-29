@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import FilePicker from './FilePicker';
+import FileUpload from './FileUpload';
+import Dropdown from './Dropdown';
+import SelectedDocument from './SelectedDocument';
+import { PropaneSharp } from '@mui/icons-material';
 
-function DocumentEditor({ hostView }) {
+function DocumentEditor({ hostView, documents, setActiveDocumentHandler, updateRoom, deleteFile}) {
   // some fake data for rendering purposes
   const fakeFileList = ['test1', 'someDocument', 'my story'];
 
@@ -10,10 +14,11 @@ function DocumentEditor({ hostView }) {
   const [fileList, setFiles] = useState(fakeFileList);
   const [document, setDocument] = useState({});
 
+
   const connectAuth = async () => {
     console.log('click auth');
     // first check to see if token is already in cookies
-    const files = await fetch('/access_drive').then(response => response.json());
+    const files = await fetch('/oauth/access_drive').then(response => response.json());
 
     if (files) {
       console.log(files);
@@ -22,19 +27,28 @@ function DocumentEditor({ hostView }) {
     }
     console.log('not authorized yet');
     // request oauth url from server
-    const redirectURL = await fetch('/auth').then(response => response.json());
+    const redirectURL = await fetch('/oauth').then(response => response.json());
     // redirect user to consent screen
     window.location.replace(redirectURL);
     // redirect should come back as an array with the files
-    setFiles(await fetch('/access_drive').then(response => response.json()));
+    setFiles(await fetch('/oauth/access_drive').then(response => response.json()));
     setPicker(true);
   };
-
 
   return (
     <div className='doc-editor'>
       {openPicker && <FilePicker fileList={fileList} setDocument={setDocument} />}
-      {hostView && !openPicker && <Button onClick={() => connectAuth()}>Choose a Google Drive File</Button>}
+
+      {hostView && !openPicker && <Button onClick={() => connectAuth()}>
+      Document Manager
+      </Button>}
+      
+      <FileUpload updateRoom={updateRoom}/>
+      <Dropdown 
+        setActiveDocumentHandler={setActiveDocumentHandler}
+        documents={documents}
+        deleteFile={deleteFile}
+      />
     </div>
   );
 }

@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
 const cookieController = {};
-// MOVE THIS TO THE ENV FILE
-const privateKey = 'wobbegong';
+
+cookieController.testRoute = (req, res, next) => {
+  console.log(req.cookies);
+  res.status(200).json(req.cookies);
+};
 
 cookieController.setUserCookie = async (req, res, next) => {
   if (!res.locals.user) {
@@ -14,7 +17,7 @@ cookieController.setUserCookie = async (req, res, next) => {
     const token = jwt.sign({
       _id,
       username
-    }, privateKey);
+    }, process.env.PRIVATE_KEY);
 
     await res.cookie('ssid', token, {httpOnly: true});
     res.locals.loggedIn = true;
@@ -30,12 +33,13 @@ cookieController.setUserCookie = async (req, res, next) => {
 cookieController.verifyUser = async (req, res, next) => {
   // check and verify jwt in cookie
   try {
+    console.log('VERIFYUSER: ', req.cookies);
     const token = req.cookies.ssid;
     if (!token) {
       res.locals.token = false;
       return next();
     }
-    const decoded = jwt.verify(token, privateKey);
+    const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
     res.locals.token = decoded;
     return next();
   } catch (err) {
@@ -70,8 +74,8 @@ cookieController.deleteSession = async (req, res, next) => {
 
 cookieController.setRoomCookie = async (req, res, next) => {
   try {
-    console.log('setting cookie')
-    await res.cookie('roomId', req.body.room, {httpOnly: true});
+    console.log('setting cookie ', req.body.room);
+    res.cookie('roomId', req.body.room, {httpOnly: true});
     return next();
   } catch (err) {
     return next({
@@ -83,8 +87,8 @@ cookieController.setRoomCookie = async (req, res, next) => {
 
 cookieController.getRoomCookie = async (req, res, next) => {
   try {
+    console.log('cookies: ', req.cookies);
     res.locals.roomId = req.cookies.roomId;
-    console.log('cookie', res.locals.roomId);
     return next();
   } catch (err) {
     return next({

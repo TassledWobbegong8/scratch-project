@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import RoomCard from '../components/RoomCard';
-import { Card } from '@mui/material';
 
-function RoomContainer({ subject, id }) {
+
+function RoomContainer({ subject }) {
   const [rooms, setRooms] = useState([]);
   // roomcontainer will retrieve current subject from useContext
 
@@ -18,9 +18,9 @@ function RoomContainer({ subject, id }) {
     fetchRooms();
   }, [subject]);
 
-
+  console.log('ROOM CONTAINER ', rooms);
   const roomCards = rooms.map((e, i) => {
-    return (<RoomCard info={e} key={JSON.stringify(e)} id={id} />);
+    return (<RoomCard info={e} key={JSON.stringify(e)} id={e._id}/>);
   });
 
   return (

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-export default function SavedRoomCard({fetchUser, info, id}) {
+export default function SavedRoomCard({fetchUser, info, id, setRoomCookie, roomId}) {
   const [host, setHost] = useState('');
+
+  const navigate = useNavigate();
 
   const getHost = async () => {
     const user = await fetch(`/api/users/${info.host}`).then(response => response.json());
@@ -26,7 +28,14 @@ export default function SavedRoomCard({fetchUser, info, id}) {
       <p><label>Host: </label>{host} </p>
       <p><label>Restricted: </label>{info.restricted ? 'Yes' : 'No'}</p>
       <p><label>Allowed users: </label></p>
-      <Link to={'/main/room'} state={{info}}><Button variant='contained' id="joinRoom">Join Room</Button></Link>
+      {/* <Link to={'/main/room'} state={{info}}> */}
+        <Button variant='contained' id="joinRoom" onClick={() => {
+        setRoomCookie(roomId);
+        setTimeout(() => {
+          navigate('/main/room');
+        }, 500);
+        }}>Join Room</Button>
+      {/* </Link> */}
       <Button variant='outlined' id="removeMyRoom" onClick={deleteSavedRoom}>Remove</Button>
     </div>
   );

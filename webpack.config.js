@@ -21,6 +21,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: ['@babel/plugin-transform-runtime', '@babel/transform-async-to-generator'],
         },
       },
 
@@ -49,7 +50,7 @@ module.exports = {
     },
     proxy: [
       {
-        context: ['/auth', '/api', '/auth_callback', '/access_drive'],
+        context: ['/oauth', '/api'],
         target: 'http://localhost:3000',
       },
     ],
